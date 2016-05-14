@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>首页</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/dashboard.css" rel="stylesheet">
+    <link href="Font-Awesome-3.2.1/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!--script src="../../assets/js/ie-emulation-modes-warning.js"></script-->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand"><i class="icon-github icon-2x pull-left"></i><!--img alt="Yonyou" src="images/logo.png"--></a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="default.html">首页</a></li>
+            <li><a href="register.html">候选人登记</a></li>
+            <li ><a href="interview-list.html">邀约面试</a></li>
+            <li><a href="offer.html">录用</a></li>
+            <li><a href="entry.html">入职登记</a></li>
+            <li><a href="setup-org.html">设置</a></li> 
+            
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            
+            <li class="dropdown">
+              <a href="#"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="currentuser">User</span> <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">修改密码</a></li>
+                <li><a href="javascript:logout();">注销</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="#">总览<span class="sr-only">(current)</span></a></li>
+            <li><a href="#">招聘报表</a></li>
+            <li><a href="#">薪资分析</a></li>
+          </ul>
+          <!--ul class="nav nav-sidebar">
+            <li><a href="">Nav item</a></li>
+            <li><a href="">Nav item again</a></li>
+            <li><a href="">One more nav</a></li>
+            <li><a href="">Another nav item</a></li>
+            <li><a href="">More navigation</a></li>
+          </ul-->
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">恭喜你打败了80%的HR荣升妈妈桑！</h1>
+
+          <div class="row">
+            <div class="col-xs-6 col-sm-3" style="background-color:darkorange">
+              
+              <h4>推荐<a href="#">24</a>/面试<a href="#">98</a></h4>
+              <span class="text-muted">7日</span>
+            </div>
+
+            <div class="col-xs-6 col-sm-3" style="background-color:#00cccc">
+              
+              <h4>录用<a href="#">99</a></h4>
+              <span class="text-muted">30日</span>
+            </div>
+            <div class="clearfix visible-xs-block"></div>
+            <div class="col-xs-6 col-sm-3 " style="background-color:greenyellow">
+              
+              <h4>入职98</h4>
+              <span class="text-muted">累计</span>
+            </div>
+            <div class="col-xs-6 col-sm-3 " style="background-color:greenyellow">
+              
+              <h4>入职率3.5%</h4>
+              <span class="text-muted">累计</span>
+            </div>
+          </div>
+
+          <h2 class="sub-header">Section title</h2>
+          <div class="row">
+            <div class="col-xs-12 col-sm-6">
+              <div id="barchart" style="height:400px;"></div>
+            </div>
+            
+            <div class="col-xs-12 col-sm-6">
+              <div id="funnelchart" style="height:400px;"></div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div id="piechart" style="height:400px;"></div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div id="radarchart" style="height:400px;"></div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>部门</th>
+                  <th>编制(原始/调整)</th>
+                  <th>在职</th>
+                  <th>计划入职</th>
+                  <th>计划离职</th>
+                  <th>签约生</th>
+                  <th>到岗率(当前/计划)</th>
+                  <th>缺编</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>UAP产品本部</td>
+                  <td>96</td>
+                  <td>85</td>
+                  <td>3</td>
+                  <td>2</td>
+                  <td>0</td>
+                  <td>90%/91%</td>
+                  <td>11</td>
+                </tr>
+                <tr>
+                  <td>NC研发本部</td>
+                  <td>153</td>
+                  <td>125</td>
+                  <td>13</td>
+                  <td>8</td>
+                  <td>4</td>
+                  <td>84%/90%</td>
+                  <td>28</td>
+                </tr>
+                <tr>
+                  <td>NC客户服务云</td>
+                  <td>153</td>
+                  <td>125</td>
+                  <td>13</td>
+                  <td>8</td>
+                  <td>4</td>
+                  <td>84%/90%</td>
+                  <td>28</td>
+                </tr>
+                <tr>
+                  <td>共享服务创新部</td>
+                  <td>70</td>
+                  <td>59</td>
+                  <td>13</td>
+                  <td>8</td>
+                  <td>4</td>
+                  <td>84%/90%</td>
+                  <td>28</td>
+                </tr>
+                <tr>
+                  <td>数据产品中心</td>
+                  <td>70</td>
+                  <td>59</td>
+                  <td>13</td>
+                  <td>8</td>
+                  <td>4</td>
+                  <td>84%/90%</td>
+                  <td>28</td>
+                </tr>
+                <tr>
+                  <td>移动创新中心</td>
+                  <td>70</td>
+                  <td>59</td>
+                  <td>13</td>
+                  <td>8</td>
+                  <td>4</td>
+                  <td>84%/90%</td>
+                  <td>28</td>
+                </tr>
+                <tr>
+                  <td>技术架构部</td>
+                  <td>16</td>
+                  <td>14</td>
+                  <td>13</td>
+                  <td>8</td>
+                  <td>4</td>
+                  <td>84%/90%</td>
+                  <td>28</td>
+                </tr>
+                <tr>
+                  <td>产品管理部</td>
+                  <td>25</td>
+                  <td>22</td>
+                  <td>13</td>
+                  <td>8</td>
+                  <td>4</td>
+                  <td>84%/90%</td>
+                  <td>28</td>
+                </tr>
+                <tr>
+                  <td>开发管理部</td>
+                  <td>25</td>
+                  <td>22</td>
+                  <td>13</td>
+                  <td>8</td>
+                  <td>4</td>
+                  <td>84%/90%</td>
+                  <td>28</td>
+                </tr>
+                <tr>
+                  <td>产品市场部</td>
+                  <td>10</td>
+                  <td>9</td>
+                  <td>13</td>
+                  <td>8</td>
+                  <td>4</td>
+                  <td>84%/90%</td>
+                  <td>28</td>
+                </tr>
+                <tr>
+                  <td>产业链</td>
+                  <td>10</td>
+                  <td>9</td>
+                  <td>13</td>
+                  <td>8</td>
+                  <td>4</td>
+                  <td>84%/90%</td>
+                  <td>28</td>
+                </tr>
+                <tr>
+                  <td>人力资源部</td>
+                  <td>10</td>
+                  <td>9</td>
+                  <td>13</td>
+                  <td>8</td>
+                  <td>4</td>
+                  <td>84%/90%</td>
+                  <td>28</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="jquery-1.11.3/jquery-1.11.3.min.js"></script>
+    <script src="bootstrap-3.3.5/js/bootstrap.min.js"></script>
+    <script src="zrender/zrender.js"></script>
+    <script src="echarts/echarts-all.js"></script>
+
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!--script src="../../assets/js/ie10-viewport-bug-workaround.js"></script-->
+    <script>
+      function logout(){
+         $.post("data/login?action=logout",function(data,status){
+                window.location.href="login.html";
+         });
+
+      }      
+
+      $(document).ready(function(){
+        //初始化
+        //判断是否登录
+        $.get("data/login?action=currentuser",function(data,status){
+          ret=JSON.parse(data);
+          if (ret.login){
+            $("span#currentuser").text(ret.username);            
+          }
+          else{
+            window.location.href="login.html";
+          }
+        });
+      });
+
+    
+      var myChart = echarts.init(document.getElementById('barchart'));
+      var option = {
+                    tooltip: {
+                        show: true
+                    },
+                    legend: {
+                        data:['单月入职人数']
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            data : ["王倩","周超","王骆宾","张三","李四","王二麻子"]
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value'
+                        }
+                    ],
+                    series : [
+                        {
+                            "name":"单月入职人数",
+                            "type":"bar",
+                            "data":[5, 20, 40, 10, 10, 20]
+                        }
+                    ]
+                };
+      myChart.setOption(option);
+      myChart = echarts.init(document.getElementById('piechart'));
+      option = {
+          tooltip : {
+              trigger: 'item',
+              formatter: "{a} <br/>{b} : {c} ({d}%)"
+          },
+          legend: {
+              orient : 'vertical',
+              x : 'left',
+              data:['初级','中级','高级','专家','高级专家','资深专家']
+          },
+          toolbox: {
+              show : true,
+              feature : {
+                  //mark : {show: true},
+                  //dataView : {show: true, readOnly: false},
+                  /*magicType : {
+                      show: true, 
+                      type: ['pie', 'funnel']
+                  },*/
+                  restore : {show: true},
+                  //saveAsImage : {show: true}
+              }
+          },
+          calculable : false,
+          series : [
+              {
+                  name:'平均',
+                  type:'pie',
+                  selectedMode: 'single',
+                  radius : [0, 70],
+                  
+                  // for funnel
+                  x: '20%',
+                  width: '40%',
+                  funnelAlign: 'right',
+                  max: 1548,
+                  
+                  itemStyle : {
+                      normal : {
+                          label : {
+                              position : 'inner'
+                          },
+                          labelLine : {
+                              show : false
+                          }
+                      }
+                  },
+                  data:[
+                      {value:35, name:'初级'},
+                      {value:79, name:'中级'},
+                      {value:45, name:'高级'},
+                      {value:25, name:'专家'}
+                      
+                      
+                  ]
+              },
+              {
+                  name:'个人',
+                  type:'pie',
+                  radius : [100, 140],
+                  
+                  // for funnel
+                  x: '60%',
+                  width: '35%',
+                  funnelAlign: 'left',
+                  max: 1048,
+                  
+                  data:[
+                      {value:235, name:'初级'},
+                      {value:79, name:'中级'},
+                      {value:245, name:'高级'},
+                      {value:125, name:'专家'},
+                      {value:45, name:'高级专家'},
+                      {value:22, name:'资深专家'}
+                  ]
+              }
+          ]
+      };
+      var ecConfig = echarts.config;
+      myChart.on(ecConfig.EVENT.PIE_SELECTED, function (param){
+          var selected = param.selected;
+          var serie;
+          var str = '当前选择： ';
+          for (var idx in selected) {
+              serie = option.series[idx];
+              for (var i = 0, l = serie.data.length; i < l; i++) {
+                  if (selected[idx][i]) {
+                      str += '【系列' + idx + '】' + serie.name + ' : ' + 
+                             '【数据' + i + '】' + serie.data[i].name + ' ';
+                  }
+              }
+          }
+          document.getElementById('wrong-message').innerHTML = str;
+      })
+                
+
+
+                    
+      myChart.setOption(option);
+      
+      myChart = echarts.init(document.getElementById('funnelchart'));
+      option = {
+          color : [
+              'rgba(255, 69, 0, 0.5)',
+              'rgba(255, 150, 0, 0.5)',
+              'rgba(255, 200, 0, 0.5)',
+              'rgba(155, 200, 50, 0.5)',
+              'rgba(55, 200, 100, 0.5)',
+              'rgba(0, 255, 50, 0.5)'
+          ],
+          title : {
+              text: '招聘漏斗',
+              subtext: '个人/平均'
+          },
+          tooltip : {
+              trigger: 'item',
+              formatter: "{a} <br/>{b} : {c}%"
+          },
+          toolbox: {
+              show : true,
+              feature : {
+                  //mark : {show: true},
+                  //dataView : {show: true, readOnly: false},
+                  restore : {show: true},
+                  //saveAsImage : {show: true}
+              }
+          },
+          legend: {
+              data : ['推荐','邀约','面试','录用','入职','转正']
+          },
+          calculable : true,
+          series : [
+              {
+                  name:'平均',
+                  type:'funnel',
+                  x: '10%',
+                  width: '80%',
+                  itemStyle: {
+                      normal: {
+                          label: {
+                              formatter: '{b}平均'
+                          },
+                          labelLine: {
+                              show : false
+                          }
+                      },
+                      emphasis: {
+                          label: {
+                              position:'inside',
+                              formatter: '{b}平均 : {c}%'
+                          }
+                      }
+                  },
+                  data:[
+                      {value:100, name:'推荐'},
+                      {value:80, name:'邀约'},
+                      {value:60, name:'面试'},
+                      {value:40, name:'录用'},
+                      {value:20, name:'入职'},
+                      {value:18, name:'转正'}
+                      
+                      
+                      
+                  ]
+              },
+              {
+                  name:'个人',
+                  type:'funnel',
+                  x: '10%',
+                  width: '80%',
+                  maxSize: '80%',
+                  itemStyle: {
+                      normal: {
+                          borderColor: '#fff',
+                          borderWidth: 2,
+                          label: {
+                              position: 'inside',
+                              formatter: '{c}%',
+                              textStyle: {
+                                  color: '#fff'
+                              }
+                          }
+                      },
+                      emphasis: {
+                          label: {
+                              position:'inside',
+                              formatter: '{b}个人 : {c}%'
+                          }
+                      }
+                  },
+                  data:[
+                      {value:100, name:'推荐'},
+                      {value:65, name:'邀约'},
+                      {value:40, name:'面试'},
+                      {value:20, name:'录用'},
+                      {value:20, name:'入职'},
+                      {value:15, name:'转正'}
+                      
+                  ]
+              }
+          ]
+      };
+      myChart.setOption(option);              
+
+      myChart = echarts.init(document.getElementById('radarchart'));
+      option = {
+          color : (function (){
+              //var zrColor = require('zrender/tool/color');
+              var zrColor=zrender.tool.color;
+              return zrColor.getStepColors('yellow', 'red', 28);
+          })(),
+          title : {
+              text: '浏览器占比变化',
+              subtext: '纯属虚构',
+              x:'right',
+              y:'bottom'
+          },
+          tooltip : {
+              trigger: 'item',
+              backgroundColor : 'rgba(0,0,250,0.2)'
+          },
+          legend: {
+             // orient : 'vertical',
+              //x : 'center',
+              data: function (){
+                      var list = [];
+                      for (var i = 1; i <=28; i++) {
+                          list.push(i + 2000);
+                      }
+                      return list;
+                  }()
+          },
+          toolbox: {
+              show : true,
+              orient : 'vertical',
+              y:'center',
+              feature : {
+                  mark : {show: true},
+                  dataView : {show: true, readOnly: false},
+                  restore : {show: true},
+                  saveAsImage : {show: true}
+              }
+          },
+         polar : [
+             {
+                 indicator : [
+                     { text: 'IE8-', max: 400},
+                     { text: 'IE9+', max: 400},
+                     { text: 'Safari', max: 400},
+                     { text: 'Firefox', max: 400},
+                     { text: 'Chrome', max: 400}
+                  ],
+                  center : ['50%', 240],
+                  radius : 150
+              }
+          ],
+          calculable : false,
+          series : (function (){
+              var series = [];
+              for (var i = 1; i <= 28; i++) {
+                  series.push({
+                      name:'浏览器（数据纯属虚构）',
+                      type:'radar',
+                      symbol:'none',
+                      itemStyle: {
+                          normal: {
+                              lineStyle: {
+                                width:1
+                              }
+                          },
+                          emphasis : {
+                              areaStyle: {color:'rgba(0,250,0,0.3)'}
+                          }
+                      },
+                      data:[
+                        {
+                          value:[
+                              (40 - i) * 10,
+                              (38 - i) * 4 + 60,
+                              i * 5 + 10,
+                              i * 9,
+                              i * i /2
+                          ],
+                          name:i + 2000
+                        }
+                      ]
+                  })
+              }
+              return series;
+          })()
+      };
+      myChart.setOption(option);            
+                          
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="集团UAP中心人力与运营管理部 刘南">
+    <link rel="icon" href="../favicon.ico">
+
+    <title>面试通知</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen"/> 
+    <link href="../Font-Awesome-3.2.1/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="http://v3.bootcss.com/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!--script src="http://v3.bootcss.com/assets/js/ie-emulation-modes-warning.js"></script-->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+  </head>
+
+  <body style="padding-top:70px;">
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand"><i class="icon-github icon-2x pull-left"></i><img alt="Yonyou" src="../images/logo.png"></a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="#">预约信息</a></li>
+            <li><a id="navmap" href="map.html">地图</a></li>
+            <li><a id="navintro" href="intro.html">公司介绍</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+  	<div class="container-fluid" >
+  	  <row>
+        <div class="col-xs-12">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">面试预约</h3>
+            </div>
+            <div class="panel-body">
+              <row>
+                <div class="col-xs-4">
+                  <strong>时间：</strong>
+                </div>
+                <div class="col-xs-8">
+                  <span id="time"></span>（<a href="">变更时间</a>）
+                </div>
+              </row>
+              <row>
+                <div class="col-xs-4">
+                  <strong>地点：</strong>
+                </div>
+                <div class="col-xs-8">
+                  北京市海淀区北清路68号用友软件园<span id="location"></span>(<a id="loc" href="map.html?location=面试接待处">查看地图</a>)
+                </div>
+              </row>
+              <row>
+                <div class="col-xs-4">
+                  <strong>职位：</strong>
+                </div>
+                <div class="col-xs-8">
+                  <span id="job"></span>
+                </div>
+              </row>
+              <row>
+                <div class="col-xs-4">
+                  <strong>HR：</strong>
+                </div>
+                <div class="col-xs-8">
+                  <span id="hrname"></span>
+                </div>
+              </row>
+              <row>
+                <div class="col-xs-4">
+                  <strong>电话：</strong>
+                </div>
+                <div class="col-xs-8">
+                  <span id="phone"></span>
+                </div>
+              </row>
+
+           
+            </div>
+          </div>
+        </div>
+      </row>
+
+    </div>
+ 
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../jquery-1.11.3/jquery-1.11.3.min.js"></script>
+    <!--script src="jquery-2.1.4/jquery-2.1.4.min.js"></script-->
+    <script src="../bootstrap-3.3.5/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!--script src="http://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script-->
+    <script src="../bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" ></script>
+    <script src="../bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" ></script>
+    
+
+
+
+    <script>
+      
+
+      $(document).ready(function(){
+        //初始化
+        var id=getUrlParam("k");
+        $("a#navmap").attr("href","map.html?k="+id);
+        $("a#navintro").attr("href","intro.html?k="+id);
+        //判断是否登录
+        if (id!="" || id!=null){
+          $.get("../data/cc?action=GetInterviewInfo&k="+id,function(data,status){
+            ret=JSON.parse(data);
+            $("#time").text(ret.InterviewTime);
+            $("#location").text(ret.InterviewLocation);
+            $("#job").text(ret.Job);
+            $("#hrname").text(ret.HrName);
+            $("#phone").text(ret.HrPhone);
+            $("a#loc").attr("href","map.html?k="+id);
+          });
+        }
+        
+        /*
+        //面试邀约/面试结果  窗口日期插件初始化
+        $('.form_datetime').datetimepicker({
+          language:  'zh-CN',
+          weekStart: 1,
+          todayBtn:  1,
+          autoclose: 1,
+          todayHighlight: 1,
+          startView: 2,
+          forceParse: 1,
+          showMeridian: 1,
+          keyboardNavigation: 1,
+          startDate: new Date(),
+        });
+        */
+      });  // on document.ready
+      
+      function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); 
+        var r = window.location.search.substr(1).match(reg);  
+        if (r != null) return unescape(r[2]); return null; 
+      }
+
+    </script>
+
+
+  </body>
+</html>

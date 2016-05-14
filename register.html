@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="候选人登记">
+    <meta name="author" content="集团UAP中心人力与运营管理部 刘南">
+    <link rel="icon" href="favicon.ico">
+
+    <title>候选人登记</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">  
+    <link href="fontawesome-4.4/css/font-awesome.min.css" rel="stylesheet" > 
+    <link href="html5uploader/html5uploader.css" rel="stylesheet">  
+    <link href="bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet">  
+    <link href="Font-Awesome-3.2.1/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="http://v3.bootcss.com/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!--script src="http://v3.bootcss.com/assets/js/ie-emulation-modes-warning.js"></script-->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+  </head>
+
+  <body style="padding-top:70px;">
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand"><i class="icon-github icon-2x pull-left"></i><!--img alt="Yonyou" src="images/logo.png"--></a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="default.html">首页</a></li>
+            <li><a href="register.html">候选人登记</a></li>
+            <li ><a href="interview-list.html">邀约面试</a></li>
+            <li><a href="offer.html">录用</a></li>
+            <li><a href="entry.html">入职登记</a></li>
+            <li><a href="setup-org.html">设置</a></li> 
+            
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            
+            <li class="dropdown">
+              <a href="#"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="currentuser">User</span> <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">修改密码</a></li>
+                <li><a href="javascript:logout();">注销</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container-fluid" >
+      <form class="form-horizontal" id="form1">
+        <div class="form-group">
+          <label class="col-sm-1 control-label" for="id">投递职位</label>
+          <div class="col-sm-5">
+            <select class="form-control" id="Job" name="Job">
+              <option>JAVA工程师</option>
+              <option>移动技术专家</option>
+              <option>iOS高级工程师</option>
+              <option>中间件架构师</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-1 control-label" for="CandidateName">姓名</label>
+          <div class="col-sm-2">
+            <input id="CandidateName" name="CandidateName" type="text" placeholder="未下载简历时可先空缺" class="form-control">
+          </div>
+          <label class="col-sm-1 control-label" for="ResumeNo">简历编号</label>
+          <div class="col-sm-2">
+            <input id="ResumeNo"  name="ResumeNo" type="text" placeholder="招聘网站简历编号" class="form-control">
+          </div>
+          
+          <label class="col-sm-1 control-label" for="DateOfBirth">出生日期</label>
+          <div class="col-sm-2">
+            <input type="date" id="DateOfBirth" name="DateOfBirth" placeholder="yyyy-mm-dd" class="form-control">
+          </div>
+          <label class="col-sm-1 control-label">性别</label>
+          <div class="col-sm-2">
+            <label class="radio-inline"><input type="radio" name="SexRadioOpts" id="SexRadioOpts" value="男" checked>男</label>
+            <label class="radio-inline"><input type="radio" name="SexRadioOpts" id="SexRadioOpts" value="女">女</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-1 control-label" for="Phone">手机</label>
+          <div class="col-sm-2">
+            <input type="number" placeholder="手机" id="Phone" name="Phone" class="form-control">
+          </div>
+          <label class="col-sm-1 control-label" for="Mail">邮箱</label>
+          <div class="col-sm-2">
+            <input type="email" placeholder="邮箱" id="Mail" name="Mail" class="form-control">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-1 control-label" for="LastJob">最近工作</label>
+          <div class="col-sm-2">
+            <input type="text" placeholder="公司名称" id="LastJob" name="LastJob" class="form-control">
+          </div>
+          <label class="col-sm-1 control-label" for="LastTitle">职位</label>
+          <div class="col-sm-2">
+            <input type="text" placeholder="职位名称" class="form-control" id="LastTitle" name="LastTitle">
+          </div>
+          <label class="col-sm-1 control-label" for="LastJobMonth">司龄</label>
+          <div class="col-sm-2">
+            <input type="number" placeholder="月数" class="form-control" name="LastJobMonth" id="LastJobMonth">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-1 control-label" for="LastJobType">公司类型</label>
+           <div class="col-sm-2">
+            <select class="form-control" id="LastJobType" name="LastJobType">
+              <option value="BAT">BAT</option>
+              <option value="一线互联网">一线互联网</option>
+              <option value="其他互联网">其他互联网</option>
+              <option value="传统IT">传统IT</option>
+              <option value="其它" selected>其它</option>
+            </select>
+          </div>
+          <label class="col-sm-1 control-label" for="InServiceState">在职状态</label>
+          <div class="col-sm-2">
+            <select class="form-control" id="InServiceState" name="InServiceState">
+              <option value="在职">在职</option>
+              <option value="不在职">不在职</option>
+              <option value="已辞职">已辞职</option>
+            </select>
+          </div>
+        
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-1 control-label"  for="HighestEducation">最高学历</label>
+          <div class="col-sm-2">
+            <select class="form-control" id="HighestEducation" name="HighestEducation">
+              <option value="一本">一本</option>
+              <option value="非一本">非一本</option>
+              <option value="硕士">硕士</option>
+              <option value="博士及以上">博士及以上</option>
+              <option value="大专">大专</option>
+              <option value="大专以下">大专以下</option>
+              <option value="不知道">不知道</option>
+            </select>
+          </div>
+          <label class="col-sm-1 control-label" for="HighestEducationName">毕业学校</label>
+          <div class="col-sm-2">
+            <input type="text" placeholder="学校名称" class="form-control" id="HighestEducationName" name="HighestEducationName">
+          </div>
+          
+          <label class="col-sm-1 control-label" for="HighestEducationGraduation">毕业日期</label>
+          <div class="col-sm-2">
+            <input type="date" placeholder="yyyy-mm-dd" class="form-control" id="HighestEducationGraduation" name="HighestEducationGraduation">
+          </div>
+          <label class="col-sm-1 control-label" for="HighestEducationProfessional">专业</label>
+          <div class="col-sm-2">
+            <input type="text" placeholder="专业名称" class="form-control" id="HighestEducationProfessional" name="HighestEducationProfessional">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-1 col-sm-3">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" id="OffJobEducationCheck" name="OffJobEducationCheck" checked onclick="$('div#OffJobEducationDiv').slideToggle();">最高学历为脱产学历
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group" id="OffJobEducationDiv" style="display:none">
+          <label class="col-sm-1 control-label" for="OffJobEducation" >脱产学历</label>
+          <div class="col-sm-2">
+            <select class="form-control" id="OffJobEducation" name="OffJobEducation">
+              <option value="一本">一本</option>
+              <option value="非一本">非一本</option>
+              <option value="硕士">硕士</option>
+              <option value="博士及以上">博士及以上</option>
+              <option value="大专">大专</option>
+              <option value="大专以下">大专以下</option>
+              <option value="不知道">不知道</option>
+            </select>
+          </div>
+          <label class="col-sm-1 control-label" for="OffJobEducationName">毕业学校</label>
+          <div class="col-sm-2">
+            <input type="text" placeholder="学校名称" class="form-control" id="OffJobEducationName" name="OffJobEducationName">
+          </div>
+          
+          <label class="col-sm-1 control-label" for="OffJobEducationGraduation">毕业日期</label>
+          <div class="col-sm-2">
+            <input type="date" placeholder="yyyy-mm-dd" class="form-control" id="OffJobEducationGraduation" name="OffJobEducationGraduation">
+          </div>
+          <label class="col-sm-1 control-label" for="OffJobEducationProfessional">专业</label>
+          <div class="col-sm-2">
+            <input type="text" placeholder="专业名称" class="form-control" id="OffJobEducationProfessional" name="OffJobEducationProfessional">
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <label class="col-sm-1 control-label" for="ResumeSourceType">简历来源</label>
+           <div class="col-sm-2">
+            <select class="form-control" id="ResumeSourceType" name="ResumeSourceType">
+              <option>职位投递</option>
+              <option>下载简历</option>
+              <option>内部推荐</option>
+              <option>部门直推</option>
+              <option>猎头</option>
+              <option>社交网络</option>
+              <option>其它</option>
+            </select>
+          </div>
+          <label class="col-sm-1 control-label" for="ResumeSource">渠道</label>
+          <div class="col-sm-2">
+            <select class="form-control" id="ResumeSource" name="ResumeSource">
+              <option>拉钩</option>
+              <option>猎聘</option>
+              <option>智联</option>
+              <option>前程无忧</option>
+              <option>大街网</option>
+              <option>其它</option>
+            </select>
+            <input type="text" class="form-control" id="ResumeSourceInput" name="ResumeSourceInput" style="display:none;" placeholder="推荐人姓名/推荐部门/其它渠道" >
+
+
+          </div>
+          <label class="col-sm-1 control-label">是否体系内</label>
+          <div class="col-sm-3">
+            <label class="radio-inline"><input type="radio" name="FromYonyouRadioOpts" id="FromYonyouRadioOpts" value="非体系内" checked>非体系内</label>
+            <label class="radio-inline"><input type="radio" name="FromYonyouRadioOpts" id="FromYonyouRadioOpts" value="股份">股份</label>
+            <label class="radio-inline"><input type="radio" name="FromYonyouRadioOpts" id="FromYonyouRadioOpts" value="其它">其它</label>
+          </div>
+        </div>  
+       
+      
+        <div class="form-group">
+          <label class="col-sm-1 control-label" for="Comments">说明</label>
+          <div class="col-sm-9">
+            <textarea class="form-control" rows="3" id="Comments" name="Comments" placeholder="可填写候选人特点"></textarea>
+          </div>
+        </div>
+
+       
+  	    
+      </form>
+      <div class="col-sm-2 col-sm-offset-1">
+          <button type="button" class="btn btn-primary btn-block" id="SaveBtn" onclick="submitForm();">保存信息</button>
+      </div>
+      <div class="col-sm-2">
+          <button type="button" class="btn btn-primary btn-block" id="ResumeFileBtn" onclick="showResumeFileModal($('#CandidateID').val());" title="保存后才能上传简历附件" disabled="disabled">简历附件</button>
+      </div>
+      <div class="col-sm-2 col-sm-offset-2">
+          <button type="button" class="btn btn-danger btn-block" id="NewBtn" onclick="newCandidate();"  disabled="disabled">新的候选人</button>
+      </div>
+
+    
+      
+
+
+    </div>
+
+    
+
+    <!--简历附件管理浮动层  -->
+    <div class="modal fade" id="ResumeFileModal" tabindex="-1" role="dialog" aria-labelledby="ResumeFileModal-Label">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" id="ResumeFileModal-ContentDiv">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="ResumeFileModal-Label">简历附件</h4>
+                </div>
+                <div class="modal-body" >
+                  
+                  
+                  <table class="table">  
+                   
+                  </table>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div> 
+    
+
+
+
+
+     <div id="tip" class="alert alert-info" role="alert" style="display:none;position:fixed;width:50%;margin-left:20%;left:0;top:30%;text-align:center;">保存成功</div>
+
+
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="jquery-1.11.3/jquery-1.11.3.min.js" type="text/javascript"></script>
+       <!--script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script-->
+    <script src="bootstrap-3.3.5/js/bootstrap.min.js" type="text/javascript"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!--script src="http://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script-->
+    
+    <script src="html5uploader/jquery.html5uploader.js" type="text/javascript"></script>
+    <script src="bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+ 	  <script>
+      function logout(){
+         $.post("data/login?action=logout",function(data,status){
+                window.location.href="login.html";
+         });
+
+      }      
+      var CandidateID="";
+      $(document).ready(function(){
+        //初始化
+        //判断是否登录
+        $.get("data/login?action=currentuser",function(data,status){
+          ret=JSON.parse(data);
+          if (ret.login){
+            $("span#currentuser").text(ret.username);            
+          }
+          else{
+            window.location.href="login.html";
+          }
+        });
+        
+        fetchJob();
+       
+        
+        fetchResumeSourceType();
+        
+        //注册事件
+        //简历来源类型改变
+        $("select#ResumeSourceType").change(function(){
+          var val=$("select#ResumeSourceType").val();
+          switch (val)
+          {
+            case "内部推荐":
+            case "部门直推":
+            case "其它":
+              $("select#ResumeSource").hide("fast",function(){
+                $("input#ResumeSourceInput").fadeIn();
+              });
+              
+              break;
+            default:
+              $("input#ResumeSourceInput").hide("fast",function(){
+                fetchResumeSource(val);
+                $("select#ResumeSource").fadeIn();
+              });
+          }
+        });//ResumeSourceType.change
+
+        $("form#FileUpload").submit(function(e){
+          alert("submitterd");
+        });  
+
+
+      
+
+        regResumeFileModalEvent(); 
+
+        
+        var action=getUrlParam("action");
+        var id=getUrlParam("id");
+        if (action=="update"){
+          loadForm(id);
+        }
+
+      });  //document.ready
+      
+      function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+            if (r != null) return unescape(r[2]); return null; //返回参数值
+        }
+
+      //填充投递职位列表
+      function fetchJob(){
+        
+        $.get("data/basedata?action=Job",function(data,status){
+          //alert("Data: " + data + "\nStatus: " + status);
+          var s=$("select#Job");
+          s.empty();
+          
+          $.each(JSON.parse(data),function(i,item){
+            var option=$("<option>").val(item.name).text(item.name);
+            s.append(option);
+          });
+          
+        });
+
+      }
+
+
+      //填充简历来源类型列表
+      function fetchResumeSourceType(){
+          $.get("data/basedata?action=ResumeSourceType",function(data,status){
+          //alert("Data: " + data + "\nStatus: " + status);
+          var s=$("select#ResumeSourceType");
+          s.empty();
+          
+          $.each(JSON.parse(data),function(i,item){
+            var option=$("<option>").val(item.name).text(item.name);
+            s.append(option);
+          });
+          $("select#ResumeSourceType").change();
+          
+        });
+      }
+
+      //填充简历来源
+      function fetchResumeSource(ResumeSourceType){
+        $.get("data/basedata?action=ResumeSource&name="+ResumeSourceType,function(data,status){
+          //alert("Data: " + data + "\nStatus: " + status);
+          var s=$("select#ResumeSource");
+          s.empty();
+          $.each(JSON.parse(data),function(i,item){
+            var option=$("<option>").val(item.name).text(item.name);
+            s.append(option);
+          });
+          
+        });
+
+      } //end function
+      
+      //保存信息
+      function submitForm(){
+          x=$("form").serializeArray();
+          if (CandidateID=="") {
+            $.post("data/register?action=new",x,function(data,status){
+              //alert("data:"+data+"\nStatus:"+status);
+              CandidateID=data;
+              $("#ResumeFileBtn").removeAttr("disabled");
+              $("#NewBtn").removeAttr("disabled");
+              $("#tip").slideDown("slow",function(){setTimeout("$('#tip').fadeOut('slow')",500);});
+                 
+
+            });
+          }
+          else{
+            $.post("data/register?action=update&candidateid="+CandidateID,x,function(data,status){
+              //alert("data:"+data+"\nStatus:"+status);
+              
+              $("#tip").slideDown("slow",function(){setTimeout("$('#tip').fadeOut('slow')",500);});
+                 
+
+            });
+
+
+          }
+
+      }
+      function loadForm(id){
+        $.get("data/register?candidateid="+id,function(data,status){
+          if (status!="success")
+            alert("Data: " + data + "\nStatus: " + status);
+          
+          $.each(JSON.parse(data),function(i,item){
+            if (CandidateID!=item.ID){
+              alert('error');
+            }
+            
+            
+            $("#Job option[value="+item.Job+"]").attr("selected", true);
+            $("#CandidateName").val(item.Name);
+            $("#ResumeNo").val(item.ResumeNo);
+            $("#DateOfBirth").val(item.DateOfBirth);
+            $("#SexRadioOpts[value="+item.Sex+"]").attr("checked",true);
+            $("#Phone").val(item.Phone);
+            $("#Mail").val(item.Mail);
+            $("#LastJob").val(item.LastJob);
+            $("#LastJobType option[value="+item.LastJobType+"]").attr("selected", true);
+            $("#LastTitle").val(item.LastTitle);
+            $("#LastJobMonth").val(item.LastTitle);
+            $("#InServiceState option[value="+item.InServiceState+"]").attr("selected", true);
+            
+            $("#HighestEducation option[value="+item.HighestEducation+"]").attr("selected",true);
+            $("#HighestEducationName").val(item.HighestEducationName);
+            $("#HighestEducationProfessional").val(item.HighestEducationProfessional);
+            $("#HighestEducationGraduation").val(item.HighestEducationGraduation);
+
+            $("#OffJobEducation option[value="+item.OffJobEducation+"]").attr("selected",true);
+            $("#OffJobEducationName").val(item.OffJobEducationName);
+            $("#OffJobEducationProfessional").val(item.OffJobEducationProfessional);
+            $("#OffJobEducationGraduation").val(item.OffJobEducationGraduation);
+            var checkflag=$("#OffJobEducationCheck").attr("checked");
+            if (checkflag=="checked" )
+              checkflag=1;
+            else
+              checkflag=0;
+            if (item.OffJobEducationCheck==1)
+              $("#OffJobEducationCheck").attr("checked","true");
+            else
+              $("#OffJobEducationCheck").removeAttr("checked");
+            
+            if (checkflag!=item.OffJobEducationCheck)
+               $('div#OffJobEducationDiv').slideToggle();
+
+            $("#Comments").val(item.Comments);
+            $("#FromYonyouRadioOpts[value="+item.FromYonyou+"]").attr("checked",true);
+            $("#ResumeSourceType option[value="+item.ResumeSourceType+"]").attr("selected", true);
+
+            switch (item.ResumeSourceType)
+            {
+              case "内部推荐":
+              case "部门直推":
+              case "其它":
+                $("select#ResumeSource").hide("fast",function(){
+                  $("input#ResumeSourceInput").fadeIn();
+                });
+                $("#ResumeSourceInput").val(item.ResumeSource);
+                break;
+              default:
+                $("input#ResumeSourceInput").hide("fast",function(){
+                  fetchResumeSource(item.ResumeSourceType);
+                  $("select#ResumeSource").fadeIn();
+                });
+                $("#ResumeSource option[value="+item.ResumeSource+"]").attr("selected", true);
+            }
+            $("#ResumeFileBtn").removeAttr("disabled");
+            $("#NewBtn").removeAttr("disabled");
+          }); //each
+  
+        }); //get    
+ 
+        CandidateID=id;
+
+      }
+      function newCandidate(){
+        CandidateID="";
+        //clear from
+        $('#form1')[0].reset();
+        $("#ResumeFileBtn").attr("disabled","disabled");
+        $("#NewBtn").attr("disabled","disabled");
+      }
+
+
+      function makeArray( array ) { 
+        var ret = []; 
+        if( array != null ){ 
+          var i = array.length; 
+          // The window, strings (and functions) also have 'length' 
+          if( i == null || typeof array === "string" || jQuery.isFunction(array) || array.setInterval ) 
+            ret[0] = array; 
+          else 
+            while( i ) 
+              ret[--i] = array[i]; 
+        } 
+        return ret; 
+      } 
+      
+    //-------------------简历附件浮动层部分---------------------------
+      function regResumeFileModalEvent(){
+        //EVENT:on show
+        $('#ResumeFileModal').on('show.bs.modal', function (event) {
+           //调整邀约面试窗口中tagspinput样式
+           $(".bootstrap-tagsinput").css("width","100%");
+        
+        })
+
+        $('#ResumeFileModal').on('hidden.bs.modal', function (event) {
+           //调整邀约面试窗口中tagspinput样式
+           $("div#upload").remove()
+        
+        })
+
+        
+      }
+
+      //Show modal
+      function showResumeFileModal(candidateid){
+        $("#ResumeFileModal").modal({backdrop:"static",keyboard:false});
+        $('#upload').html5uploader({url:'data/register/resumeupload?candidateid='+CandidateID});
+        var div1=$("<div></div>").attr("id","upload");
+
+        $(".table"). before(div1);
+        $('#upload').html5uploader({
+          auto:true,
+          multi:true,
+          removeTimeout:400,
+          buttonText:"添加附件",
+          url:'data/register/resumeupload?candidateid='+CandidateID,
+          itemTemplate:'<li id="${fileID}file"><div class="progress" style="width:100%"><div class="progressbar"></div></div><span class="filename">${fileName}</span><span class="progressnum">0/${fileSize}</span><a class="delfilebtn">删除</a></li>',
+          onUploadStart:function(aa,name){
+            aa.url=aa.url+"&filename="+name;
+            
+          },
+          onInit:function(){
+            //alert('初始化');
+          },
+          onUploadComplete:function(){
+            //alert('全部上传完成');
+            reloadResumeFileModalTable();
+          },
+          onUploadSuccess:function(file,ret){
+            //alert(file.name+"上传完成"+ret);
+          }
+        });
+          
+        reloadResumeFileModalTable();
+
+        $("#ResumeFileModal").modal("show");
+       
+        return;
+      }
+      function delResumeFileOne(id){
+        $("tr#"+id).remove();
+        $.post("data/register/resumedel?id="+id,function(data,status){
+          //alert("Data: " + data + "\nStatus: " + status);
+        });
+
+      }
+
+      //加载附件表格
+      function reloadResumeFileModalTable(){
+        $.get("data/register/resumeupload?candidateid="+CandidateID,function(data,status){
+          //alert("Data: " + data + "\nStatus: " + status);
+          var t=$(".table");
+          t.empty();
+          $.each(JSON.parse(data),function(i,item){
+            var tr=$("<tr>").attr("id",item.id);
+            tr.css({"border-bottom-style":"solid","border-bottom-width":"thin","border-bottom-color":"lightgrey"});
+            var tdhtml="<td style='border-top-style:none;'>"+
+                       "<a href=upload/"+item.urlname+" target='_blank'>"+item.filename+"</a>"+
+                       "</td>";
+            tr.append(tdhtml);
+            tdhtml=" <td style='float:right;border-top-style:none;'>"+
+                   "   <input type='checkbox' class='switch-checkbox' id="+item.id+" />" +
+                   "   <button type='button' class='btn btn-primary  btn-xs ResumeFileDelBtn'  style='display:none;' id="+ item.id+" aria-label='Left Align' title='删除' onclick='delResumeFileOne("+item.id+");'>"+
+                   "      <span class='glyphicon glyphicon-trash' aria-hidden='true'></span>"+
+                   "    </button>"+
+                   "  </td>";
+            tr.append(tdhtml);
+
+            t.append(tr);
+
+          }); //each
+          //$('input.switch-checkbox').bootstrapSwitch();
+          $('.switch-checkbox').bootstrapSwitch('size',"mini");
+          $('.switch-checkbox').bootstrapSwitch('onColor',"danger");
+          $('.switch-checkbox').bootstrapSwitch('offColor',"warning");
+          $('.switch-checkbox').bootstrapSwitch('inverse',true);
+          
+          $('.switch-checkbox').on('switchChange.bootstrapSwitch', function(event, state) {
+            console.log(this); // DOM element
+            
+            if (state){
+              $(".ResumeFileDelBtn[id="+this.id+"]").fadeIn();
+            }
+            else{
+              $(".ResumeFileDelBtn[id="+this.id+"]").fadeOut();
+
+            }
+            //console.log(event); // jQuery event
+            console.log(state); // true | false
+          });
+        });//get  
+      } //reloadResumeFileModalTable
+
+    
+
+    </script>
+   
+
+  </body>
+</html>

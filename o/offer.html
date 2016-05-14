@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="刘南">
+    <link rel="icon" href="../favicon.ico">
+
+    <title>录用邀请函</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../Font-Awesome-3.2.1/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../sco.js/css/sco.message.css" rel="stylesheet" media="screen" />
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="http://v3.bootcss.com/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!--script src="http://v3.bootcss.com/assets/js/ie-emulation-modes-warning.js"></script-->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+      span.key {
+        text-decoration:underline;
+        font-weight: bold;
+      }
+    </style>
+
+
+  </head>
+
+  <body style="padding-top:70px;background: #e8e8e8;">
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand"><i class="icon-github icon-2x pull-left"></i><img alt="Yonyou" src="../images/logo.png"></a>
+           <button type="submit" class="btn btn-success  btn-sm navbar-btn " style="float:right;margin-right:5px;" onclick="javascript:window.location.href='list.html'">返回</button>
+        </div>
+       
+        
+      </div>
+    </nav>
+
+  	<div class="container-fluid" >
+  	  <h2 style="text-align:center">录用邀请函</h2>
+      <button class="btn btn-success btn-sm btn-confirm" style="left: 35%;text-align: center;width: 30%;position: relative;" type="button" onclick="confirmoffer();">接受</button>
+      
+      <div>
+        <h4>尊敬的<span id="name" class="key" data-id="">XXX</span>:</h4>
+        <p style="text-indent:2em;">
+          我们诚挚地邀请您加入用友网络科技股份有限公司<span id="dept" class="key">XXXX</span>，<span id="job" class="key" data-id="">XXX</span>岗位，工作地点在 北京 ，部门负责人是<span id="manager" class="key">XXX</span>。
+        </p>
+        <p>有关事宜通知如下：</p>
+        <p>一、以下情况全部满足的前提下，本通知有效：</p>
+        <ol>
+          <li>您应聘我公司时所提供的信息是真实的；</li>
+          <li>在我公司与您签订劳动合同前，公司业务、您应聘岗位未发生变化。</li>
+        </ol>
+        <p>二、薪资条款：您的年薪为人民币<span id="annualsalary" class="key">xxx</span>万元。年薪由基本工资和绩效奖金构成，其中：</p>
+        <ol>
+          <li>基本工资：为年薪的<span id="salarybaserate" class="key">xx</span>%  ，分12个月支付，转正后税前工资<span id="salary" class="key">xxxxx</span>元。</li>
+          <li>绩效奖金：为年薪的<span id="salarybonusrate" class="key">xx</span>%,您的绩效奖金发放时间及发放标准，将按照公司绩效管理制度执行。</li>
+        </ol>
+        <p id="probation">三、试用期条款：您的试用期为<span id="probationperiod" class="key">XX</span>个月，试用期税前工资<span id="probationsalary" class="key">xxxxx</span>元。</p>
+        <p>四、福利条款：您的福利分为法定福利和补充福利两部分：</p>
+        <ol>
+          <li>法定福利：公司依据国家相关法律法规为员工缴纳社会保险和住房公积金：<br>
+              社会保险：在您提供与原单位解除劳动合同证明并与我公司签署劳动合同，同时在相关社会保险转移手续办理完毕后，您可享受本市及公司规定的社会保险待遇。不持有中国身份证和户口本的外籍人员，将不享受中国当地社会保险政策。<br>
+              住房公积金：在您与公司签署劳动合同后，您可以享受本市及公司规定的住房公积金待遇。不持有中国身份证和户口本的外籍人员，将不享受中国当地住房公积金政策。</li>
+          <li>补充福利：公司为体现对员工的人文关怀，依据年度人员费用预算，建立并提供补充福利项目，努力构建幸福企业。其中包括：<br>
+              风险保障类：员工人身意外保险和身故保险/员工重大疾病医疗救助；<br>
+              员工关怀类：节日礼金、生日关怀、地区机构的季节性补贴/员工集体活动(包括部门郊游、单身交友活动、亲子活动、各项俱乐部活动、特殊员工慰问等)/工作餐/员工运动会；<br>
+              身心保健类：员工体检/员工补充医疗方案；<br>
+              员工发展类：员工培训；<br>
+              增值服务类：班车服务/公司品牌形成的产品折扣服务；<br>
+              年休假：在您入公司工作满1年后，您可按照劳动法享受带薪休假。<br>
+          </li>
+        </ol>
+        <p>五、为鼓励员工在公司长期服务并为公司长期绩效做出贡献，公司建立骨干员工股权激励计划，受激励的骨干员工获得股权激励计划收益。股权激励计划收益为长期收益。公司将根据发展情况，由董事会提出，报证券监管部门审核批准，并经股东大会决定，不定期实施骨干员工股权激励计划，并在经营业绩达到规定目标时予以执行。</p>
+        <p>六、聘用关系的解除：您的试用期期限以劳动合同约定为准，根据劳动法及公司相关制度规定，试用期内，您和公司都有权利解除聘用关系，但试用期满后解除的，应提前30天书面通知另一方。</p>
+        <p>七、请您入职后登陆http://ufapp.ufida.com.cn/diaocha/web/suvery/EmployeeRule.html，并在入职时完成《用友员工商业行为守则》的学习和测试并签署阳光经营承诺书。</p>
+
+      </div>
+      <div><p id="pf" style="font-weight:bold;">请您在收到邀请函的3日内确认是否接受，并提交计划入职时间。如逾期未确认接受则属于主动放弃，本邀请函自动作废。</p></div>
+      <button class="btn btn-success btn-sm btn-confirm" style="left: 35%;text-align: center;width: 30%;position: relative;margin-bottom:50px;" type="button"  onclick="confirmoffer();">接受</button>
+      
+    </div>
+ 
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../jquery-1.11.3/jquery-1.11.3.min.js"></script>
+    <!--script src="jquery-2.1.4/jquery-2.1.4.min.js"></script-->
+    <script src="../bootstrap-3.3.5/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!--script src="http://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script-->
+    <script src="../sco.js/js/sco.message.js"></script> 
+
+
+
+    <script>
+      
+
+      $(document).ready(function(){
+        
+        $.get("../data/ologin?action=currentuser",function(data,status){
+          ret=JSON.parse(data);
+          if (ret.login==false){
+            window.location.href="login.html";
+            return;
+          }
+          $.get("../data/cc?action=GetLastOfferInfo&candidateid="+ret.candidateid,function(data,status){
+            retOffer=JSON.parse(data);
+            if (retOffer.ResultType=="接受OFFER"){
+              $("button.btn-confirm").hide();
+              $("#pf").text("您已接受本邀请函，请按照计划入职日期前来办理入职手续。我们期待您准时到来。")
+            }
+            $("#name").attr("data-id",ret.candidateid);
+            $("#name").text(ret.candidatename);
+            $("#dept").text(retOffer.DeptName);
+            $("#job").text(retOffer.Job);
+            $("#job").attr("data-id",retOffer.OfferID);
+            $("#manager").text(retOffer.Manager);
+            $("#annualsalary").text(retOffer.AnnualSalary);
+            $("#salary").text(retOffer.Salary);
+            var baserate=parseFloat(retOffer.Salary)*12/(parseFloat(retOffer.AnnualSalary)*10000)*100;
+            $("#salarybaserate").text(baserate.toString());
+            $("#salarybonusrate").text((100-baserate).toString());
+            if (retOffer.ProbationType=="有"){
+              $("#probationperiod").text(retOffer.ProbationPeriod);
+              $("#probationsalary").text(retOffer.ProbationPeriodSalary);
+            }
+            else{
+              $("p#probation").text("三、试用期条款：您没有试用期。")
+            }
+            
+          /*         
+          ret['JobGrade']=row[2].decode('utf-8')
+          ret['DeptID']=row[3]
+          ret['ManagerID']=row[4]
+          ret['OfferTimestamp']=row[5].strftime('%Y-%m-%d %H:%M')
+            ret['OnBoardDate']=""
+          ret['Director']=row[7].decode('utf-8')
+            ret['StockClause']=""
+            ret['WelfareClause']=""
+            ret['AllowanceClause']=""
+            ret['OtherClause']=""
+          
+            ret['ProbationType']="无"
+            ret['ProbationType']="有"
+           */
+
+
+
+          });
+              
+        });
+      
+
+
+
+        
+      
+      });  // on document.ready
+      
+      function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); 
+        var r = window.location.search.substr(1).match(reg);  
+        if (r != null) return unescape(r[2]); return null; 
+      }
+      function confirmoffer(){
+        $("button.btn-confirm").hide();
+        offerid=$("#job").attr("data-id");
+        candidateid=$("#name").attr("data-id");
+        $.scojs_message('欢迎您选择用友！页面将自动跳转》》》', $.scojs_message.TYPE_OK);
+        $.post("../data/cc?action=ConfirmOffer",
+                {
+                  "offerid":offerid,
+                  "candidateid":candidateid,
+                },
+                function(data,status){
+                  window.location.href="list.html";
+                }
+        );
+        
+        
+      }
+
+    </script>
+
+
+  </body>
+</html>

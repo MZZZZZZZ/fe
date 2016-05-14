@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="集团UAP中心人力与运营管理部 刘南">
+    <link rel="icon" href="../favicon.ico">
+
+    <title>入职补充资料</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../Font-Awesome-3.2.1/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen"/> 
+    <link href="../sco.js/css/sco.message.css" rel="stylesheet" media="screen" />
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="http://v3.bootcss.com/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!--script src="http://v3.bootcss.com/assets/js/ie-emulation-modes-warning.js"></script-->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+  </head>
+
+  <body style="padding-top:70px;">
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand"><i class="icon-github icon-2x pull-left"></i><img alt="Yonyou" src="../images/logo.png"></a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="offer.html">录用邀请函</a></li>
+            <li><a href="extrainfo.html">入职补充资料</a></li>
+            <li><a href="map.html">地图</a></li>
+            <li><a href="bus.html">班车/公交路线</a></li>
+            <li><a href="pe.html">入职体检说明</a></li>
+            
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+  	<div class="container-fluid" >
+  	  <h4>请在收到录用邀请函3日内提交计划入职日期。日后如有变更请及时联系HR联系人：<span id="hrname">xx</span>，电话<span id="hrphone">12312312312</span></h4>
+      <form class="form-horizontal"> 
+         <div class="form-group" >
+          <label class="col-sm-2 col-xs-12 control-label">计划入职日期</label>
+          <div class="col-sm-5 col-xs-5">
+            <input type="date" id="entry-date">
+          </div>
+          <div class="col-sm-5 col-xs-5">
+            <button class="btn btn-success btn-sm" type="button" >提交</button>
+          </div>
+        </div>
+        <hr>
+        <h4>请在入职1周前完成下列信息补充与上传。</h4>
+        <div class="form-group" >
+          <label class="col-sm-2 control-label">在京详细住址</label>
+          <div class="col-sm-9">
+            <input type="text" placeholder="" class="form-control" id="address">
+          </div>  
+        </div>
+       
+        <div class="form-group" >
+          <label class="col-sm-2 col-xs-12 control-label">紧急联络人</label>
+          <div class="col-sm-3 col-xs-12">
+            <select class="form-control"  id="family">
+              <option value="夫妻" selected>夫妻</option>
+              <option value="父母" >父母</option>
+              <option value="兄弟" >兄弟姐妹</option>
+            </select>
+          </div>
+          <div class="col-sm-3 col-xs-12">
+            <input type="text" placeholder="姓名" class="form-control" id="emergency-name">
+          </div>
+          <div class="col-sm-3 col-xs-12">
+            <input type="tel" placeholder="电话" class="form-control" id="emergency-phone">
+          </div>
+        </div>
+        
+        <div class="form-group" >
+          <label class="col-sm-2 col-xs-12 control-label">社保缴纳情况</label>
+          <div class="col-sm-3 col-xs-12">
+            <select class="form-control"  id="sb-flag">
+              <option value="已缴纳" selected>已缴纳</option>
+              <option value="未缴纳" >未缴纳</option>
+            </select>
+          </div>
+
+          <div class="col-sm-3 col-xs-12">
+            <input type="text" placeholder="缴纳城市" class="form-control" id="sb-city">
+          </div>
+          <div class="col-sm-3 col-xs-12">
+            <input type="month" placeholder="缴纳月份" class="form-control" id="sb-date">
+          </div>
+        </div>
+        
+        <div class="form-group" >
+          <label class="col-sm-2 col-xs-12 control-label">公积金缴纳情况</label>
+          <div class="col-sm-3 col-xs-12">
+            <select class="form-control"  id="gjj-flag">
+              <option value="已缴纳" selected>已缴纳</option>
+              <option value="未缴纳" >未缴纳</option>
+            </select>
+          </div>
+          
+          <div class="col-sm-3 col-xs-12">
+            <input type="text" placeholder="缴纳城市" class="form-control" id="gjj-city">
+          </div>
+          <div class="col-sm-3 col-xs-12">
+            <input type="month" placeholder="缴纳月份" class="form-control" id="gjj-date">
+          </div>
+        </div>
+
+
+
+
+        <div class="form-group" >
+          <div class="col-sm-12 col-xs-12">
+            <button class="btn btn-success btn-sm" style="width:100%;">提交</button>
+          </div>
+        </div>
+        <hr>
+        <div class="form-group" >
+          <label class="col-sm-2 col-xs-12 control-label">大头照（白背景）</label>
+          <div class="col-sm-4 col-xs-6">
+            <p><img id="portrait" class="lazy" src="../images/uploadsample/preload.gif" data-original="../images/uploadsample/portrait.jpg" width=100%   style="border-style:dashed;border-width:1px;"></img></p>
+            <p><button type="button" class="btn btn-success  btn-sm btn-block" onclick="$('input#portrait[type=file]').click();"><i class="icon-camera icon-2x"></i></button></p>
+            <input id="portrait" type="file" capture="camera" name="photo"  accept="image/*" style="display:none" >
+          </div>  
+        </div>
+        <div class="form-group" >
+          <label class="col-sm-2 col-xs-12 control-label">身份证</label>
+          <div class="col-sm-4 col-xs-6">
+            <p><img id="id1" class="lazy" src="../images/uploadsample/preload.gif" data-original="../images/uploadsample/id1.jpg" width=100%   style="border-style:dashed;border-width:1px;"></img></p>
+            <p><button type="button" class="btn btn-success  btn-sm btn-block" onclick="$('input#id1[type=file]').click();"><i class="icon-camera icon-2x"></i></button></p>
+            <input id="id1" type="file" capture="camera" name="photo"  accept="image/*" style="display:none" >
+          </div>  
+          <div class="col-sm-4 col-xs-6">
+            <p><img id="id2" class="lazy" src="../images/uploadsample/preload.gif" data-original="../images/uploadsample/id2.jpg" width=100%  style="border-style:dashed;border-width:1px;"></img></p>
+            <p><button type="button" class="btn btn-success  btn-sm btn-block" onclick="$('input#id2[type=file]').click();"><i class="icon-camera icon-2x"></i></button></p>
+            <input id="id2" type="file" capture="camera" name="photo"  accept="image/*" style="display:none" >
+          </div>  
+        </div>
+        <div class="form-group" >
+          <label class="col-sm-2 col-xs-12 control-label">户口本</label>
+          <div class="col-sm-4 col-xs-6">
+            <p><img id="id3" class="lazy" src="../images/uploadsample/preload.gif" data-original="../images/uploadsample/id3.jpg" width=100%  style="border-style:dashed;border-width:1px;" ></img></p>
+            <p><button type="button" class="btn btn-success  btn-sm btn-block" onclick="$('input#id3[type=file]').click();"><i class="icon-camera icon-2x"></i></button></p>
+            <input id="id3" type="file" capture="camera" name="photo"  accept="image/*" style="display:none" >
+          </div>  
+          <div class="col-sm-4 col-xs-6">
+            <p><img id="id4" class="lazy" src="../images/uploadsample/preload.gif" data-original="../images/uploadsample/id4.jpg" width=100%  style="border-style:dashed;border-width:1px;"></img></p>
+            <p><button type="button" class="btn btn-success  btn-sm btn-block" onclick="$('input#id4[type=file]').click();"><i class="icon-camera icon-2x"></i></button></p>
+            <input id="id4" type="file" capture="camera" name="photo"  accept="image/*" style="display:none" >
+          </div>  
+        </div>
+        <div class="form-group" >
+          <label class="col-sm-2 col-xs-12 control-label">毕业证/学位证</label>
+          <div class="col-sm-4 col-xs-6">
+            <p><img id="edu1" class="lazy" src="../images/uploadsample/preload.gif" data-original="../images/uploadsample/edu1.jpg" width=100%  style="border-style:dashed;border-width:1px;" ></img></p>
+            <p><button type="button" class="btn btn-success  btn-sm btn-block" onclick="$('input#edu1[type=file]').click();"><i class="icon-camera icon-2x"></i></button></p>
+            <input id="edu1" type="file" capture="camera" name="photo"  accept="image/*" style="display:none" >
+          </div>  
+          <div class="col-sm-4 col-xs-6">
+            <p><img id="edu2" class="lazy" src="../images/uploadsample/preload.gif" data-original="../images/uploadsample/edu2.jpg" width=100%  style="border-style:dashed;border-width:1px;"></img></p>
+            <p><button type="button" class="btn btn-success  btn-sm btn-block" onclick="$('input#edu2[type=file]').click();"><i class="icon-camera icon-2x"></i></button></p>
+            <input id="edu2" type="file" capture="camera" name="photo"  accept="image/*" style="display:none" >
+          </div>  
+        </div>
+        <div class="form-group" >
+          <label class="col-sm-2 col-xs-12 control-label">职称/资质证书（如有）</label>
+          <div class="col-sm-4 col-xs-6">
+            <p><img id="cert1" class="lazy" src="../images/uploadsample/preload.gif" data-original="../images/uploadsample/cert1.jpg" width=100%  style="border-style:dashed;border-width:1px;" ></img></p>
+            <p><button type="button" class="btn btn-success  btn-sm btn-block" onclick="$('input#cert1[type=file]').click();"><i class="icon-camera icon-2x"></i></button></p>
+            <input id="cert1" type="file" capture="camera" name="photo"  accept="image/*" style="display:none" >
+          </div>  
+          <div class="col-sm-4 col-xs-6">
+            <p><img id="cert2" class="lazy" src="../images/uploadsample/preload.gif" data-original="../images/uploadsample/cert2.jpg" width=100%  style="border-style:dashed;border-width:1px;"></img></p>
+            <p><button type="button" class="btn btn-success  btn-sm btn-block" onclick="$('input#cert2[type=file]').click();"><i class="icon-camera icon-2x"></i></button></p>
+            <input id="cert2" type="file" capture="camera" name="photo"  accept="image/*" style="display:none" >
+          </div>  
+        </div>
+
+
+      </form>
+      
+    </div>
+ 
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../jquery-1.11.3/jquery-1.11.3.min.js"></script>
+    <!--script src="jquery-2.1.4/jquery-2.1.4.min.js"></script-->
+    <script src="../bootstrap-3.3.5/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!--script src="http://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script-->
+    <script src="../sco.js/js/sco.message.js"></script> 
+    <script src="../bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" ></script>
+    <script src="../bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" ></script>
+    <script src="../js/lrz.bundle.js" type="text/javascript"></script>
+    <script src="../js/jquery.lazyload.js" type="text/javascript"></script>
+
+    <script>
+      
+      $("img.lazy").lazyload();
+      $(document).ready(function(){
+        //初始化
+     
+        
+        
+    
+      });  // on document.ready
+      
+      function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); 
+        var r = window.location.search.substr(1).match(reg);  
+        if (r != null) return unescape(r[2]); return null; 
+      }
+      function confirmoffer(){
+        $("button.btn-confirm").hide();
+        $("#extradiv").slideDown();
+        scroll(0,0);
+        $.scojs_message('欢迎您选择用友网络！请尽快确定入职日期并补充入职资料。', $.scojs_message.TYPE_OK);
+      }
+      
+       [].forEach.call(document.querySelectorAll('[data-src]'), function (el) {
+            (function (el) {
+                el.addEventListener('click', function () {
+                    el.src = 'image/loading.gif';
+                    lrz(el.dataset.src)
+                        .then(function (rst) {
+                            el.src = rst.base64;
+                           return rst;
+                        });
+                });
+
+                el.click();
+            })(el);
+        });
+
+        $('input[type=file]').change(function(e){updatePhoto(e);});
+        function updatePhoto(e) {
+            var that = e.currentTarget;
+            lrz(that.files[0], {width: 1024})
+                .then(function (rst) {
+                    var img        = new Image(),
+                        div        = document.createElement('div'),
+                        p          = document.createElement('p'),
+                        sourceSize = toFixed2(that.files[0].size / 1024),
+                        resultSize = toFixed2(rst.base64Len / 1024),
+                        scale      = parseInt(100 - (resultSize / sourceSize * 100));
+
+                    p.style.fontSize = 13 + 'px';
+                    p.innerHTML      = '源文件：<span class="text-danger">' + 
+                                        sourceSize + 'KB' + '</span> <br />' + '压缩后传输Base64：<span class="text-success">' +
+                                        resultSize + 'KB (省' + scale + '%)' +
+                                        '</span> ';
+
+           // div.className = 'col-sm-6';
+          //  div.appendChild(img);
+           // div.appendChild(p);
+
+           // img.onload = function () {
+             //   that.parentNode.appendChild(div);
+           // };
+
+           // img.src = rst.base64;
+       // var imgTmp=document.getElementById(that.id);
+                    $("img#"+that.id).attr("src",rst.base64);
+                    strTmp=rst.base64;
+                    iIndex=strTmp.indexOf("base64,");
+                    strBase64=strTmp.slice(iIndex+7);
+                    
+                   // $.post('../../upload',{action:0,id:that.id,photo:strBase64},function(data,status){alert('upload ok'+status)}); 
+                    return rst;
+                });
+        }
+
+        function toFixed2 (num) {
+            return parseFloat(+num.toFixed(2));
+        }
+
+        /**
+        * 替换字符串 !{}
+        * @param obj
+        * @returns {String}
+        * @example
+         * '我是!{str}'.render({str: '测试'});
+        */
+        String.prototype.render = function (obj) {
+            var str = this, reg;
+
+            Object.keys(obj).forEach(function (v) {
+                reg = new RegExp('\\!\\{' + v + '\\}', 'g');
+                str = str.replace(reg, obj[v]);
+            });
+
+            return str;
+        };
+
+
+    </script>
+
+
+  </body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="刘南">
+    <link rel="icon" href="../favicon.ico">
+
+    <title>妙招录用查询</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../sco.js/css/sco.message.css" rel="stylesheet" media="screen" />
+    <link href="../Font-Awesome-3.2.1/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="http://v3.bootcss.com/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!--script src="http://v3.bootcss.com/assets/js/ie-emulation-modes-warning.js"></script-->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+  </head>
+
+  <body style="padding-top:70px;">
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand"><i class="icon-github icon-2x pull-left"></i><img alt="Yonyou" src="../images/logo.png"></a>
+          
+        </div>
+      </div>
+    </nav>
+
+  	<div class="container">
+      <div>
+        <h4>尊敬的<span id="name" style="text-decoration:underline;">XXX</span>:</h4>
+        <p style="text-indent:2em;">
+          我们诚挚地邀请您加入用友网络科技股份有限公司<span id="dept" style="text-decoration:underline;">XXX</span>，<span id="job" style="text-decoration:underline;">XX</span>岗位。
+        </p>
+        <p style="text-indent:2em;">请使用接收短信通知的手机号码登录以查收您的录用邀请函。</p>
+      </div>
+      <hr>
+  	  <form  style="padding-left:30px;padding-right:30px;"> 
+        <div class="form-group ">
+          <input type="tel" placeholder="输入手机号" class="form-control" id="User">
+        </div>
+        <div class="form-group ">
+          <input type="tel" placeholder="输入短信验证码" class="form-control" id="VerifyCode">
+        
+        </div>
+        <div class="form-group">
+          <button class="btn btn-default" type="button"  id="SendCodeBtn" onclick="sendVerifyCode();">获取验证码</button>
+        </div>
+        
+        <button class="btn btn-lg btn-primary btn-block" id="SubmitBtn" type="submit">登录</button>
+	    </form>
+    </div>
+   
+    <footer class="footer" style="text-align:center;position:fixed;bottom:0px;width:100%;">
+			<span class="label label-default">妙招技术支持热线:18610102399 </span>
+    </footer>
+    
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../jquery-1.11.3/jquery-1.11.3.min.js"></script>
+    <!--script src="jquery-2.1.4/jquery-2.1.4.min.js"></script-->
+    <script src="../bootstrap-3.3.5/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!--script src="http://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script-->
+    <script src="../js/jQuery.md5.js"></script>
+    <script src="../sco.js/js/sco.message.js"></script>
+
+
+
+    <script>
+      
+      $(document).ready(function(){
+        //初始化
+        
+        var phone=getUrlParam("k");
+        $("#User").val(phone);
+        
+        
+        $.get("../data/cc?action=GetLastOfferSummary&phone="+phone,function(data,status){
+          ret=JSON.parse(data);
+          $("#name").text(ret.Name);
+          $("#dept").text(ret.DeptName);
+          $("#job").text(ret.Job);
+        });
+
+
+        $("#SubmitBtn").click(function(e){
+          e.preventDefault();
+          var phone=$("#User").val();
+          phone=$.trim(phone);
+          
+          var verifycode=$("#VerifyCode").val();
+          
+          $.post("../data/ologin?action=login",
+              {
+                "phone":phone,
+                "verifycode":verifycode
+              },
+              function(data,status){
+                ret=JSON.parse(data);
+                if (ret.login){
+                  $("#SubmitBtn").attr("disabled","disabled");
+                  window.location.href="list.html";
+                  return;
+                }
+                else{
+                  if (ret.fail=="Candidate Not Found."){
+                    $.scojs_message('手机号码不存在。', $.scojs_message.TYPE_ERROR);
+                    return;
+                  }
+                  else if (ret.fail=="incorrect verifycode"){
+                    $.scojs_message('验证码错误。', $.scojs_message.TYPE_ERROR);
+                    return;
+                  }
+                
+                  
+                }
+                
+              }//function
+          );//post
+        
+        });//click
+      });  // on document.ready
+      
+
+      function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+            if (r != null) return unescape(r[2]); return null; //返回参数值
+      }
+
+      
+      function sendVerifyCode(){
+        
+        var phone=$("#User").val();
+        if (phone==""){
+          $.scojs_message('请填写手机号码', $.scojs_message.TYPE_ERROR); 
+          return;
+        }
+        $.post("../data/ologin?action=SendVerifyCode",
+              {
+                "phone":phone
+              },
+              function(data,status){
+                $.scojs_message('请查收短信', $.scojs_message.TYPE_OK);
+                time($("#SendCodeBtn"));
+        
+              }
+        );
+        
+      } //sendVerifyCode
+
+      var wait=30;
+      function time(o) {
+        if (wait == 0) {
+          o.removeAttr("disabled");  
+          o.text("获取验证码");
+          wait = 30;
+        }
+        else {
+          o.attr("disabled", true);
+          o.text("重新发送(" + wait + ")");
+          wait--;
+          setTimeout(function(){time(o)},1000);
+        }
+      };
+
+
+   
+
+    </script>
+
+
+  </body>
+</html>

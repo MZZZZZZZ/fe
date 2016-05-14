@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="刘南">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>注册企业账号</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/signin.css" rel="stylesheet">
+    <link href="sco.js/css/sco.message.css" rel="stylesheet" media="screen" />
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!--script src="http://v3.bootcss.com/assets/js/ie-emulation-modes-warning.js"></script-->
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Custom styles for this template -->
+    
+
+  </head>
+
+  <body>
+
+    <div class="container">
+
+      <form class="form-signin">
+        <h2 class="form-signin-heading">企业用户</h2>
+        <label for="inputUser" class="sr-only">账号</label>
+        <input type="tel" id="inputUser" class="form-control" placeholder="联系人手机号" required autofocus><button class="btn btn-sm">获取验证码</button>
+        <label for="inputValid" class="sr-only">验证码</label>
+        <input type="text" id="inputValid" class="form-control" placeholder="短信验证码" >
+        <label for="inputPassword" class="sr-only">密码</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="密码" required>
+        <label for="inputPasswordConfirm" class="sr-only">重复密码</label>
+        <input type="password" id="inputPasswordConfirm" class="form-control" placeholder="重复密码" required>
+        <label for="inputContacts" class="sr-only">联系人姓名</label>
+        <input type="text" id="inputContacts" class="form-control" placeholder="联系人姓名" required>
+        <label for="inputMail" class="sr-only">联系人邮箱</label>
+        <input type="text" id="inputMail" class="form-control" placeholder="联系人邮箱" >
+        <label for="inputName" class="sr-only">公司名称</label>
+        <input type="text" id="inputName" class="form-control" placeholder="公司名称" >
+        <label for="inputCategory" class="sr-only">行业</label>
+        <input type="text" id="inputCategory" class="form-control" placeholder="行业" >
+        <label for="inputRegions" class="sr-only">地区</label>
+        <input type="text" id="inputRegions" class="form-control" placeholder="地区" >
+
+
+
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me"> 同意并接受<a href="">用户服务协议与用户资料保密承诺</a>
+          </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="button" onclick="sign();">注册</button>
+      </form>
+
+    </div> <!-- /container -->
+     
+
+    <script src="jquery-1.11.3/jquery-1.11.3.min.js"></script>
+    <script src="bootstrap-3.3.5/js/bootstrap.min.js"></script>
+    <script src="js/jQuery.md5.js"></script>
+    <script src="sco.js/js/sco.message.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!--script src="http://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script-->
+
+    <script>
+      function sign(){
+        pw=$.md5($("#inputPassword").val());
+        user=$("#inputUser").val();
+
+        
+        $.post("data/sign",
+              {
+                "user":user,
+                "pw":pw
+              },
+              function(data,status){
+                ret=JSON.parse(data);
+
+                if (ret=="ok")
+                {
+                  window.location.href="default.html";
+                }
+                else{
+                  if (ret=="User Not Found"){
+                    $.scojs_message('用户不存在，请检查手机号码是否正确。', $.scojs_message.TYPE_ERROR);
+                  }
+                  else if (ret=="incorrect password"){
+                    $.scojs_message('密码错误。', $.scojs_message.TYPE_ERROR);
+                  }
+
+                } //ret.login
+              }//function
+        ); //post
+        
+
+      }
+    </script>
+  </body>
+</html>

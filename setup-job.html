@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="刘南">
+    <link rel="icon" href="../favicon.ico">
+
+    <title>职位设置</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen"/> 
+    <link href="tagsinput/bootstrap-tagsinput.css" rel="stylesheet">
+    <link href="treeview/bootstrap-treeview.min.css" rel="stylesheet">
+    <link href="Font-Awesome-3.2.1/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="http://v3.bootcss.com/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!--script src="http://v3.bootcss.com/assets/js/ie-emulation-modes-warning.js"></script-->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+  </head>
+
+  <body style="padding-top:70px;">
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand"><i class="icon-github icon-2x pull-left"></i><!--img alt="Yonyou" src="images/logo.png"--></a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="default.html">首页</a></li>
+            <li><a href="register.html">候选人登记</a></li>
+            <li ><a href="interview-list.html">邀约面试</a></li>
+            <li><a href="offer.html">录用</a></li>
+            <li><a href="entry.html">入职登记</a></li>
+            <li><a href="setup-org.html">设置</a></li> 
+            
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            
+            <li class="dropdown">
+              <a href="#"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="currentuser">User</span> <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">修改密码</a></li>
+                <li><a href="javascript:logout();">注销</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    
+  	<div class="container-fluid" >
+  	  <div class="row">
+        <div class="col-mo-2 col-lg-2">
+          <ul class="nav nav-pills nav-stacked">
+            <li role="presentation"><a href="setup-org.html">组织与人员</a></li>
+            <li role="presentation"  class="active"><a href="#">职位</a></li>
+            <li role="presentation"><a href="#">简历渠道</a></li>
+          </ul>
+        </div>
+       
+  	    <div class="col-md-10 col-lg-10">
+          <div class="row" style="margin-bottom:10px;margin-left:10px;">
+            <button class="btn btn-default btn-sm" id="NewUserBtn" onclick="showJobModal();">新增职位</button>
+           
+          </div>
+          <div class="row" style="margin-left:10px;">
+            <table class="table table table-hover expanding" id="UserTable">
+              <thead>
+                <tr>
+                  <th>部门</th>
+                  <th>职位</th>
+                  <th>优先级</th>
+                  <th>级别</th>
+                  <th>负责人</th>
+                  <th>开放时间</th>
+                  <th>状态</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+
+            </table>
+          </div>
+
+
+
+        </div>
+  	  </div>
+    </div>
+    
+    
+    <!--用户编辑浮动层  -->
+    <div class="modal fade" id="JobModal" tabindex="-1" role="dialog" aria-labelledby="JobModal-Label">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" id="JobModal-ContentDiv">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="JobModal-Label">职位属性</h4>
+                </div>
+                <div class="modal-body" >
+                  <form class="form-horizontal"> 
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">职位名称</label>
+                      <div class="col-sm-9">
+                        <input type="text" placeholder="" class="form-control" id="JobModal-JobName" data-id="">
+                      </div>
+                    </div>  
+
+                   
+
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">部门</label>
+                      <div class="col-sm-9">
+                        <div class="input-group">
+                          <input type="text" placeholder="" class="form-control" id="JobModal-Dept" readonly>
+                          <span class="input-group-btn">
+                            <button class="btn btn-success " type="button" onclick="$('div#JobModal-DeptTree').toggle();">
+                               <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                          </span>
+                          <div id="JobModal-DeptTree" style="position:absolute;float:right;width:400px;z-index:999;display:none;" ></div>
+                        </div> 
+                      </div>
+                    </div>  
+
+
+                    <div class="form-group" id="JobModal-PriorityDiv">
+                      <label class="col-sm-2 control-label">优先级</label>
+                      <div class="col-sm-9">
+                        <input type="text" placeholder="" class="form-control" id="JobModal-Priority">
+                      </div>
+                      <div class="col-sm-4 col-sm-offset-2" id="UserModal-PhoneValidDiv" style="color:red;display:none;"></div> 
+                    </div> 
+
+                    <div class="form-group" id="JobModal-JobLevelDiv">
+                      <label class="col-sm-2 control-label">职位级别</label>
+                      <div class="col-sm-9">
+                        <input type="text" placeholder="" class="form-control" id="JobModal-JobLevel">
+                      </div>
+                      <div class="col-sm-4 col-sm-offset-2" id="UserModal-MailValidDiv" style="color:red;display:none;"></div> 
+                    </div>  
+
+                    <div class="form-group" id="JobModal-ClassificationDiv">
+                      <label class="col-sm-2 control-label">职位分类</label>
+                      <div class="col-sm-9">
+                        <input type="text" placeholder="" class="form-control" id="JobModal-Classification">
+                      </div>
+                      
+                    </div>  
+
+                    <div class="form-group" id="JobModal-SubClassificationDiv">
+                      <label class="col-sm-2 control-label">职位子类</label>
+                      <div class="col-sm-9">
+                        <input type="text" placeholder="" class="form-control" id="JobModal-SubClassification">
+                      </div>
+                      
+                    </div>  
+                    
+                    <div class="form-group" id="JobModal-CreateTimeDiv">
+                      <label class="col-sm-2 control-label">开放日期</label>
+                      <div class="col-sm-9">
+                        <input type="date" placeholder="" class="form-control" id="JobModal-CreateTime">
+                      </div>
+                      
+                    </div>  
+
+
+                  </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="JobModal-SubmitBtn">确定</button>
+                </div>
+                
+            </div>
+        </div>
+    </div> 
+    
+
+    <!--操作确认浮动层  -->
+    <div class="modal fade" id="ConfirmModal" tabindex="-1" role="dialog" aria-labelledby="ConfirmModal-Label">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" id="ConfirmModal-ContentDiv">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="ConfirmModal-Label">确认</h4>
+                </div>
+                <div class="modal-body" >
+                  <p id="ConfirmModal-Content"></p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="ConfirmModal-SubmitBtn">确定</button>
+                </div>
+                
+            </div>
+        </div>
+    </div> 
+    
+
+    <!--position:fixed;width:50%;left:0;top:30%;-->
+
+    
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="jquery-1.11.3/jquery-1.11.3.min.js"></script>
+    <!--script src="jquery-2.1.4/jquery-2.1.4.min.js"></script-->
+    <script src="bootstrap-3.3.5/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!--script src="http://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script-->
+    <script src="bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" ></script>
+    <script src="bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" ></script>
+    <script src="tagsinput/bootstrap-tagsinput.js"></script>
+    <script src="tagsinput/typeahead.bundle.js"></script>
+    <script src="treeview/bootstrap-treeview.js"></script>
+    <script src="js/tip.js"></script>
+
+
+
+
+    <script>
+      function logout(){
+         $.post("data/login?action=logout",function(data,status){
+                window.location.href="login.html";
+         });
+
+      }      
+      
+      $(document).ready(function(){
+        //初始化
+        //判断是否登录
+        $.get("data/login?action=currentuser",function(data,status){
+          ret=JSON.parse(data);
+          if (ret.login){
+            $("span#currentuser").text(ret.username);            
+          }
+          else{
+            window.location.href="login.html";
+          }
+        });
+        
+  
+        //树初始化
+    
+        buildJobModalDeptTree();  //用户编辑-部门树
+        
+        //注册浮动层事件
+
+        regJobModalEvent();
+        
+        $(document).on("click",".ResetPWBtn",function(e){
+          id=$(e.currentTarget).parent().parent().attr("id");
+          resetPW(id);
+        });
+        $(document).on("click",".RemoveUserBtn",function(e){
+          id=$(e.currentTarget).parent().parent().attr("id");
+          removeUser(id);
+        });
+        $(document).on("click",".UpdateUserBtn",function(e){
+          id=$(e.currentTarget).parent().parent().attr("id");
+          updateUser(id);
+        });
+          
+      });  // on document.ready
+      
+      
+
+
+      function showConfirmModal(text,confirm_fn){
+        $("#ConfirmModal-Content").text(text);
+        $("#ConfirmModal").modal("show");
+        $("#ConfirmModal-SubmitBtn").click(function(){
+          $("#ConfirmModal").modal("hide");
+           $("#ConfirmModal-SubmitBtn").unbind();
+           confirm_fn();
+        });
+      }
+
+      
+
+
+    //---------------------JobModal------------------------------
+      function regJobModalEvent(){
+        $("#JobModal-SubmitBtn").click(function(e){
+          e.preventDefault();
+          JobName=$("#JobModal-JobName").val();
+         
+          id=$("#JobModal-JobName").attr("data-id");
+          if (id=="")
+            NewUser(Name,Phone,Mail,$("#UserModal-Dept").attr("data-id"),Type);
+          else
+            UpdateUser(id,Name,Phone,Mail,$("#UserModal-Dept").attr("data-id"),Type);
+        });
+
+      
+      
+
+      }//regUserModalEvent
+
+      function NewUser(Name,Phone,Mail,DeptID,Type){
+        $.post("data/basedata?action=NewUser",
+              {
+                "name":Name,
+                "phone":Phone,
+                "mail":Mail,
+                "deptid":DeptID,
+                "type":Type
+                
+              },
+              function(data,status){
+                //alert("Data: " + data + "\nStatus: " + status);
+                $("#UserModal").modal("hide");
+                $("#UserModal-Name").val("");
+                $("#UserModal-Phone").val("");
+                $("#UserModal-Mail").val("");
+                $("#UserModal-Dept").val("");
+                $("#UserModal-Password").val("");
+                $("#UserModal-Password2").val("")
+                setUserModalPwState($("#UserModal-PasswordDiv"),"none");
+                setUserModalPwState($("#UserModal-Password2Div"),"none");
+
+                reloadUserTable();
+                jsondata=JSON.parse(data);
+                if (jsondata.code==1000){
+                  showTip("登录密码已发送短信至用户手机。",5000);
+                }
+                else
+                {
+                   showTip("错误.code="+jsondata.code.toString(),10000); 
+                }
+              }//function
+        );//post
+
+      }
+      function UpdateUser(id,Name,Phone,Mail,DeptID,Type){
+        $.post("data/basedata?action=UpdateUser",
+              {
+                "id":id,
+                "name":Name,
+                "phone":Phone,
+                "mail":Mail,
+                "deptid":DeptID,
+                "type":Type
+                
+              },
+              function(data,status){
+                //alert("Data: " + data + "\nStatus: " + status);
+                $("#UserModal").modal("hide");
+                $("#UserModal-Name").val("");
+                $("#UserModal-Phone").val("");
+                $("#UserModal-Mail").val("");
+                $("#UserModal-Dept").val("");
+                $("#UserModal-Password").val("");
+                $("#UserModal-Password2").val("")
+                setUserModalPwState($("#UserModal-PasswordDiv"),"none");
+                setUserModalPwState($("#UserModal-Password2Div"),"none");
+
+                reloadUserTable();
+                
+                if (data !="ok"){
+                   showTip("错误."+data,10000); 
+                }
+              }//function
+        );//post
+      }
+     
+      //新增用户
+      function showJobModal(){
+          
+          
+          $("#JobModal-JobName").val("");
+          $("#JobModal-JobName").attr("data-id","");
+          
+
+          $("#JobModal").modal({backdrop:"static",keyboard:false});
+          $("#JobModal").modal("show");
+      }
+
+       //组装部门树数据，注册事件
+      function buildJobModalDeptTree(){
+         $.get("data/basedata?action=DeptTree",function(data,status){
+          
+          var tree=JSON.parse(data);
+          tree=tree[0].nodes;  //去公司节点
+          $('div#JobModal-DeptTree').treeview({data:tree});    
+          
+
+          //EVENT:部门树选中
+          $('div#JobModal-DeptTree').on('nodeSelected', function(event, data) {
+             $('div#UserModal-DeptTree').toggle();
+             $("input#JobModal-Dept").val(data.text);
+             $("input#JobModal-Dept").attr("data-id",data.customid);
+             
+          });      
+
+        
+        
+        });//get
+      }
+      //------------------------end UserModal----------------------------
+ 
+    //-------------------------------用户操作--------------------------
+      function reloadUserTable(){
+        tbody=$("#UserTable tbody");
+        tbody.empty();
+        
+        var nodeList=$('div#DeptTree').treeview('getSelected');
+        if (nodeList.length>0){
+          if (nodeList[0].customid!='0'){
+            deptid=nodeList[0].customid;
+          }
+          else
+            return;
+        }
+        else
+          return;
+
+
+        $.get("data/basedata?action=User&deptid="+deptid,function(data,status){
+          $.each(JSON.parse(data),function(i,item){
+            var tr=$("<tr>").attr("id",item.id);
+            
+            var tdhtml="<td>"+item.name+"</td>";
+            tr.append(tdhtml);
+            tdhtml="<td>"+item.phone+"</td>";
+            tr.append(tdhtml);
+            tdhtml="<td>"+item.mail+"</td>";
+            tr.append(tdhtml);
+            intType=parseInt(item.type);
+            strType=""
+            if ((intType&1)==1){
+              strType+="HR ";
+            }
+            if ((intType&2)==2){
+              if (strType!="")
+                strType+="/";
+              strType+="面试官 ";
+            }
+
+            tdhtml="<td>"+strType+"</td>";
+            tr.append(tdhtml);
+            
+            tdhtml="<td>" +
+                   "  <button class='btn btn-default btn-sm UpdateUserBtn'>修改</button>"+
+                   "  <button class='btn btn-default btn-sm ResetPWBtn'>密码重置</button>"+
+                   "  <button class='btn btn-default btn-sm RemoveUserBtn'>删除</button>"+
+                   "</td>";
+            tr.append(tdhtml);
+
+            tbody.append(tr);
+          });//each
+
+        });//get
+
+
+        
+      }
+     
+      function updateUser(id){
+        $.get("data/basedata?action=UserInfo&id="+id,function(data,status){
+              
+              var item=JSON.parse(data);
+              $("#UserModal-Name").val(item.name);
+              $("#UserModal-Name").attr("data-id",id);
+              $("#UserModal-Phone").val(item.phone);
+              $("#UserModal-Mail").val(item.mail);
+              $("#UserModal-Dept").val(item.deptname);
+              $("#UserModal-Dept").attr("data-id",item.deptid);
+              itype=parseInt(item.type);
+              if ((itype&1)==1)
+                $("#UserModal-TypeHR").attr("checked","checked");
+              else
+                $("#UserModal-TypeHR").removeAttr("checked");
+              if ((itype&2)==2)
+                $("#UserModal-TypeInterviewer").attr("checked","checked");
+              else
+                $("#UserModal-TypeInterviewer").removeAttr("checked");
+
+              $("#UserModal").modal({backdrop:"static",keyboard:false});
+              $("#UserModal").modal("show");
+            }//function
+          );//post
+
+        
+      }
+
+      function removeUser(id){
+        showConfirmModal("删除用户会影响接收面试与入职通知。请确认是否删除。",function(){
+          $.post("data/basedata?action=RemoveUser",
+            {
+              "id":id,
+            },
+            function(data,status){
+              reloadUserTable();
+            }//function
+          );//post
+        }); //showConfirmModal
+      }
+
+   
+
+    </script>
+
+
+  </body>
+</html>

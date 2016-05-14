@@ -1,0 +1,1910 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="集团UAP中心人力与运营管理部 刘南">
+    <link rel="icon" href="../favicon.ico">
+
+    <title>邀约面试</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen"/> 
+    <link href="tagsinput/bootstrap-tagsinput.css" rel="stylesheet">
+    <link href="treeview/bootstrap-treeview.min.css" rel="stylesheet">
+    <link href="Font-Awesome-3.2.1/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="http://v3.bootcss.com/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!--script src="http://v3.bootcss.com/assets/js/ie-emulation-modes-warning.js"></script-->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+  </head>
+
+  <body style="padding-top:70px;">
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand"><i class="icon-github icon-2x pull-left"></i><!--img alt="Yonyou" src="images/logo.png"--></a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="default.html">首页</a></li>
+            <li><a href="register.html">候选人登记</a></li>
+            <li ><a href="interview-list.html">邀约面试</a></li>
+            <li><a href="offer.html">录用</a></li>
+            <li><a href="entry.html">入职登记</a></li>
+            <li><a href="setup-org.html">设置</a></li> 
+            
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            
+            <li class="dropdown">
+              <a href="#"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="currentuser">User</span> <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">修改密码</a></li>
+                <li><a href="javascript:logout();">注销</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+  	<div class="container-fluid" >
+  	  <div class="row">
+  	    <div class="col-md-6 col-lg-6">
+          <form class="form-inline" style="display:inline-block;">
+              <div class="form-group">
+                <label for="status">状态</label>
+                <select class="form-control"  id="status">
+                  <option value="0" selected>全部</option>
+                  <option value="1" >未邀约</option>
+                  <option value="2">待面试</option>
+                  <option value="3">面试通过/待定</option>
+                  <option value="4">邀约失败</option>
+                  <option value="5">面试未通过</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="hr">HR</label>
+                <select class="form-control"  id="hr">
+                  <option value="0" selected>全部</option>
+                </select>
+              </div>
+              <button type="button" class="btn btn-default" onclick="init_pagination();loadList(1);">过滤</button>
+            </form>
+        </div>
+
+        <div class="col-md-6 col-lg-6">
+  		    <nav style="float:right;display:inline-block;">
+  	        <ul class="pagination" style="margin:0;">
+  	          <li>
+  	            <a href="#" aria-label="前一页">
+  	              <span aria-hidden="true">&laquo;</span>
+  	            </a>
+  	          </li>
+              
+  	          <li><a href="#">1</a></li>
+  	          <li><a href="#">2</a></li>
+  	          <li><a href="#">3</a></li>
+  	          <li><a href="#">4</a></li>
+  	          <li><a href="#">5</a></li>
+              
+  	          <li>
+  	            <a href="#" aria-label="下一页">
+  	              <span aria-hidden="true">&raquo;</span>
+  	            </a>
+  	          </li>
+  	        </ul>
+  	      </nav>
+        </div>
+  	    
+  	  </div>
+
+      <table class="table table table-hover expanding">
+        <thead>
+          <tr>
+            <th>序号</th>
+            <th>操作</th>
+            <th>姓名(性别)</th>
+            <th>投递职位</th>
+            <th>年龄/工龄</th>
+            <th>电话</th>
+            <th>上份工作/职位</th>
+            <th>登记/面试时间</th>
+            <th>简历来源</th>
+            <th>HR</th>
+            <th>状态</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+
+
+    
+    <!--邀约面试浮动层-->
+    <div class="modal fade" id="AppointModal" tabindex="-1" role="dialog" aria-labelledby="AppointModal-Label">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" id="AppointModal-ContentDiv">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="AppointModal-Label">邀约面试</h4>
+                </div>
+                <div class="modal-body">
+                  <form class="form-horizontal"> 
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">候选人</label>
+                      <div class="col-sm-9" >
+                        <p class="form-control-static" id="AppointModal-CandidateName"></p>
+                        <p id="AppointModal-CandidateID" style="display:none" ></p>
+                        <p id="AppointModal-Action" style="display:none" ></p>
+                        <p id="AppointModal-InterviewID" style="display:none" ></p>
+                      </div>
+                    </div>
+                    
+                    <div class="form-group" id="AppointModal-ResultTypeDiv">
+                      <label class="col-sm-2 control-label">邀约结果</label>
+                      <div class="col-sm-9" >
+                        <label class="radio-inline"><input type="radio" id="AppointModal-AppointResultTypeRadioOpts" name="AppointResultType"  value="邀约成功" checked="checked">邀约成功</label>
+                        <label class="radio-inline"><input type="radio" id="AppointModal-AppointResultTypeRadioOpts" name="AppointResultType" value="邀约失败">邀约失败</label>
+                      </div>
+                    </div>
+
+                    <div class="form-group" id="AppointModal-DeptDiv">
+                      <label class="col-sm-2 control-label">面试部门</label>
+                      <div class="col-sm-9" >
+                        <div class="input-group">
+                            <input type="text"  class="form-control" value="" data-role="tagsinput" id="AppointModal-DeptName" >
+                            <span class="input-group-btn">
+                              <button class="btn btn-success " type="button" onclick="$('div#AppointModal-DeptTree').toggle();">
+                                 <span class="glyphicon glyphicon-search"></span>
+                              </button>
+                            </span>
+                            <div id="AppointModal-DeptTree" style="position:absolute;float:right;width:400px;z-index:999;display:none;" ></div>
+                        </div>
+                      </div>
+                    
+                    </div>
+
+
+                    <div class="form-group" id="AppointModal-InterviewerDiv">
+                      <label class="col-sm-2 control-label">面试官</label>
+                      <div class="col-sm-9" >
+                        <div class="input-group">
+                          <input type="text"  class="form-control" value="" data-role="tagsinput" id="AppointModal-Interviewer" >
+                          <span class="input-group-btn">
+                            <button class="btn btn-success " type="button" onclick="$('div#AppointModal-InterviewerTree').toggle();">
+                              <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                          </span>
+                          <div id="AppointModal-InterviewerTree" style="position:absolute;float:right;width:400px;z-index:999;display:none;" ></div>
+                        </div>
+                      </div>
+                    </div>
+
+
+
+
+                    <div class="form-group" id="AppointModal-InterviewTypeDiv">
+                      <label class="col-sm-2 control-label">面试方式</label>
+                      <div class="col-sm-9">
+                        <label class="radio-inline"><input type="radio" id="AppointModal-InterviewTypeRadioOpts" name="InterviewType"  value="现场" checked="checked">现场</label>
+                        <label class="radio-inline"><input type="radio" id="AppointModal-InterviewTypeRadioOpts" name="InterviewType" value="电话">电话</label>
+                      </div>
+                    </div>
+
+                     
+                    <div class="form-group" id="AppointModal-TimeDiv">
+                      <label class="col-sm-2 control-label">面试时间</label>
+                      <div class="input-group date form_datetime col-sm-9" data-date="2015-05-13T10:25:00Z" data-date-format="yyyy-mm-dd hh:ii"  style="padding-left:15px;">
+                        <input class="form-control" size="16" type="text" value="" id="AppointModal-Time" >
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                      </div>
+                    </div>
+
+
+                    <div class="form-group" id="AppointModal-LocationDiv">
+                      <label class="col-sm-2 control-label">面试地点</label>
+                      <div class="col-sm-9">
+                        <input type="text" placeholder="" class="form-control" id="AppointModal-Location">
+                      </div>
+                    </div>
+                    
+
+                   
+                    <div class="form-group" id="AppointModal-CommentsDiv">
+                       <label class="col-sm-2 control-label" for="AppointModal-Comments">说明</label>
+                       <div class="col-sm-9">
+                         <textarea class="form-control" rows="3" id="AppointModal-Comments" name="AppointModal-Comments"></textarea>
+                       </div>
+                    </div>
+                   
+
+                    <div class="form-group" id="AppointModal-AppointFailDiv" style="display:none;">
+                      <label class="col-sm-2 control-label">失败原因</label>
+                      <div class="col-sm-9">
+                        <div class="input-group">
+                          <input type="text"  class="form-control" value="" data-role="tagsinput" id="AppointModal-AppointFailTags"  >
+                          <span class="input-group-btn">
+                            <button class="btn btn-success " type="button" id="AppointModal-AppointFailSelBtn">
+                               <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                          </span>
+                          <div id="AppointModal-TagBox" style="position:absolute;float:right;background-color: white;border:grey solid thin;width:400px;height:auto;z-index:999;display:none;" >
+                            <div style="position: absolute;left: 380px;top:2px;">
+                              <button type="button" class="close" onclick="$('div#AppointModal-TagBox').hide();">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div style="padding:10px">
+                              <button type="button" class="btn btn-success AppointModal-TagBtn"  style="margin: 5px;">名花有主</button>
+                              <button type="button" class="btn btn-success AppointModal-TagBtn" style="margin: 5px;">人各有志</button>
+                              <button type="button" class="btn btn-success AppointModal-TagBtn" style="margin: 5px;">庙小和尚大</button>
+                              <button type="button" class="btn btn-success AppointModal-TagBtn" style="margin: 5px;">逗你玩</button>
+                              <button type="button" class="btn btn-success AppointModal-TagBtn" style="margin: 5px;">其他原因</button>
+                              <br>
+                              <div class="input-group">
+                                <input type="text" class="form-control" id="AppointModal-OtherTag" placeholder="其它" style="margin:5px;">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-success AppointModal-TagBtn" type="button" >添加</button>
+                                </span>
+                              </div><!-- /input-group -->
+                            </div>
+                          </div><!--/TagBox-->
+                        </div><!--/input-group-->
+                      </div>
+                    </div>
+
+
+                  </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="AppointModal-SubmitBtn">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--面试结果浮动层-->
+    <div class="modal fade" id="ResultModal" tabindex="-1" role="dialog" aria-labelledby="ResultModal-Label">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" id="ResultModal-ContentDiv">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="ResultModal-Label">面试结果</h4>
+                </div>
+                <div class="modal-body">
+                  <form class="form-horizontal"> 
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">候选人</label>
+                      <div class="col-sm-9">
+                        <p class="form-control-static" id="ResultModal-CandidateName"></p>
+                        <p id="ResultModal-CandidateID" style="display:none"></p>
+                        <p id="ResultModal-InterviewID" style="display:none" ></p>
+                      </div>
+                    </div>
+                    
+
+                    <div class="form-group" id="ResultModal-ResultTypeDiv">
+                      <label class="col-sm-2 control-label">面试结果</label>
+                      <div class="col-sm-9">
+                        <label class="radio-inline"><input type="radio" id="ResultModal-ResultTypeRadioOpts"  name="ResultType" value="面试通过" checked="checked">面试通过</label>
+                        <label class="radio-inline"><input type="radio" id="ResultModal-ResultTypeRadioOpts"  name="ResultType" value="面试结果待定">面试结果待定</label>
+                        <label class="radio-inline"><input type="radio" id="ResultModal-ResultTypeRadioOpts"  name="ResultType" value="面试未通过">面试未通过</label>
+                        <label class="radio-inline"><input type="radio" id="ResultModal-ResultTypeRadioOpts"  name="ResultType" value="爽约">爽约</label>
+                      </div>
+                    </div>
+
+                    
+                    <div class="form-group" id="ResultModal-ResultTagsDiv" >
+                      <label class="col-sm-2 control-label">标签</label>
+                      <div class="col-sm-9">
+                        <div class="input-group">
+                          <input type="text"  class="form-control" value="" data-role="tagsinput" id="ResultModal-ResultTags"  >
+                          <span class="input-group-btn">
+                            <button class="btn btn-success " type="button" id="ResultModal-ResultTagsSelBtn">
+                               <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                          </span>
+                          <div id="ResultModal-TagBox" style="position:absolute;float:right;background-color: white;border:grey solid thin;width:400px;height:auto;z-index:999;display:none;" >
+                            <div style="position: absolute;left: 380px;top:2px;">
+                              <button type="button" class="close" onclick="$('div#ResultModal-TagBox').hide();">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div style="padding:10px">
+                              <button type="button" class="btn btn-success ResultModal-TagBtn"  style="margin: 5px;">能用</button>
+                              <button type="button" class="btn btn-success ResultModal-TagBtn"  style="margin: 5px;">学霸</button>
+                              <button type="button" class="btn btn-success ResultModal-TagBtn"  style="margin: 5px;">水平高</button>
+                              <button type="button" class="btn btn-success ResultModal-TagBtn" style="margin: 5px;">经验丰富</button>
+                              <button type="button" class="btn btn-success ResultModal-TagBtn" style="margin: 5px;">有潜力</button>
+                              <button type="button" class="btn btn-success ResultModal-TagBtn" style="margin: 5px;">颜值高</button>
+                              <button type="button" class="btn btn-success ResultModal-TagBtn" style="margin: 5px;">性价比优</button>
+                              <button type="button" class="btn btn-warning ResultModal-TagBtn" style="margin: 5px;">分数低</button>
+                              <button type="button" class="btn btn-warning ResultModal-TagBtn" style="margin: 5px;">太水</button>
+                              <button type="button" class="btn btn-warning ResultModal-TagBtn" style="margin: 5px;">逗比</button>
+                              <button type="button" class="btn btn-warning ResultModal-TagBtn" style="margin: 5px;">没激情</button>
+                              <button type="button" class="btn btn-warning ResultModal-TagBtn" style="margin: 5px;">太贵</button>
+                              <button type="button" class="btn btn-warning ResultModal-TagBtn" style="margin: 5px;">不匹配</button>
+                              <button type="button" class="btn btn-warning ResultModal-TagBtn" style="margin: 5px;">不靠谱</button>
+                              <button type="button" class="btn btn-warning ResultModal-TagBtn" style="margin: 5px;">RP差</button>
+                              <br>
+                              <div class="input-group">
+                                <input type="text" class="form-control" id="ResultModal-OtherTag" placeholder="其它" style="margin:5px;">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-success ResultModal-TagBtn" type="button" >添加</button>
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="form-group" id="ResultModal-DeptDiv">
+                     <label class="col-sm-2 control-label">面试部门</label>
+                      <div class="col-sm-9" >
+                        <div class="input-group">
+                            <input type="text"  class="form-control" value="" data-role="tagsinput" id="ResultModal-DeptName" >
+                            <span class="input-group-btn">
+                              <button class="btn btn-success " type="button" onclick="$('div#ResultModal-DeptTree').toggle();">
+                                 <span class="glyphicon glyphicon-search"></span>
+                              </button>
+                            </span>
+                            <div id="ResultModal-DeptTree" style="position:absolute;float:right;width:400px;z-index:999;display:none;" ></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group" id="ResultModal-InterviewerDiv">
+                      <label class="col-sm-2 control-label">面试官</label>
+                      <div class="col-sm-9" >
+                        <div class="input-group">
+                          <input type="text"  class="form-control" value="" data-role="tagsinput" id="ResultModal-Interviewer" >
+                          <span class="input-group-btn">
+                            <button class="btn btn-success " type="button" onclick="$('div#ResultModal-InterviewerTree').toggle();">
+                              <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                          </span>
+                          <div id="ResultModal-InterviewerTree" style="position:absolute;float:right;width:400px;z-index:999;display:none;" ></div>
+                        </div>
+                      </div>
+                    </div>
+
+
+
+
+
+                     
+                    <div class="form-group" id="ResultModal-TimeDiv">
+                      <label class="col-sm-2 control-label">实际面试时间</label>
+                      <div class="input-group date form_datetime col-sm-9" data-date="2015-05-13T10:25:00Z" data-date-format="yyyy-mm-dd hh:ii"  style="padding-left:15px;">
+                        <input class="form-control" size="16" type="text" value="" id="ResultModal-Time" >
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                      </div>
+                    </div>
+
+
+                    <div class="form-group" id="ResultModal-LocationDiv">
+                      <label class="col-sm-2 control-label">面试地点</label>
+                      <div class="col-sm-9">
+                        <input type="text" placeholder="" class="form-control" id="ResultModal-Location">
+                      </div>
+                    </div>
+                    
+                    <div class="form-group" id="ResultModal-ExamScoreDiv">
+                      <label class="col-sm-2 control-label">笔试成绩</label>
+                      <div class="col-sm-9">
+                        <input type="text" placeholder="" class="form-control" id="ResultModal-ExamScore">
+                      </div>
+                    </div>
+
+                   
+                    <div class="form-group" id="ResultModal-CommentsDiv">
+                       <label class="col-sm-2 control-label" for="ResultModal-Comments">备注</label>
+                       <div class="col-sm-9">
+                         <textarea class="form-control" rows="3" id="ResultModal-Comments" name="ResultModal-Comments"></textarea>
+                       </div>
+                    </div>
+                  </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="ResultModal-SubmitBtn">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--候选人简历浮动层-->
+    <div class="modal fade" id="ResumeModal" tabindex="-1" role="dialog" aria-labelledby="ResumeModal-Label">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="ResultModal-Label">候选人简历</h4>
+                </div>
+                <div class="modal-body">
+                  <form class="form-horizontal"> 
+                    
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">人选信息</label>
+                      <div class="col-sm-9" style="padding:0px;" id="ResumeModal-CandidateInfo">
+
+                      </div>
+                    </div>
+                    
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">简历附件</label>
+                      <div class="col-sm-9" style="padding:0px;">
+                        <table  class="table" id="ResumeModal-ResumeFile"> 
+                          <!--thead>
+                            <tr><th>附件名称</th><th>选择转发</th>
+                          </thead--> 
+                          <tbody>
+                          </tbody>
+                        </table>
+                        <!--p class="form-control-static"><a href="#">点击下载</a></p-->
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">转发</label>
+                      
+                      <div class="col-sm-9 input-group">
+                        <input type="text" class="form-control" placeholder="邮箱，分号分隔" id="ResumeModal-EMail">
+                        <span class="input-group-btn">
+                          <button class="btn btn-success" type="button" id="ResumeModal-SendBtn">发送</button>
+                        </span>
+                      </div><!-- /input-group -->
+                    </div>
+                  </form>
+                  
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!--发送面试提醒浮动层-->
+    <div class="modal fade" id="NotifyModal" tabindex="-1" role="dialog" aria-labelledby="NotifyModal-Label">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="NotifyModal-Label">发送面试提醒</h4>
+                </div>
+                <div class="modal-body">
+                  <form class="form-horizontal"> 
+
+
+
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">发送范围</label>
+                      <div class="col-sm-8">
+                        <label class="checkbox-inline">
+                          <input type="checkbox" id="NotifyModal-CandidateChk" > 候选人
+                        </label>
+                        <label class="checkbox-inline">
+                          <input type="checkbox" id="NotifyModal-InterviewerChk" > 面试官
+                        </label>
+                        <label class="checkbox-inline">
+                          <input type="checkbox" id="NotifyModal-DestClerkChk" > 面试接待
+                        </label>
+                        <label class="checkbox-inline">
+                          <input type="checkbox" id="NotifyModal-RecruiterChk"> 招聘经理
+                        </label>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-sm-offset-2 col-sm-8">
+                        <label class="checkbox-inline">
+                          <input type="checkbox" id="NotifyModal-OtherChk" onchange="$('input#NotifyModal-Other').fadeToggle();"> 其他
+                          <input type="text" id="NotifyModal-Other" placeholder="手机号码，分号分隔" style="display:none;width:300px;">
+                        </label>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-sm-3 col-sm-offset-2 ">
+                        <button class="btn btn-success" type="button" id="NotifyModal-SendBtn">发送</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+     <!--删除候选人浮动层-->
+    <div class="modal fade" id="RemoveModal" tabindex="-1" role="dialog" aria-labelledby="RemoveModal-Label">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" id="RemoveModal-ContentDiv">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="RemoveModal-Label">删除候选人</h4>
+                </div>
+                <div class="modal-body" >
+                  <form class="form-horizontal"> 
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">候选人</label>
+                      <div class="col-sm-9">
+                        <p class="form-control-static" id="RemoveModal-CandidateName"></p>
+                        <p id="RemoveModal-CandidateID" style="display:none" val=""></p>
+                      </div>
+                    </div>
+
+
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">删除原因</label>
+                      <div class="col-sm-9">
+                        <div class="input-group">
+                          <input type="text"  class="form-control" value="" data-role="tagsinput" id="RemoveModal-Reason"  >
+                          <span class="input-group-btn">
+                            <button class="btn btn-success " type="button" id="RemoveModal-ReasonSelBtn">
+                              <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                          </span>
+                
+                          <div id="RemoveModal-TagBox" style="position:absolute;float:right;background-color: white;border:grey solid thin;width:400px;height:auto;z-index:999;display:none;" >
+                            <div style="position: absolute;left: 380px;top:2px;">
+                              <button type="button" class="close" onclick="$('div#RemoveModal-TagBox').hide();">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div style="padding:10px">
+                              <button type="button" class="btn btn-success RemoveModal-TagBtn"  style="margin: 5px;">查无此人</button>
+                              <button type="button" class="btn btn-success RemoveModal-TagBtn" style="margin: 5px;">就是约不上</button>
+                              <button type="button" class="btn btn-success RemoveModal-TagBtn" style="margin: 5px;">没能力没潜力</button>
+                              <button type="button" class="btn btn-success RemoveModal-TagBtn" style="margin: 5px;">人各有志</button>
+                              <button type="button" class="btn btn-success RemoveModal-TagBtn" style="margin: 5px;">RP有问题</button>
+                              <button type="button" class="btn btn-success RemoveModal-TagBtn" style="margin: 5px;">其他原因</button>
+                              <br>
+                              <div class="input-group">
+                                <input type="text" class="form-control" id="RemoveModal-OtherTag" placeholder="其它" style="margin:5px;">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-success RemoveModal-TagBtn" type="button" >添加</button>
+                                </span>
+                              </div><!-- /input-group -->
+                            </div>
+                          </div><!--/TagBox-->
+                        </div> 
+                      </div>
+                    </div>
+
+                
+                  </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">再考虑一下呗</button>
+                    <button type="button" class="btn btn-primary" id="RemoveModal-SubmitBtn">永不相见！</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="tip" class="alert alert-success" role="alert" style="display:none;position:fixed;z-index:99999;width:50%;margin-left:20%;left:0;top:30%;text-align:center;">成功</div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="jquery-1.11.3/jquery-1.11.3.min.js"></script>
+    <!--script src="jquery-2.1.4/jquery-2.1.4.min.js"></script-->
+    <script src="bootstrap-3.3.5/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!--script src="http://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script-->
+    <script src="bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" ></script>
+    <script src="bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" ></script>
+    <script src="tagsinput/bootstrap-tagsinput.js"></script>
+    <script src="tagsinput/typeahead.bundle.js"></script>
+    <script src="treeview/bootstrap-treeview.min.js"></script>
+    <script src="js/tip.js"></script>
+
+
+
+
+    <script>
+      var currentpage=1;  
+      function logout(){
+         $.post("data/login?action=logout",function(data,status){
+                window.location.href="login.html";
+         });
+
+      }      
+
+      $(document).ready(function(){
+        //初始化
+        //判断是否登录
+        $.get("data/login?action=currentuser",function(data,status){
+          ret=JSON.parse(data);
+          if (ret.login){
+            $("span#currentuser").text(ret.username);            
+          }
+          else{
+            window.location.href="login.html";
+          }
+        });
+        
+        
+
+        //面试邀约/面试结果  窗口日期插件初始化
+        $('.form_datetime').datetimepicker({
+          language:  'zh-CN',
+          weekStart: 1,
+          todayBtn:  1,
+          autoclose: 1,
+          todayHighlight: 1,
+          startView: 2,
+          forceParse: 1,
+          showMeridian: 1,
+          keyboardNavigation: 1,
+          startDate: new Date(),
+        });
+
+        //HR列表
+        buildHRList();
+       
+        
+        //部门树数据加载
+        buildDeptTree();
+        //面试官树数据加载
+        buildInterviewerTree();
+        
+
+        //面试邀约浮动层事件注册
+        regAppointModalEvent();
+        //面试结果浮动层事件注册
+        regResultModalEvent();
+        //简历浮动层事件注册
+        regResumeModalEvent();        
+        //面试通知浮动层事件注册
+        regNotifyModalEvent();        
+        //删除浮动层事件注册
+        regRemoveModalEvent();        
+
+        init_pagination();
+        loadList(currentpage);
+      });  // on document.ready
+      
+
+    //-----------------必须放在外面初始化的部分-------------------------
+      //这坑爹的玩意，放在document.ready就是不管用  浪费了多半天时间
+      //初始化部门tagsInput标签颜色
+      $("input#AppointModal-DeptName").tagsinput({
+        tagClass: 'label label-primary',
+         itemValue: 'id',
+         itemText: 'label',
+         freeInput: false
+      });
+      $("input#ResultModal-DeptName").tagsinput({
+        tagClass: 'label label-primary',
+        itemValue: 'id',
+        itemText: 'label',
+        freeInput: false
+      });
+      //初始化面试官tagsInput标签颜色
+      $("input#AppointModal-Interviewer").tagsinput({
+        tagClass: 'label label-primary',
+        itemValue: 'id',
+        itemText: 'label',
+        freeInput: false       
+      });      
+       //初始化面试官tagsInput标签颜色
+      $("input#ResultModal-Interviewer").tagsinput({
+        tagClass: 'label label-primary',
+        itemValue: 'id',
+        itemText: 'label',
+        freeInput: false
+      });
+      //初始化删除原因tagsInput标签颜色
+      $("input#RemoveModal-Reason").tagsinput({
+       tagClass: 'label label-primary'
+      });
+      //初始化邀约失败原因tagsInput标签颜色
+      $("input#AppointModal-AppointFailTags").tagsinput({
+       tagClass: 'label label-primary'
+      });
+      //初始化面试结果tagsInput标签颜色
+      $("input#ResultModal-ResultTags").tagsinput({
+       tagClass: 'label label-primary'
+      });
+
+
+       
+    //----------------------主列表函数部分---------------------------
+      //加载/更新面试日志
+      function getInterviewInfo(CandidateID,StatusString){
+        
+        $.get("data/interview?action=InterviewInfoList&candidateid="+CandidateID,function(data,status){
+          //alert("Data: " + data + "\nStatus: " + status);
+          var html = "";
+          if (data=="[]"){
+             html = "<p>无面试记录！</p>";
+          }
+          else{
+            $.each(JSON.parse(data),function(i,item){
+              if (item.InterviewAppointResult=="邀约成功"){
+                if (item.ResultType=="面试通过"){
+                  html+="<p>【面试通过】——<strong>时间:</strong>"+item.InterviewTime +"；<strong>方式:</strong>"+item.InterviewType+"； <strong>面试官:</strong>"+(item.InterviewerSummary==""?"未指定": item.InterviewerSummary)+ "； <strong>面试意见:</strong>"+item.ResultTags+"； <strong>备注:</strong>"+(item.Summary==""?"无":item.Summary)+"</p>";
+                }
+                else if (item.ResultType=="面试未通过"){
+                  html+="<p>【面试未通过】——<strong>时间:</strong>"+item.InterviewTime +"；<strong>方式:</strong>"+item.InterviewType+"； <strong>面试官:</strong>"+(item.InterviewerSummary==""?"未指定": item.InterviewerSummary)+ "； <strong>面试意见:</strong>"+item.ResultTags+"； <strong>备注:</strong>"+(item.Summary==""?"无":item.Summary)+"</p>";
+                }
+                else if (item.ResultType=="面试结果待定"){
+                  html+="<p>【面试结果待定】——<strong>时间:</strong>"+item.InterviewTime +"；<strong>方式:</strong>"+item.InterviewType+"； <strong>面试官:</strong>"+(item.InterviewerSummary==""?"未指定": item.InterviewerSummary)+ "； <strong>面试意见:</strong>"+item.ResultTags+"； <strong>备注:</strong>"+(item.Summary==""?"无":item.Summary)+"</p>";
+                }
+                else if (item.ResultType=="爽约"){
+                  html+="<p>【爽约】——<strong>原定时间:</strong>"+item.InterviewTime +"；<strong>方式:</strong>"+item.InterviewType+"； <strong>面试官:</strong>"+(item.InterviewerSummary==""?"未指定": item.InterviewerSummary)+ "； <strong>面试意见:</strong>"+item.ResultTags+"； <strong>备注:</strong>"+(item.Summary==""?"无":item.Summary)+"</p>";
+                }
+                else {
+                 html+="<p>【待面试】——<strong>时间:</strong>"+item.InterviewTime +"；<strong>方式:</strong>"+item.InterviewType+"； <strong>面试官:</strong>"+(item.InterviewerSummary==""?"未指定": item.InterviewerSummary)+ "； <strong>邀约时间:</strong>"+item.InterviewAppointTimestamp+"； <strong>备注:</strong>"+(item.Summary==""?"无":item.Summary)+"</p>";
+
+                }
+
+
+              }
+              else if (item.InterviewAppointResult=="邀约失败"){
+                 html+="<p>【邀约失败】——<strong>原因:</strong>"+item.InterviewAppointFailTags+"； <strong>邀约时间:</strong>"+item.InterviewAppointTimestamp+"</p> ";
+              }
+
+            });//each
+          }
+          var content=$("#div_"+CandidateID).find(".interviewinfo_content");
+          content.empty();
+          content.html(html);
+          $("div#div_"+CandidateID).parent().parent().slideDown(); 
+          $("div#div_"+CandidateID).slideDown();
+          return;
+        });//get
+        
+         
+
+
+       /*
+        if (StatusString=="未邀约") {
+           
+        } else {
+          //var run = resp.pool_run
+          //var detail = resp.pool_detail
+          if (StatusString=="面试通过"){
+            html+="<p>2015-11-3 10:30 现场面试 【面试官】：王喜庆 张乐龙 【评价】：xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 【结果】:通过</p> ";
+            html+="<p>2015-11-5 15:00 现场面试 【面试官】：史周军 【评价】：xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 【结果】:通过</p> ";
+          }
+          else if(StatusString=="待面试"){
+            html+="<p>2015-11-5 10:00 现场面试 【面试官】：刘鲲鹏 【岗位】:JAVA工程师</p> ";
+
+          }
+          else if (StatusString=="邀约失败"){
+            html+="<p>2015-11-4 10:50:12 已找到工作</p> ";
+          }
+          else if(StatusString=="面试未通过"){
+            html+="<p>2015-11-4 10:50:12 前端经验不足</p> ";
+          }
+        }*/
+        
+        return;
+
+      }
+    
+      //更新状态与操作标签标签
+      function updateRow(CandidateID,StatusString){
+        var thisRow=$("tr.odd#"+CandidateID);
+        var statusCell=thisRow.find(".status");
+        var statusLabelClass="";
+        switch (StatusString) {
+          case '未邀约'   : 
+          case "爽约":
+            statusLabelClass= 'label label-danger';
+            break;
+          case '待面试'  : 
+            statusLabelClass=  'label label-warning';
+            break;
+          case '面试通过': 
+            statusLabelClass=  'label label-success';
+            break;
+          case '面试结果待定':
+            statusLabelClass="label label-info";
+            break;
+          case '邀约失败'   : 
+          case '面试未通过'  : 
+            statusLabelClass=  'label label-default';
+            break;
+        } 
+         
+        statusCell.html("<span class='"+statusLabelClass+"'>"+StatusString+"</span>");
+        OpeTD=thisRow.find("td.OpeTD");
+        var name=OpeTD.attr("data-name");
+        OpeTD.html(getOpeHtml(StatusString,CandidateID,name));
+        
+      }
+
+      function addRow(item,tbody){
+        var tr=$("<tr>").attr("id",item.id);
+        var td="<td>1</td>";  //序号
+        var nametemp="";
+        if (item.name=="")
+          nametemp=item.resumeno;
+        else
+          nametemp=item.name;
+        tr.append(td);
+        td=$("<td class='OpeTD' data-name='"+nametemp+"'>");//操作
+        td.append(getOpeHtml(item.state,item.id,nametemp));
+        tr.append(td);
+        
+        
+        td=$("<td>").append("<a href='javascript:showResumeModal(&quot;"+item.id+"&quot);'>"+nametemp+"</a>("+item.sex+")");  //姓名性别
+        tr.append(td);
+        td="<td>"+item.job+"</td>"; //投递职位
+        tr.append(td);
+        td="<td>"+(item.age==null?"":item.age)+"/"+(item.workage==null?"":item.workage)+"</td>"; //年龄工龄
+        tr.append(td);
+        td="<td>"+item.phone+"</td>"; //手机
+        tr.append(td);
+        td="<td>"+item.lastjob+ "/"+ item.lasttitle+"</td>"; //上家公司、职位
+        tr.append(td);
+        td="<td>"+item.registertime+"</td>"; //登记日期
+        tr.append(td);
+        td="<td>"+item.resumesource+"</td>"; //简历来源
+        tr.append(td);
+        td="<td>"+item.hrname+"</td>"; //HR姓名
+        tr.append(td);
+
+        td=$("<td>").addClass("status");
+        span=$("<span>").text(item.state);
+        switch (item.state){
+          case "未邀约":
+          case "爽约":
+            span.addClass("label label-danger"); //红
+            break;
+          case "待面试":
+            span.addClass("label label-warning"); //橙
+            break;
+          case "面试通过":
+            span.addClass("label label-success"); //绿
+            break;
+          case "邀约失败":
+          case "面试未通过":
+            span.addClass("label label-default");//灰
+            break;
+          case "面试结果待定":
+            span.addClass("label label-info"); //深蓝
+            break;
+          default:
+             span.addClass("label label-primary"); //深蓝
+        }
+        td.append(span);
+        tr.append(td);
+        
+        tbody.append(tr);
+        tr="<tr class='interviewinfo' style='display:none'>"+
+           "  <td colspan='10' align='left' background=''>"+
+           "    <div id='div_"+item.id+"' style='display:none'>"+ 
+           "      <div style='position: relative;'>" +
+           "        <button type='button' class='close' style='position:absolute;left:0px;top:-3px;' onclick='$(&quot;div#div_"+item.id+"&quot;).slideUp(&quot;fast&quot;,function(){$(this).parent().parent().css({&quot;display&quot;:&quot;none&quot;});});'>"+
+           "          <span aria-hidden='true'>&times;</span>"+
+           "        </button>"+
+           "      </div>"+
+           "      <div class='interviewinfo_content' style='margin-left:4%;'>"+
+           "        <p> 正在努力加载ing。。。。</p>"+
+           "      </div>"+
+           "    </div>"+
+           "  </td>"+
+           "</tr>";
+        tbody.append(tr);
+      }
+
+      function getOpeHtml(state,id,name){
+        //邀约面试 1 修改登记信息2  面试结果3 面试变更4 发送提醒5 删除6 归档人才库7
+        var OpeCode;
+        switch (state){
+          case "未邀约":
+          case "面试通过":
+            OpeCode=new Array("1","2","6","7");
+            break;
+          case "待面试":
+            OpeCode=new Array("3","4","5","2","6","7");
+            break;
+          case "邀约失败":
+          case "面试未通过":
+            OpeCode=new Array("7","1","2","6");
+            break;
+          case "面试结果待定":
+            OpeCode=new Array("3","2","6","7");
+            break;
+          case "爽约":
+            //OpeCode=new Array("4","5","2","6","7");
+            OpeCode=new Array("3","1","2","6","7");
+            break;
+          default:
+            OpeCode=new Array();
+        }
+        
+        var ret="";
+        var btn="";
+        for (x in OpeCode){
+          switch(OpeCode[x]){
+            case "1": //邀约面试
+              btn="<button type='button' class='btn btn-primary btn-xs btn-appoint' aria-label='Left Align' title='邀约面试'' onclick='showAppointModal(&quot;new&quot;,&quot;"+id+"&quot;,&quot;"+name+"&quot;);'>";
+              btn=btn+"<span class='glyphicon glyphicon-calendar' aria-hidden='true'></span>";
+              btn=btn+"</button>";
+              ret=ret+btn;
+              break;
+            case "2": //修改登记信息
+              btn="<button type='button' class='btn btn-primary  btn-xs' aria-label='Left Align' title='修改登记信息' onclick='window.open(&quot;register.html?action=update&id="+id+"&quot;);'>";
+              btn=btn+"<span class='glyphicon glyphicon-list-alt' aria-hidden='true'></span>";  
+              btn=btn+"</button>";
+              ret=ret+btn;
+              break;
+            case "3": //面试结果
+              btn="<button type='button' class='btn btn-primary btn-xs'  aria-label='Left Align' title='面试结果'' onclick='showResultModal(&quot;" +id+"&quot;,&quot;"+name+ "&quot;);'>";
+              btn=btn+"<span class='glyphicon glyphicon-check' aria-hidden='true'></span>";
+              btn=btn+"</button>";
+              ret=ret+btn;
+              break;
+            case "4"://面试变更
+              btn="<button type='button' class='btn btn-primary btn-xs btn-appoint' aria-label='Left Align' title='面试变更'' onclick='showAppointModal(&quot;update&quot;,&quot;"+id+"&quot;,&quot;"+name+"&quot;);'>";
+              btn=btn+"<span class='glyphicon glyphicon-time' aria-hidden='true'></span>";  
+              btn=btn+"</button>";
+              ret=ret+btn;
+              break;
+            case "5":
+              btn="<button type='button' class='btn btn-primary btn-xs' aria-label='Left Align' title='发送提醒' onclick='showNotifyModal(&quot;"+id+"&quot;);'>";
+              btn=btn+"<span class='glyphicon glyphicon-phone' aria-hidden='true'></span>";  
+              btn=btn+"</button>";
+              ret=ret+btn;
+              break;
+            case "6":
+              btn="<button type='button' class='btn btn-primary  btn-xs' aria-label='Left Align' title='删除'' onclick='showRemoveModal(&quot;" +id+"&quot;,&quot;"+name+ "&quot;);'>";
+              btn=btn+"<span class='glyphicon glyphicon-trash' aria-hidden='true'></span>";
+              btn=btn+"</button>";
+              ret=ret+btn;
+              break;
+            case "7":
+              btn="<button type='button' class='btn btn-primary  btn-xs' aria-label='Left Align' title='归档人才库'>";
+              btn=btn+"<span class='glyphicon glyphicon-inbox' aria-hidden='true'></span>";
+              btn=btn+"</button>";
+              //ret=ret+btn;
+              break;
+
+          }
+        } //for
+        return ret;
+      } //getOpeHtml
+
+      function init_pagination(){
+        var hr=$("select#hr option:selected").val();
+        var status=$("select#status option:selected").val();
+
+        $.get("data/candidate?action=GetInterviewList&hr="+hr+"&status="+status+"&page=0",function(data,status){
+          var pages=0;
+          if(data!="None"){
+            var ret=JSON.parse(data);
+            pages=parseInt(ret.pages);
+          }
+
+          var ul=$(".pagination");
+          ul.attr("data-pages",pages);
+          ul.empty();
+          if (pages>0){
+            ul.append("<li id='prev'><a href='javascript:loadList(1)' aria-label='上一页'> <span aria-hidden='true'>&laquo;</span></a></li>");
+            for (var i=1;i<=pages;i++){
+              ul.append("<li id="+i+"><a href='javascript:loadList("+i+")'>"+i+"</a></li>");
+            }
+            ul.append("<li id='next'><a href='javascript:loadList("+pages+")' aria-label='下一页'> <span aria-hidden='true'>&raquo;</span></a></li>");
+          } 
+          else
+          {
+            ul.append("<li>无记录</li>");
+          }
+           
+          
+        });
+
+      }
+      function change_pagination(page){
+        var pages=$(".pagination").attr("data-pages");
+        var prevpage=parseInt(page)-1;
+        if (prevpage==0)
+          prevpage=1;
+        var nextpage=parseInt(page)+1;
+        if (nextpage>pages)
+          nextpage=pages;
+
+        $(".pagination li#prev a").attr("href","javascript:loadList("+prevpage+")");
+        $(".pagination li#next a").attr("href","javascript:loadList("+nextpage+")");
+        for (var i=1;i<=pages;i++){
+          if (i==page){
+            $(".pagination li#"+i+" a").html("<strong>"+i+"</strong>"); 
+            $(".pagination li#"+i+" a").css("background-color","aliceblue");
+          }
+          else{
+            $(".pagination li#"+i+" a").html(i); 
+            $(".pagination li#"+i+" a").css("background-color",""); 
+          }
+        }
+      }
+      function loadList(page){
+        currentpage=page;
+        var hr=$("select#hr option:selected").val();
+        var status=$("select#status option:selected").val();
+
+        $.get("data/candidate?action=GetInterviewList&hr="+hr+"&status="+status+"&page="+page,function(data,status){
+          change_pagination(page);
+          var tbody=$(".table tbody");
+          tbody.empty();
+          if(data=="None")
+            return;
+          $.each(JSON.parse(data),function(i,item){
+            addRow(item,tbody);
+          });
+          //面试日志展开功能初始化
+          $(".expanding tr:odd ").css("cursor","pointer");
+          $(".expanding tr:odd").addClass("odd");
+          $(".expanding tr:odd ").attr("title","点击显示面试详情");
+          //$(".expanding tr:not(.odd)").hide();
+          //$(".expending tr.jc").css("display","none");
+          $(".expanding tr:first-child").show();
+
+           //注册事件
+          //点击奇数行展开/折叠面试日志
+          $(".expanding tr.odd").click(function(e){
+            var tag = e.target.nodeName;
+            if(tag == 'A' || tag == 'a' || tag=='button' || tag=='BUTTON' || tag=='span' || tag=='SPAN'){
+              //do nothing
+            }
+            else{
+              var id =$(this).attr("id");
+              var status=$(this).find("span").text();
+                
+              if($(this).next("tr").is(":hidden")){  
+                getInterviewInfo(id,status);
+                
+              }
+              else
+              {
+                
+                $(this).next("tr").find("div#div_"+id).slideUp("fast",function(){$(this).parent().parent().css({"display":"none"});});
+                //$(this).next("tr").slideUp(); 
+              }
+              
+
+            }
+          });
+
+        });
+      }
+      function buildHRList(){
+        $.get("data/user?action=HRList",function(data,status){
+          ret=JSON.parse(data);
+          var s=$("select#hr");
+          s.empty();
+          var option=$("<option>").val("0").text("全部");
+          s.append(option);
+          for (i in ret){
+            option=$("<option>").val(ret[i].id).text(ret[i].name);
+            s.append(option);
+          }
+        });  
+        
+      }
+
+    //-------------------面试邀约部分---------------------------
+      
+      function regAppointModalEvent(){
+        //EVENT:show.bs.modal        
+        //ps:日期插件选中后会再次触发此事件
+        $('#AppointModal').on('show.bs.modal', function (event) {
+          //调整邀约面试窗口中tagspinput样式
+          $(".bootstrap-tagsinput").css("width","100%");
+        
+        })
+
+        
+                  
+        
+        //EVENT:邀约结果radioCHANGE
+        $("input#AppointModal-AppointResultTypeRadioOpts").click(function(e){
+          var result=$("input#AppointModal-AppointResultTypeRadioOpts:checked").val();
+          toggleAppointModal_AppointResult(result);
+        });
+
+        //EVENT:邀约面试提交按钮
+        $("button#AppointModal-SubmitBtn").click(function(e){
+           
+          e.preventDefault();
+          submitAppointModal();
+         
+        });
+        
+
+        //---------邀约失败原因 标签盒操作 ------------
+        $("button.AppointModal-TagBtn").click(function(e){
+          
+          var text=e.currentTarget.innerText;
+          if (text=="添加"){
+            text=$("input#AppointModal-OtherTag").val();
+          }
+          $("input#AppointModal-AppointFailTags").tagsinput("add",text);
+          e.stopPropagation();
+        });
+        //点击content中任何区域可关闭标签盒TagBox
+        $("div#AppointModal-ContentDiv").click(function(e){
+          $('div#AppointModal-TagBox').hide();
+        })
+        //选择钮显示标签盒
+        $("button#AppointModal-AppointFailSelBtn").click(function(e){
+          $("div#AppointModal-TagBox").show();
+          //事件阻止，防止触发content.click再次关闭
+          e.stopPropagation();
+        })
+        //标签盒事件阻止冒泡，防止触发content.click
+        $("input#AppointModal-OtherTag").click(function(e){
+          e.stopPropagation();
+        })
+        $("div#AppointModal-TagBox").click(function(e){
+          e.stopPropagation();
+        })
+        //-----------标签盒------------
+
+      }//regAppointModalEvent
+       
+      function toggleAppointModal_AppointResult(result){
+          if (result=="邀约成功"){
+            $("div#AppointModal-DeptDiv").slideDown();
+            $("div#AppointModal-InterviewerDiv").slideDown();
+            $("div#AppointModal-InterviewTypeDiv").slideDown();
+            $("div#AppointModal-TimeDiv").slideDown();
+            $("div#AppointModal-LocationDiv").slideDown();
+            $("div#AppointModal-CommentsDiv").slideDown();
+            $("div#AppointModal-AppointFailDiv").slideUp();
+          }
+          else{
+            $("div#AppointModal-DeptDiv").slideUp();
+            $("div#AppointModal-InterviewerDiv").slideUp();
+            $("div#AppointModal-InterviewTypeDiv").slideUp();
+            $("div#AppointModal-TimeDiv").slideUp();
+            $("div#AppointModal-LocationDiv").slideUp();
+            $("div#AppointModal-CommentsDiv").slideUp();
+            $("div#AppointModal-AppointFailDiv").slideDown();
+          }
+      }
+      //Show modal   邀约面试、面试变更
+      function showAppointModal(action,candidateid,candidatename){
+          
+          
+          $("p#AppointModal-CandidateID").text(candidateid);
+          $("p#AppointModal-CandidateName").text(candidatename);
+          $("p#AppointModal-Action").text(action);
+          if (action=="update"){  //变更 
+            $("#AppointModal-Label").text("变更时间");
+
+            $("div#AppointModal-ResultTypeDiv").hide();
+            //load info
+            $.get("data/interview?action=LastInterviewInfo&candidateid="+candidateid,function(data,status){
+          
+              var item=JSON.parse(data);
+              $("p#AppointModal-InterviewID").text(item.InterviewID);
+              $("#AppointModal-Time").val(item.InterviewTime);
+              $("#AppointModal-Location").val(item.InterviewLocation);
+              $("#AppointModal-Comments").val(item.Summary);
+              $("#AppointModal-InterviewTypeRadioOpts[value="+item.InterviewType+"]").prop({checked:"checked"});
+              
+              
+              $("#AppointModal-Interviewer").tagsinput('removeAll');
+              for (i in item.InterviewerList){
+                $("input#AppointModal-Interviewer").tagsinput("add",{id:item.InterviewerList[i].id,label:item.InterviewerList[i].name});
+              }
+              $("#AppointModal-DeptName").tagsinput('removeAll');
+              for (i in item.DepartmentList){
+                $("input#AppointModal-DeptName").tagsinput("add",{id:item.DepartmentList[i].id,label:item.DepartmentList[i].name});
+              }
+
+              
+
+              $("#AppointModal").modal({backdrop:"static",keyboard:false});
+              $("#AppointModal").modal("show"); 
+            });
+          }
+          else{ //new
+
+            $("#AppointModal-Label").text("邀约面试");
+            
+            $("div#AppointModal-ResultTypeDiv").show();
+            //$("#AppointModal-AppointResultTypeRadioOpts[value!='邀约成功']").removeAttr("checked");
+            $("#AppointModal-AppointResultTypeRadioOpts[value='邀约成功']").prop({checked:"checked"});
+            toggleAppointModal_AppointResult('邀约成功');
+            $("#AppointModal-DeptName").tagsinput('removeAll');
+            $("#AppointModal-Interviewer").tagsinput('removeAll');
+            $("#AppointModal-InterviewTypeRadioOpts[value='现场']").prop({checked:"checked"});
+            $("#AppointModal-Time").val("");
+            $("#AppointModal-Location").val("");
+            $("#AppointModal-Comments").val("");
+            $("#AppointModal").modal({backdrop:"static",keyboard:false});
+            $("#AppointModal").modal("show");
+           
+          }
+          return;
+      }
+      
+      function submitAppointModal(){
+        var CandidateID=$("p#AppointModal-CandidateID").text();
+        var CandidateName=$("p#AppointModal-CandidateName").text();
+        var InterviewID=$("p#AppointModal-InterviewID").text();
+        var AppointResult=$("#AppointModal-AppointResultTypeRadioOpts:checked").val();
+        var action=$("p#AppointModal-Action").text();
+        if (AppointResult=="邀约成功"){
+          var Dept=$("input#AppointModal-DeptName").val();
+          var deptlist=$("input#AppointModal-DeptName").tagsinput('items');
+          var deptidlist="";
+          var deptnamelist="";
+          for (i in deptlist){
+             deptidlist+=(i==0?"":",")+deptlist[i].id;
+             deptnamelist+=(i==0?"":",")+deptlist[i].label;
+          }
+          var interviewerlist=$("input#AppointModal-Interviewer").tagsinput('items');
+          var intervieweridlist="";
+          var interviewernamelist="";
+          for (i in interviewerlist){
+             intervieweridlist+=(i==0?"":",")+interviewerlist[i].id;
+             interviewernamelist+=(i==0?"":",")+interviewerlist[i].label;
+          }
+          var InterviewType=$("input#AppointModal-InterviewTypeRadioOpts:checked").val();
+          var Comments=$("textarea#AppointModal-Comments").val();
+          var Location=$("input#AppointModal-Location").val();
+          var Interviewtime=$("input#AppointModal-Time").val();
+          if (Interviewtime==""){
+            showTip("面试时间不能为空。",3000);
+            return;
+          }
+          if (action=="new")
+            addInterview(CandidateID,AppointResult,"",deptnamelist,deptidlist,interviewernamelist,intervieweridlist,InterviewType,Interviewtime,Location,Comments);
+          else  //update
+            updateInterview(InterviewID,CandidateID,AppointResult,"",deptnamelist,deptidlist,interviewernamelist,intervieweridlist,InterviewType,Interviewtime,Location,Comments);
+        }
+        else{ //邀约失败
+          //var failtags=$("input#AppointModal-AppointFailTags").tagsinput('items');
+          var failtags=$("input#AppointModal-AppointFailTags").val();
+          addInterview(CandidateID,AppointResult,failtags,null,null,null,null,null,null,null,null); 
+        }//appointresult          
+        
+       
+        return;
+      }
+
+
+      //保存面试预约信息-update
+      function updateInterview(interviewid,candidateid,appointresult,appointfailtags,departmentlist,departmentidlist,interviewerlist,intervieweridlist,interviewtype,interviewtime,interviewlocation,summary){
+        $.post("data/interview?action=UpdateInterview",
+              {
+                "interviewid":interviewid,
+                "candidateid":candidateid,
+                "appointresult":appointresult,
+                "appointfailtags":appointfailtags,
+                "departmentlist":departmentlist,
+                "departmentidlist":departmentidlist,
+                "interviewerlist":interviewerlist,
+                "intervieweridlist":intervieweridlist,
+                "interviewtype":interviewtype,
+                "interviewtime":interviewtime,
+                "interviewlocation":interviewlocation,
+                "summary":summary
+              },
+              function(data,status){
+                $('#AppointModal').modal('hide');
+                if (appointresult=="邀约成功"){
+                  ret=JSON.parse(data);
+                  if (ret.Error=="Time Is Null."){
+                    alert("面试时间不能为空");
+                    return;
+                  }
+                  if (ret.SMSResult=="Candidate's Phone Not Found."){
+                    showTip("候选人手机号为空，面试通知短信无法送达。请补充手机号码后再次发送。",5000);
+                    
+                  }
+                  
+                  
+                }
+                
+              }
+        );//post
+
+
+      }
+
+      //保存面试预约信息-new
+      function addInterview(candidateid,appointresult,appointfailtags,departmentlist,departmentidlist,interviewerlist,intervieweridlist,interviewtype,interviewtime,interviewlocation,summary){
+        $.post("data/interview?action=NewInterview",
+              {
+                "candidateid":candidateid,
+                "appointresult":appointresult,
+                "appointfailtags":appointfailtags,
+                "departmentlist":departmentlist,
+                "departmentidlist":departmentidlist,
+                "interviewerlist":interviewerlist,
+                "intervieweridlist":intervieweridlist,
+                "interviewtype":interviewtype,
+                "interviewtime":interviewtime,
+                "interviewlocation":interviewlocation,
+                "summary":summary
+              },
+              function(data,status){
+                $('#AppointModal').modal('hide');
+                if (appointresult=="邀约成功"){
+                  ret=JSON.parse(data);
+                  if (ret.Error=="Time Is Null."){
+                    alert("面试时间不能为空");
+                    return;
+                  }
+                  if (ret.SMSResult=="Candidate's Phone Not Found."){
+                    showTip("候选人手机号为空，面试通知短信无法送达。请补充手机号码后再次发送。",5000);
+                    
+                  }
+                  
+                  updateRow(candidateid,"待面试");
+                }
+                else{
+                  updateRow(candidateid,"邀约失败");
+
+                }
+              }
+        );//post
+
+      }
+      
+      
+
+
+      //组装面试官树数据,注册时间
+      function buildInterviewerTree(){
+        $.get("data/basedata?action=InterviewerTree",function(data,status){
+          
+          var tree=JSON.parse(data);
+          //tree=tree[0].nodes;  //去UAP节点
+          $('div#AppointModal-InterviewerTree').treeview({data:tree});    
+          $('div#ResultModal-InterviewerTree').treeview({data:tree});
+
+
+          //EVENT:面试邀约浮动层-面试官树选中
+          $('div#AppointModal-InterviewerTree').on('nodeSelected', function(event, data) {
+             $('div#AppointModal-InterviewerTree').toggle();
+             $("input#AppointModal-Interviewer").tagsinput("add",{id:data.customid,label:data.text,});
+          });      
+
+          //EVENT:面试结果浮动层-部门树选中
+          $('div#ResultModal-InterviewerTree').on('nodeSelected', function(event, data) {
+             $('div#ResultModal-InterviewerTree').toggle();
+             $("input#ResultModal-Interviewer").tagsinput("add",{id:data.customid,label:data.text,});
+          });       
+        
+        });//get
+
+      }//buildInterviewerTree
+ 
+      
+      //组装部门树数据，注册事件
+      function buildDeptTree(){
+         $.get("data/basedata?action=DeptTree",function(data,status){
+          
+          var tree=JSON.parse(data);
+          tree=tree[0].nodes;  //去UAP节点
+          $('div#AppointModal-DeptTree').treeview({data:tree});    
+          $('div#ResultModal-DeptTree').treeview({data:tree});
+
+
+          //EVENT:部门树选中
+          $('div#AppointModal-DeptTree').on('nodeSelected', function(event, data) {
+             $('div#AppointModal-DeptTree').toggle();
+             $("input#AppointModal-DeptName").tagsinput("add",{id:data.customid,label:data.text,});
+          });      
+
+          //EVENT:部门树选中
+          $('div#ResultModal-DeptTree').on('nodeSelected', function(event, data) {
+             $('div#ResultModal-DeptTree').toggle();
+             $("input#ResultModal-DeptName").tagsinput("add",{id:data.customid,label:data.text,});
+          });       
+        
+        });//get
+
+      }//buildDeptTree
+ 
+    //-------------------面试结果部分---------------------------
+      function regResultModalEvent(){
+        //EVENT:show.bs.modal        
+        //ps:日期插件选中后会再次触发此事件
+        $('#ResultModal').on('show.bs.modal', function (event) {
+          //调整邀约面试窗口中tagspinput样式
+          $(".bootstrap-tagsinput").css("width","100%");
+          
+        })
+         //EVENT:面试结果radioCHANGE
+        $("input#ResultModal-ResultTypeRadioOpts").click(function(e){
+          var result=$("input#ResultModal-ResultTypeRadioOpts:checked").val();
+          toggleResultModal_ResultType(result);
+        });
+
+        
+        //EVENT:邀约面试提交按钮
+        $("button#ResultModal-SubmitBtn").click(function(e){
+           
+          e.preventDefault();
+          submitResultModal();
+         
+        })
+
+        //---------面试结果 标签盒操作 ------------
+        
+        $("button.ResultModal-TagBtn").click(function(e){
+          
+          var text=e.currentTarget.innerText;
+          if (text=="添加"){
+            text=$("input#ResultModal-OtherTag").val();
+          }
+          $("input#ResultModal-ResultTags").tagsinput("add",text);
+          e.stopPropagation();
+        });
+        //点击content中任何区域可关闭标签盒TagBox
+        $("div#ResultModal-ContentDiv").click(function(e){
+          $('div#ResultModal-TagBox').hide();
+        })
+        //选择钮显示标签盒
+        $("button#ResultModal-ResultTagsSelBtn").click(function(e){
+          $("div#ResultModal-TagBox").show();
+          //事件阻止，防止触发content.click再次关闭
+          e.stopPropagation();
+        })
+        //标签盒事件阻止冒泡，防止触发content.click
+        $("input#ResultModal-OtherTag").click(function(e){
+          e.stopPropagation();
+        })
+        $("div#ResultModal-TagBox").click(function(e){
+          e.stopPropagation();
+        })
+        //-----------标签盒------------
+
+      }//regEvent
+      function toggleResultModal_ResultType(result){
+          if (result=="爽约"){
+            $("div#ResultModal-DeptDiv").slideUp();
+            $("div#ResultModal-InterviewerDiv").slideUp();
+            $("div#ResultModal-TimeDiv").slideUp();
+            $("div#ResultModal-LocationDiv").slideUp();
+            $("div#ResultModal-ExamScoreDiv").slideUp();
+            $("div#ResultModal-CommentsDiv").slideUp();
+            
+          }
+          else{
+            
+            $("div#ResultModal-DeptDiv").slideDown();
+            $("div#ResultModal-InterviewerDiv").slideDown();
+            $("div#ResultModal-TimeDiv").slideDown();
+            $("div#ResultModal-LocationDiv").slideDown();
+            $("div#ResultModal-ExamScoreDiv").slideDown();
+            $("div#ResultModal-CommentsDiv").slideDown();
+          }
+      }
+      //Show modal
+      function showResultModal(candidateid,candidatename){
+          
+      
+          $("p#ResultModal-CandidateID").text(candidateid);
+          $("p#ResultModal-CandidateName").text(candidatename);
+         
+        
+            
+          //load info
+          $.get("data/interview?action=LastInterviewInfo&candidateid="+candidateid,function(data,status){
+        
+            var item=JSON.parse(data);
+            
+            $("p#ResultModal-InterviewID").text(item.InterviewID);
+            $("#ResultModal-Time").val(item.InterviewTime);
+            $("#ResultModal-ExamScore").val(item.ExamScore);
+            $("#ResultModal-Location").val(item.InterviewLocation);
+            $("#ResultModal-Comments").val(item.Summary);
+            if (typeof(item.ResultType)=="undefined" || item.ResultType==""){
+              $("#ResultModal-ResultTypeRadioOpts[value=面试通过]").prop({checked:"checked"});
+              toggleResultModal_ResultType("面试通过");
+            }
+            else{
+              $("#ResultModal-ResultTypeRadioOpts[value="+item.ResultType+"]").prop({checked:"checked"});
+              toggleResultModal_ResultType(item.ResultType);
+            }
+            
+            $("#ResultModal-ResultTags").tagsinput('removeAll');
+            array=item.ResultTags.split(",")
+            for (i in array){
+               $("#ResultModal-ResultTags").tagsinput("add",array[i]);
+            }
+            $("#ResultModal-Interviewer").tagsinput('removeAll');
+            for (i in item.InterviewerList){
+              $("input#ResultModal-Interviewer").tagsinput("add",{id:item.InterviewerList[i].id,label:item.InterviewerList[i].name});
+            }
+            $("#ResultModal-DeptName").tagsinput('removeAll');
+            for (i in item.DepartmentList){
+              $("input#ResultModal-DeptName").tagsinput("add",{id:item.DepartmentList[i].id,label:item.DepartmentList[i].name});
+            }
+          
+
+            $("#ResultModal").modal({backdrop:"static",keyboard:false});
+            $("#ResultModal").modal("show"); 
+          });
+          
+        
+          return;
+
+
+      }
+      
+      function submitResultModal(){
+        var CandidateID=$("p#ResultModal-CandidateID").text();
+        var CandidateName=$("p#ResultModal-CandidateName").text();
+        var InterviewID=$("p#ResultModal-InterviewID").text();
+        var ResultType=$("#ResultModal-ResultTypeRadioOpts:checked").val();
+        var ResultTags=$("input#ResultModal-ResultTags").val();
+        var ExamScore=$("input#ResultModal-ExamScore").val();
+        var Dept=$("input#ResultModal-DeptName").val();
+        var deptlist=$("input#ResultModal-DeptName").tagsinput('items');
+        var deptidlist="";
+        var deptnamelist="";
+        for (i in deptlist){
+           deptidlist+=(i==0?"":",")+deptlist[i].id;
+           deptnamelist+=(i==0?"":",")+deptlist[i].label;
+        }
+        var interviewerlist=$("input#ResultModal-Interviewer").tagsinput('items');
+        var intervieweridlist="";
+        var interviewernamelist="";
+        for (i in interviewerlist){
+           intervieweridlist+=(i==0?"":",")+interviewerlist[i].id;
+           interviewernamelist+=(i==0?"":",")+interviewerlist[i].label;
+        }
+        var Comments=$("textarea#ResultModal-Comments").val();
+        var Location=$("input#ResultModal-Location").val();
+        var Interviewtime=$("input#ResultModal-Time").val();
+        if (Interviewtime==""){
+          showTip("面试时间不能为空。",3000);
+          return;
+        }
+       
+        addInterviewResult(CandidateID,InterviewID,ResultType,ExamScore,ResultTags,deptnamelist,deptidlist,interviewernamelist,intervieweridlist,Interviewtime,Location,Comments);
+        
+       
+        return;
+      }
+
+
+
+
+      //保存面试结果信息
+      function addInterviewResult(candidateid,interviewid,resulttype,examscore,resulttags,departmentlist,departmentidlist,interviewerlist,intervieweridlist,interviewtime,interviewlocation,summary){
+        $.post("data/interview?action=InterviewResult",
+              {
+                "interviewid":interviewid,
+                "candidateid":candidateid,
+                "resulttype":resulttype,
+                "examscore":examscore,
+                "resulttags":resulttags,
+                "departmentlist":departmentlist,
+                "departmentidlist":departmentidlist,
+                "interviewerlist":interviewerlist,
+                "intervieweridlist":intervieweridlist,
+                "interviewtime":interviewtime,
+                "interviewlocation":interviewlocation,
+                "summary":summary
+              },
+              function(data,status){
+                $('#ResultModal').modal('hide');
+                
+                ret=JSON.parse(data);
+                if (ret.Error=="Time Is Null."){
+                  alert("面试时间不能为空");
+                  return;
+                }
+                if (ret.SMSResult=="Candidate's Phone Not Found."){
+                  showTip("候选人手机号为空，面试结果短信无法送达。请补充手机号码后再次发送。",5000);
+                  
+                }
+                
+                updateRow(candidateid,resulttype);
+                
+                
+               
+              }//function 
+        );//post
+
+      }
+      
+
+
+  //-------------------显示简历部分---------------------------
+      function regResumeModalEvent(){
+        //EVENT:转发简历按钮
+        $("button#ResumeModal-SendBtn").click(function(e){
+           
+          //e.preventDefault();
+          var receiverstr=$("input#ResumeModal-EMail").val();
+          if (receiverstr=="" ){
+            showTip("请填写接收邮箱。",1000);
+            $("button#ResumeModal-SendBtn").attr("disabled","disabled");
+            return;
+          }
+          sendMail();
+          
+        });
+        /*
+        $("table#ResumeModal-ResumeFile tbody").on("click","input#ResumeModal-FileCheck",function(e){
+          var resumeid=getResumeIDListString();
+          var receiverstr=$("input#ResumeModal-EMail").val();
+          if (resumeid=="" || receiverstr=="" )
+            $("button#ResumeModal-SendBtn").attr("disabled","disabled");
+          else
+            $("button#ResumeModal-SendBtn").removeAttr("disabled");
+        });*/
+        $("input#ResumeModal-EMail").keypress(function(e){
+          var receiverstr=$("input#ResumeModal-EMail").val();
+          if (receiverstr=="" )
+            $("button#ResumeModal-SendBtn").attr("disabled","disabled");
+          else
+            $("button#ResumeModal-SendBtn").removeAttr("disabled");
+        });
+        $("input#ResumeModal-EMail").change(function(e){
+          var receiverstr=$("input#ResumeModal-EMail").val();
+          if (receiverstr=="" )
+            $("button#ResumeModal-SendBtn").attr("disabled","disabled");
+          else
+            $("button#ResumeModal-SendBtn").removeAttr("disabled");
+        });
+      }
+
+      //Show modal
+      function showResumeModal(candidateid){
+          $("#ResumeModal").modal({backdrop:"static",keyboard:false});
+          $("#ResumeModal-SendBtn").attr("data-id",candidateid);
+          //init
+          $("button#ResumeModal-SendBtn").attr("disabled","disabled");
+          $("input#ResumeModal-EMail").val("");
+          reloadResumeModalCandidateInfo(candidateid);
+          reloadResumeModalTable(candidateid);
+
+          $("#ResumeModal").modal("show");
+          return;
+      }
+      //加载候选人信息
+      function reloadResumeModalCandidateInfo(candidateid){
+        div=$("#ResumeModal-CandidateInfo");
+        div.empty();
+        var ret="";
+        var pval="";
+
+        $.get("data/register?candidateid="+candidateid,function(data,status){
+          if (status!="success")
+            alert("Data: " + data + "\nStatus: " + status);
+          $.each(JSON.parse(data),function(i,item){
+               
+            pval="<p><strong>姓名:</strong>"+item.Name+"("+item.Sex+") <strong>出生日期:</strong>"+item.DateOfBirth + " <strong>投递职位:</strong>"+item.Job+ "</p>";
+            ret=ret+pval;
+            pval="<p><strong>简历编号:</strong>"+item.ResumeNo+" <strong>手机:</strong>"+item.Phone + " <strong>邮箱:</strong>"+item.Mail+ "</p>";
+            ret=ret+pval;
+            pval="<p><strong>任职公司:</strong>"+item.LastJob+" <strong>职位:</strong>"+item.LastTitle + " <strong>任职月数:</strong>"+item.LastJobMonth+ " <strong>在职状态:</strong>"+ item.InServiceState+"</p>";
+            ret=ret+pval;
+            
+            pval="<p><strong>最高学历:</strong>"+item.HighestEducation+" <strong>学校:</strong>"+item.HighestEducationName + " <strong>专业:</strong>"+item.HighestEducationProfessional+ " <strong>毕业:</strong>"+ item.HighestEducationGraduation+"</p>";
+            ret=ret+pval;
+            
+            if (item.OffJobEducationCheck!=1){
+              pval="<p><strong>脱产学历:</strong>"+item.OffJobEducation+" <strong>学校:</strong>"+item.OffJobEducationName + " <strong>专业:</strong>"+item.OffJobEducationProfessional+ " <strong>毕业:</strong>"+ item.OffJobEducationGraduation+"</p>";
+              ret=ret+pval;
+            }
+
+            pval="<p><strong>简历来源:</strong>"+item.ResumeSourceType +"-" +item.ResumeSource+"</p>";
+            ret=ret+pval;
+            pval="<p><strong>说明:</strong>"+item.Comments+"</p>";
+            ret=ret+pval;
+            pval="<p><strong>是否体系内:</strong>"+item.FromYonyou+"</p>";
+            ret=ret+pval;
+          }); //each
+          div.append(ret);
+        }); //get    
+        
+        return;
+        
+      }
+      //加载附件表格
+      function reloadResumeModalTable(candidateid){
+        $.get("data/register/resumeupload?candidateid="+candidateid,function(data,status){
+          //alert("Data: " + data + "\nStatus: " + status);
+          var t=$("table#ResumeModal-ResumeFile tbody");
+          t.empty();
+          $.each(JSON.parse(data),function(i,item){
+            var tr=$("<tr>").attr("id",item.id);
+            tr.css({"border-bottom-style":"solid","border-bottom-width":"thin","border-bottom-color":"lightgrey"});
+            var tdhtml="<td style='border-top-style:none;'>"+
+                       "<a href=upload/"+item.urlname+" target='_blank'>"+item.filename+"</a>"+
+                       "</td>";
+            tr.append(tdhtml);
+            tdhtml="<td style='float:right;border-top-style:none;'>"+
+                   " <label>选择发送<input type='checkbox' id='ResumeModal-FileCheck' name='"+item.id+"'></label>"+
+                   "</td>";
+            tr.append(tdhtml);
+            t.append(tr);
+          });
+        });    
+      } //reloadResumeModalTable
+
+      //获得checked的简历ID字符串，逗号分隔
+      function getResumeIDListString(){
+        var resumeid="";
+        $("#ResumeModal-FileCheck:checked").each(function(index){
+            var fileid=$(this).attr("name")
+            if (resumeid=="")
+              resumeid=fileid
+            else
+              resumeid=resumeid+","+fileid
+        });
+        return resumeid;
+      }
+ 
+
+      //发邮件   收件人邮箱用逗号分隔，简历附件编号用逗号分隔
+      function sendMail(){
+        var candidateid=$("#ResumeModal-SendBtn").attr("data-id");  
+        var receiverstr=$("input#ResumeModal-EMail").val();
+        var candidateinfo=$("#ResumeModal-CandidateInfo").html();
+        var resumeid=getResumeIDListString();
+        showTip("正在发送邮件。。。。。",0);
+        
+        $.get("data/forwardresume?candidateid="+candidateid+"&receiver="+receiverstr+"&resumeid="+resumeid+"&candidateinfo="+candidateinfo,function(data,status){
+          if (data=="ok"){
+
+            showTip("发送完成",500);
+            
+          }
+          else{
+            
+            showTip("发送失败",2000);
+            alert("Data: " + data + "\nStatus: " + status);
+          }
+        });
+
+      }
+
+
+
+      
+   //-------------------面试通知部分---------------------------
+      function regNotifyModalEvent(){
+        //EVENT:邀约面试提交按钮
+        $("button#NotifyModal-SendBtn").click(function(e){
+           
+          //e.preventDefault();
+          alert("发送面试提醒");
+         
+        })
+      }
+
+      //Show modal
+      function showNotifyModal(candidateid){
+          $("#NotifyModal").modal({backdrop:"static",keyboard:false});
+
+          $("#NotifyModal").modal("show");
+          
+          //load info
+
+          return;
+      }
+      
+    //-------------------候选人删除通知部分---------------------------
+      function regRemoveModalEvent(){
+        //EVENT:on show
+        $('#RemoveModal').on('show.bs.modal', function (event) {
+           //调整邀约面试窗口中tagspinput样式
+           $(".bootstrap-tagsinput").css("width","100%");
+        
+        })
+
+
+        //EVENT:邀约面试提交按钮
+        $("button#RemoveModal-SubmitBtn").click(function(e){
+           
+          //e.preventDefault();
+
+          var tags=$("#RemoveModal-Reason").tagsinput('items');
+          var id= $("p#RemoveModal-CandidateID").text();
+           $.post("data/candidate?action=Remove",
+              {
+                "candidateid":id,
+                "reasontags":tags.toString()
+                
+              },
+              function(data,status){
+                 $('#RemoveModal').modal('hide');
+                 showTip("真的再也看不见了。",1500);
+                 loadList(currentpage);
+              }
+        );//post
+
+         
+         
+        });
+
+        $("button.RemoveModal-TagBtn").click(function(e){
+          
+          var text=e.currentTarget.innerText;
+          if (text=="添加"){
+            text=$("input#RemoveModal-OtherTag").val();
+          }
+          $("input#RemoveModal-Reason").tagsinput("add",text);
+          e.stopPropagation();
+        });
+        //点击content中任何区域可关闭标签盒TagBox
+        $("div#RemoveModal-ContentDiv").click(function(e){
+          $('div#RemoveModal-TagBox').hide();
+        })
+        //选择钮显示标签盒
+        $("button#RemoveModal-ReasonSelBtn").click(function(e){
+          $("div#RemoveModal-TagBox").show();
+          //事件阻止，防止触发content.click再次关闭
+          e.stopPropagation();
+        })
+        //标签盒事件阻止冒泡，防止触发content.click
+        $("input#RemoveModal-OtherTag").click(function(e){
+          e.stopPropagation();
+        })
+        $("div#RemoveModal-TagBox").click(function(e){
+          e.stopPropagation();
+        })
+        
+      }
+
+      //Show modal
+      function showRemoveModal(candidateid,candidatename){
+          $("#RemoveModal").modal({backdrop:"static",keyboard:false});
+          $("p#RemoveModal-CandidateID").text(candidateid);
+          $("p#RemoveModal-CandidateName").text(candidatename);
+          $("#RemoveModal").modal("show");
+          
+          //load info
+
+          return;
+      }
+
+    </script>
+
+
+  </body>
+</html>

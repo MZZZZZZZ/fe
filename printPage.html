@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="刘南">
+    <link rel="icon" href="../favicon.ico">
+
+    <title>打印</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="http://v3.bootcss.com/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!--script src="http://v3.bootcss.com/assets/js/ie-emulation-modes-warning.js"></script-->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+      img.idclass {width:60%;}
+      img.hukouclass {width:85%;}
+      img.diplomaclass {width:85%;}
+  
+    </style>
+
+
+  </head>
+
+  <body>
+    <div id="div1">
+      <p style="text-align:center;"> <img id="img1" ></p>
+      <p style="text-align:center;"> <img id="img2" ></p>
+      <p style="text-align:center;"> <img id="img3" ></p>
+    </div>
+
+
+ 
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="jquery-1.11.3/jquery-1.11.3.min.js"></script>
+    <!--script src="jquery-2.1.4/jquery-2.1.4.min.js"></script-->
+    <script src="bootstrap-3.3.5/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!--script src="http://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script-->
+    
+
+
+
+    <script>
+      
+      $(document).ready(function(){
+        //初始化
+        //判断是否登录
+        $.get("data/login?action=currentuser",function(data,status){
+          ret=JSON.parse(data);
+          if (ret.login){
+              
+          }
+          else{
+            window.location.href="login.html";
+          }
+        });
+
+        var CandidateID=getUrlParam("k");
+        var Type=getUrlParam("Type");   //1 身份证  2毕业证 
+        if (Type=="1")
+          $("div#div1").css("margin-top","20%");
+        $.ajax({  
+          type : "get",  
+          url : "data/cc",  
+          data : "action=GetCert&candidateid="+CandidateID,  
+          async : false,  
+          success : function(data){  
+            if (data=="")
+                return;
+            ret=JSON.parse(data);
+            var id="";
+            for (x in ret){
+              switch (ret[x].filename_main){
+                case "身份证-正":
+                  id="id1";
+                  if (Type=="1"){
+                    $("img#img1").attr("src","upload/"+ret[x].urlname);
+                    $("img#img1").addClass("idclass");
+                  }
+                  break;
+                case "身份证-背":
+                  id="id2";
+                  if (Type=="1"){
+                    $("img#img2").attr("src","upload/"+ret[x].urlname);
+                    $("img#img2").addClass("idclass");
+                  }
+                  break;
+                case "户口本-首页":
+                  id="id3";
+                  if (Type=="3"){
+                    $("img#img1").attr("src","upload/"+ret[x].urlname);
+                    $("img#img1").addClass("hukouclass");
+                  }
+                  break;
+                case "户口本-本人页-正":
+                  id="id4";
+                  if (Type=="3"){
+                    $("img#img2").attr("src","upload/"+ret[x].urlname);
+                    $("img#img2").addClass("hukouclass");
+                  }
+                  break;
+                case "户口本-本人页-背":
+                  id="id5";
+                  if (Type=="3"){
+                    $("img#img3").attr("src","upload/"+ret[x].urlname);
+                    $("img#img3").addClass("hukouclass");
+                  }
+                  break;  
+                case "毕业证":
+                  id="edu1";
+                  if (Type=="2"){
+                    $("img#img1").attr("src","upload/"+ret[x].urlname);
+                    $("img#img1").addClass("diplomaclass");
+                  }
+                  break;  
+                case "学位证":
+                  id="edu2";
+                  if (Type=="2"){
+                    $("img#img2").attr("src","upload/"+ret[x].urlname);
+                    $("img#img2").addClass("diplomaclass");
+                  }
+                  break;    
+                case "资质1":
+                  id="cert1";
+                  if (Type=="4"){
+                    $("img#img1").attr("src","upload/"+ret[x].urlname);
+                    $("img#img1").addClass("diplomaclass");
+                  }
+                  break;    
+                case "资质2":
+                  id="cert2";
+                  if (Type=="4"){
+                    $("img#img2").attr("src","upload/"+ret[x].urlname);
+                    $("img#img2").addClass("diplomaclass");
+                  }
+                  break;    
+                default:
+                  id="";
+                  alert("error");
+              }
+             }
+        }  
+        });  
+
+
+        /*
+        
+        $.get("data/cc?action=GetCert&candidateid="+CandidateID,function(data,status){
+              if (data=="")
+                return;
+              ret=JSON.parse(data);
+              var id="";
+              for (x in ret){
+                switch (ret[x].filename_main){
+                  case "身份证-正":
+                    id="id1";
+                    $("img#img1").attr("src","upload/"+ret[x].urlname);
+                    break;
+                  case "身份证-背":
+                    id="id2";
+                    $("img#img2").attr("src","upload/"+ret[x].urlname);
+                    break;
+                  case "户口本-首页":
+                    id="id3";
+                    break;
+                  case "户口本-本人页-正":
+                    id="id4";
+                    break;
+                  case "户口本-本人页-背":
+                    id="id5";
+                    break;  
+                  case "毕业证":
+                    id="edu1";
+                    break;  
+                  case "学位证":
+                    id="edu2";
+                    break;    
+                  case "资质1":
+                    id="cert1";
+                    break;    
+                  case "资质2":
+                    id="cert2";
+                    break;    
+                  default:
+                    id="";
+                    alert("error");
+                }
+               }
+        });//get cc           
+          */
+                
+                
+
+
+      }); //document.ready
+
+
+
+      function getUrlParam(name) {
+          var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); 
+          var r = window.location.search.substr(1).match(reg);  
+          if (r != null) return unescape(r[2]); return null; 
+      }
+
+
+    </script>
+
+
+  </body>
+</html>

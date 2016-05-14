@@ -1,0 +1,36 @@
+    /*
+    # =============================================================================
+    #   Login/signup animation
+    # =============================================================================
+    */
+
+    $(window).load(function() {
+      return $(".login-container").addClass("active");
+    });
+    /*
+    # =============================================================================
+    #   FitVids
+    # =============================================================================
+    */
+
+    $(".timeline-content").fitVids();
+    /*
+    # =============================================================================
+    #   Timeline animation
+    # =============================================================================
+    */
+
+    timelineAnimate = function(elem) {
+      return $(".timeline.animated li").each(function(i) {
+        var bottom_of_object, bottom_of_window;
+        bottom_of_object = $(this).position().top + $(this).outerHeight();
+        bottom_of_window = $(window).scrollTop() + $(window).height();
+        if (bottom_of_window > bottom_of_object) {
+          return $(this).addClass("active");
+        }
+      });
+    };
+    timelineAnimate();
+    $(window).scroll(function(){
+	return timelineAnimate();
+});

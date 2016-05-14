@@ -1,0 +1,1891 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="集团UAP中心人力与运营管理部 刘南">
+    <link rel="icon" href="../favicon.ico">
+
+    <title>录用</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen"/> 
+    <link href="tagsinput/bootstrap-tagsinput.css" rel="stylesheet">
+    <link href="treeview/bootstrap-treeview.min.css" rel="stylesheet">
+    <link href="Font-Awesome-3.2.1/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="http://v3.bootcss.com/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!--script src="http://v3.bootcss.com/assets/js/ie-emulation-modes-warning.js"></script-->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+  </head>
+
+  <body style="padding-top:70px;">
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand"><i class="icon-github icon-2x pull-left"></i><!--img alt="Yonyou" src="images/logo.png"--></a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="default.html">首页</a></li>
+            <li><a href="register.html">候选人登记</a></li>
+            <li ><a href="interview-list.html">邀约面试</a></li>
+            <li><a href="offer.html">录用</a></li>
+            <li><a href="entry.html">入职登记</a></li>
+            <li><a href="setup-org.html">设置</a></li> 
+            
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            
+            <li class="dropdown">
+              <a href="#"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="currentuser">User</span> <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">修改密码</a></li>
+                <li><a href="javascript:logout();">注销</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+  	<div class="container-fluid" >
+  	  <div class="row">
+  	    <div class="col-md-6 col-lg-6">
+          <form class="form-inline" style="display:inline-block;">
+              <div class="form-group">
+                <label for="status">状态</label>
+                <select class="form-control"  id="status">
+                  <option value="0" selected>全部</option>
+                  <option value="1">面试通过/待定</option>
+                  <option value="2">已发/接受OFFER</option>
+                  <option value="3">拒OFFER/违约</option>
+                  
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="hr">HR</label>
+                <select class="form-control"  id="hr">
+                  <option value="0" selected>全部</option>
+                </select>
+              </div>
+              <button type="button" class="btn btn-default" onclick="init_pagination();loadList(1);">过滤</button>
+            </form>
+        </div>
+
+        <div class="col-md-6 col-lg-6">
+  		    <nav style="float:right;display:inline-block;">
+  	        <ul class="pagination" style="margin:0;">
+  	          <li>
+  	            <a href="#" aria-label="前一页">
+  	              <span aria-hidden="true">&laquo;</span>
+  	            </a>
+  	          </li>
+              
+  	          <li><a href="#">1</a></li>
+  	          <li><a href="#">2</a></li>
+  	          <li><a href="#">3</a></li>
+  	          <li><a href="#">4</a></li>
+  	          <li><a href="#">5</a></li>
+              
+  	          <li>
+  	            <a href="#" aria-label="下一页">
+  	              <span aria-hidden="true">&raquo;</span>
+  	            </a>
+  	          </li>
+  	        </ul>
+  	      </nav>
+        </div>
+  	    
+  	  </div>
+
+      <table class="table table-hover expanding " id="main">
+      <thead>
+        <tr>
+          <th>序号</th>
+          <th>操作</th>
+          <th>姓名(性别)</th>
+          <th>录用职位/职级</th>
+          <th>年龄</th>
+          <th>电话</th>
+          <th>录用部门</th>
+          <th>录用日期</th>
+          <th>计划入职日期</th>
+          <th>指导人</th>
+          <th>HR</th>
+          <th>状态</th>
+        </tr>
+      </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+
+
+    
+    <!--录用浮动层-->
+    <div class="modal fade" id="OfferModal" tabindex="-1" role="dialog" aria-labelledby="OfferModal-Label">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" id="OfferModal-ContentDiv">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="OfferModal-Label">录用</h4>
+                </div>
+                <div class="modal-body">
+                  <form class="form-horizontal"> 
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">候选人</label>
+                      <div class="col-sm-9" >
+                        <p class="form-control-static" id="OfferModal-CandidateName"></p>
+                        <p id="OfferModal-CandidateID" style="display:none" ></p>
+                        <p id="OfferModal-Action" style="display:none" ></p>
+                        <p id="OfferModal-OfferID" style="display:none" ></p>
+                      </div>
+                    </div>
+                    
+                   
+
+                    <div class="form-group" id="OfferModal-DeptDiv">
+                      <label class="col-sm-2 control-label">录用部门</label>
+                      <div class="col-sm-4" >
+                        <div class="input-group">
+                            <input type="text"  class="form-control" value=""  id="OfferModal-DeptName" data-id="" >
+                            <div class="input-group-btn">
+                              <button class="btn btn-default " type="button" onclick="$('div#OfferModal-DeptTree').toggle();">
+                                 <span class="glyphicon glyphicon-search"></span>
+                              </button>
+                              
+                            </div>
+                            <div id="OfferModal-DeptTree" style="position:absolute;float:right;width:400px;z-index:999;display:none;" ></div>  
+                        </div>
+                      </div>
+                      <label class="col-sm-2 control-label">工作地点</label>
+                      <div class="col-sm-3">
+                        <select class="form-control"  id="OfferModal-JobBase">
+                          <option value="北京" selected>北京</option>
+                          <option value="深圳" >深圳</option>
+                          <option value="南昌" >南昌</option>
+                        </select>
+                      </div>
+                    </div>
+                    
+                    <div class="form-group" >
+                      <label class="col-sm-2 control-label">录用职位</label>
+                      <div class="col-sm-4">
+                        <input type="text" placeholder="" class="form-control" id="OfferModal-Job">
+                      </div>  
+                      <label class="col-sm-2 control-label">职级</label>
+                      <div class="col-sm-3">
+                        <select class="form-control"  id="OfferModal-JobGrade">
+                          <option value="1A" selected>1A</option>
+                          <option value="1B" >1B</option>
+                          <option value="2A" >2A</option>
+                          <option value="2B" >2B</option>
+                          <option value="准3A" >准3A</option>
+                          <option value="准3B" >准3B</option>
+                          <option value="准4A" >准4A</option>
+                          <option value="准4B" >准4B</option>
+                          <option value="准5A" >准5A</option>
+                          <option value="准5B" >准5B</option>
+                          <option value="准6A" >准6A</option>
+                          <option value="准6B" >准6B</option>
+
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group" id="OfferModal-ManagerDiv">
+                      <label class="col-sm-2 control-label">部门经理</label>
+                      <div class="col-sm-4" >
+                        <div class="input-group">
+                          <input type="text"  class="form-control" value=""  id="OfferModal-Manager" data-id="">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default " type="button" onclick="$('div#OfferModal-ManagerTree').toggle();">
+                              <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                          </span>
+                          <div id="OfferModal-ManagerTree" style="position:absolute;float:right;width:400px;z-index:999;display:none;" ></div>
+                        </div>
+                      </div>
+                      <label class="col-sm-2 control-label">指导人</label>
+                      <div class="col-sm-3">
+                        <input type="text" placeholder="" class="form-control" id="OfferModal-Director">
+                      </div>
+                    </div>
+
+                    
+                    <div class="form-group" id="OfferModal-SalaryDiv">
+                      <label class="col-sm-2 control-label">月薪</label>
+                      <div class="col-sm-4">
+                        <div class="input-group">
+                          <input type="number" placeholder="" class="form-control" id="OfferModal-Salary">
+                          <span class="input-group-addon">元</span>
+                        </div>
+                      </div>
+
+                      <label class="col-sm-2 control-label">年薪</label>
+                      
+                      <div class="col-sm-3">
+                        <div class="input-group">
+                          <input type="text" placeholder="" class="form-control" id="OfferModal-AnnualSalary">
+                          <span class="input-group-addon">万元</span>
+                        </div>
+                      </div>
+                    </div>
+
+          
+
+
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">试用期</label>
+                      <div class="col-sm-9">
+                        <label class="radio-inline"><input type="radio" id="OfferModal-ProbationPeriodRadioOpts" name="ProbationPeriod" value="无">无</label>
+                        <label class="radio-inline"><input type="radio" id="OfferModal-ProbationPeriodRadioOpts" name="ProbationPeriod"  value="有" checked="checked">有</label>
+                      </div>
+                    </div>
+
+                    <div class="form-group" id="OfferModal-ProbationPeriodDiv">
+                      <label class="col-sm-2 control-label">试用月薪</label>
+                      <div class="col-sm-4">
+                        <div class="input-group">
+                          <input type="number" placeholder="" class="form-control" id="OfferModal-ProbationPeriodSalary">
+                          <span class="input-group-addon">元</span>
+                        </div>
+                      </div>
+                      <label class="col-sm-2 control-label">试用期</label>
+                      <div class="col-sm-3">
+                        <div class="input-group">
+                          <input type="number" placeholder="" class="form-control" id="OfferModal-ProbationPeriod" value="3">
+                          <span class="input-group-addon">月</span>
+                        </div>
+                      </div>
+                    </div>
+                        
+                     
+                    <a href="#none" onclick="toggleClause('StockClause');" >股票条款<i class="icon-angle-down" id="StockClause"></i></a><hr style="margin-top:2px;">
+                    <div class="form-group" id="OfferModal-StockClauseDiv" style="display:none;">
+                       <label class="col-sm-2 control-label" for="OfferModal-StockClause">股票</label>
+                       <div class="col-sm-9">
+                         <textarea class="form-control" rows="2" id="OfferModal-StockClause" name="OfferModal-StockClause"></textarea>
+                       </div>
+                    </div>
+                     <a href="#none" onclick="toggleClause('WelfareClause');" >福利条款<i class="icon-angle-down" id="WelfareClause"></i></a><hr style="margin-top:2px;">
+                    <div class="form-group" id="OfferModal-WelfareClauseDiv"  style="display:none;">
+                       <label class="col-sm-2 control-label" for="OfferModal-WelfareClause">福利</label>
+                       <div class="col-sm-9">
+                         <textarea class="form-control" rows="2" id="OfferModal-WelfareClause" name="OfferModal-WelfareClause"></textarea>
+                       </div>
+                    </div>
+                    <a href="#none" onclick="toggleClause('AllowanceClause');" >津贴条款<i class="icon-angle-down" id="AllowanceClause"></i></a><hr style="margin-top:2px;">
+                    <div class="form-group" id="OfferModal-AllowanceClauseDiv" style="display:none;" >
+                       <label class="col-sm-2 control-label" for="OfferModal-AllowanceClause">津贴</label>
+                       <div class="col-sm-9">
+                         <textarea class="form-control" rows="2" id="OfferModal-AllowanceClause" name="OfferModal-AllowanceClause"></textarea>
+                       </div>
+                    </div>
+                    <a href="#none" onclick="toggleClause('OtherClause');" >其它条款<i class="icon-angle-down" id="OtherClause"></i></a><hr style="margin-top:2px;">
+                    <div class="form-group" id="OfferModal-OtherClauseDiv" style="display:none;">
+                       <label class="col-sm-2 control-label" for="OfferModal-OtherClause">其它条款</label>
+                       <div class="col-sm-9">
+                         <textarea class="form-control" rows="2" id="OfferModal-OtherClause" name="OfferModal-OtherClause"></textarea>
+                       </div>
+                    </div>
+                   
+
+
+                  </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="OfferModal-SubmitBtn">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--录用结果浮动层-->
+    <div class="modal fade" id="ResultModal" tabindex="-1" role="dialog" aria-labelledby="ResultModal-Label">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" id="ResultModal-ContentDiv">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="ResultModal-Label">录用反馈</h4>
+                </div>
+                <div class="modal-body">
+                  <form class="form-horizontal"> 
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">候选人</label>
+                      <div class="col-sm-9" >
+                        <p class="form-control-static" id="ResultModal-CandidateName"></p>
+                        <p id="ResultModal-CandidateID" style="display:none" ></p>
+                        <p id="ResultModal-Action" style="display:none" ></p>
+                        <p id="ResultModal-OfferID" style="display:none" ></p>
+                      </div>
+                    </div>
+                    
+                   
+
+                    
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">录用结果</label>
+                      <div class="col-sm-9">
+                        <label class="radio-inline"><input type="radio" id="ResultModal-ResultTypeRadioOpts" name="ResultTypeRadioOpts" value="接受OFFER"  checked="checked">接受</label>
+                        <label class="radio-inline"><input type="radio" id="ResultModal-ResultTypeRadioOpts" name="ResultTypeRadioOpts"  value="拒绝OFFER">拒绝</label>
+                        <label class="radio-inline"><input type="radio" id="ResultModal-ResultTypeRadioOpts" name="ResultTypeRadioOpts"  value="违约">违约</label>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">说明标签</label>
+                      <div class="col-sm-9">
+                        <div class="input-group">
+                          <input type="text"  class="form-control" value="" data-role="tagsinput" id="ResultModal-ResultTags"  >
+                          <span class="input-group-btn">
+                            <button class="btn btn-success " type="button" id="ResultModal-ResultTagsSelBtn">
+                              <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                          </span>
+                
+                          <div id="ResultModal-TagBox" style="position:absolute;float:right;background-color: white;border:grey solid thin;width:400px;height:auto;z-index:999;display:none;" >
+                            <div style="position: absolute;left: 380px;top:2px;">
+                              <button type="button" class="close" onclick="$('div#ResultModal-TagBox').hide();">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div style="padding:10px">
+                              <button type="button" class="btn btn-success ResultModal-TagBtn"  style="margin: 5px;">薪资不满足</button>
+                              <button type="button" class="btn btn-success ResultModal-TagBtn" style="margin: 5px;">行业不看好</button>
+                              <button type="button" class="btn btn-success ResultModal-TagBtn" style="margin: 5px;">公司不看好</button>
+                              <button type="button" class="btn btn-success ResultModal-TagBtn" style="margin: 5px;">职位原因</button>
+                              <button type="button" class="btn btn-success ResultModal-TagBtn" style="margin: 5px;">RP有问题</button>
+                              <button type="button" class="btn btn-success ResultModal-TagBtn" style="margin: 5px;">其他原因</button>
+                              <br>
+                              <div class="input-group">
+                                <input type="text" class="form-control" id="ResultModal-OtherTag" placeholder="其它" style="margin:5px;">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-success ResultModal-TagBtn" type="button" >添加</button>
+                                </span>
+                              </div><!-- /input-group -->
+                            </div>
+                          </div><!--/TagBox-->
+                        </div> 
+                      </div>
+                    </div>
+
+
+
+                    <div class="form-group" id="ResultModal-CommentsDiv">
+                       <label class="col-sm-2 control-label" for="ResultModal-Comments">备注</label>
+                       <div class="col-sm-9">
+                         <textarea class="form-control" rows="3" id="ResultModal-Comments" name="ResultModal-Comments"></textarea>
+                       </div>
+                    </div>
+                   
+
+
+                  </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="ResultModal-SubmitBtn">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--候选人简历浮动层-->
+    <div class="modal fade" id="ResumeModal" tabindex="-1" role="dialog" aria-labelledby="ResumeModal-Label">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="ResultModal-Label">候选人简历</h4>
+                </div>
+                <div class="modal-body">
+                  <form class="form-horizontal"> 
+                    
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">人选信息</label>
+                      <div class="col-sm-9" style="padding:0px;" id="ResumeModal-CandidateInfo" data-id="">
+                        <div id="ResumeModal-CandidateInfo-Photo" style="float:right;width:120px;;height:160px;"></div>
+                        <div id="ResumeModal-CandidateInfo-Info"></div>
+
+                      </div>
+
+                    </div>
+                    
+
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">简历附件</label>
+                      <div class="col-sm-9" style="padding:0px;">
+                        <table  class="table" id="ResumeModal-ResumeFile"> 
+                          <!--thead>
+                            <tr><th>附件名称</th><th>选择转发</th>
+                          </thead--> 
+                          <tbody>
+                          </tbody>
+                        </table>
+                        <!--p class="form-control-static"><a href="#">点击下载</a></p-->
+                      </div>
+
+                    </div>
+                    <div class="form-group">
+                      <!--label class="col-sm-2 control-label">转发</label-->
+                      
+                      <div class="col-sm-9 col-sm-offset-2 input-group">
+                        <input type="text" class="form-control" placeholder="邮箱，分号分隔" id="ResumeModal-EMail">
+                        <span class="input-group-btn">
+                          <button class="btn btn-success" type="button" id="ResumeModal-SendBtn">发送</button>
+                        </span>
+                      </div><!-- /input-group -->
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">证件照片</label>
+                      <div class="col-sm-9" style="padding:0px;">
+                        <row  id="ResumeModal-CertPhotoRow">
+                         
+                        
+
+                        </row>
+                        <row>
+                          <a id="ResumeModal-PrintIDPhoto" href="printPage.html">打印身份证</a>
+                        </row>
+                      </div>
+                    </div>
+
+
+                  </form>
+                  
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!--发送面试提醒浮动层-->
+    <div class="modal fade" id="NotifyModal" tabindex="-1" role="dialog" aria-labelledby="NotifyModal-Label">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="NotifyModal-Label">发送面试提醒</h4>
+                </div>
+                <div class="modal-body">
+                  <form class="form-horizontal"> 
+
+
+
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">发送范围</label>
+                      <div class="col-sm-8">
+                        <label class="checkbox-inline">
+                          <input type="checkbox" id="NotifyModal-CandidateChk" > 候选人
+                        </label>
+                        <label class="checkbox-inline">
+                          <input type="checkbox" id="NotifyModal-InterviewerChk" > 面试官
+                        </label>
+                        <label class="checkbox-inline">
+                          <input type="checkbox" id="NotifyModal-DestClerkChk" > 面试接待
+                        </label>
+                        <label class="checkbox-inline">
+                          <input type="checkbox" id="NotifyModal-RecruiterChk"> 招聘经理
+                        </label>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-sm-offset-2 col-sm-8">
+                        <label class="checkbox-inline">
+                          <input type="checkbox" id="NotifyModal-OtherChk" onchange="$('input#NotifyModal-Other').fadeToggle();"> 其他
+                          <input type="text" id="NotifyModal-Other" placeholder="手机号码，分号分隔" style="display:none;width:300px;">
+                        </label>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-sm-3 col-sm-offset-2 ">
+                        <button class="btn btn-success" type="button" id="NotifyModal-SendBtn">发送</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+     <!--删除候选人浮动层-->
+    <div class="modal fade" id="RemoveModal" tabindex="-1" role="dialog" aria-labelledby="RemoveModal-Label">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" id="RemoveModal-ContentDiv">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="RemoveModal-Label">删除候选人</h4>
+                </div>
+                <div class="modal-body" >
+                  <form class="form-horizontal"> 
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">候选人</label>
+                      <div class="col-sm-9">
+                        <p class="form-control-static" id="RemoveModal-CandidateName"></p>
+                        <p id="RemoveModal-CandidateID" style="display:none" val=""></p>
+                      </div>
+                    </div>
+
+
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">删除原因</label>
+                      <div class="col-sm-9">
+                        <div class="input-group">
+                          <input type="text"  class="form-control" value="" data-role="tagsinput" id="RemoveModal-Reason"  >
+                          <span class="input-group-btn">
+                            <button class="btn btn-success " type="button" id="RemoveModal-ReasonSelBtn">
+                              <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                          </span>
+                
+                          <div id="RemoveModal-TagBox" style="position:absolute;float:right;background-color: white;border:grey solid thin;width:400px;height:auto;z-index:999;display:none;" >
+                            <div style="position: absolute;left: 380px;top:2px;">
+                              <button type="button" class="close" onclick="$('div#RemoveModal-TagBox').hide();">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div style="padding:10px">
+                              <button type="button" class="btn btn-success RemoveModal-TagBtn"  style="margin: 5px;">查无此人</button>
+                              <button type="button" class="btn btn-success RemoveModal-TagBtn" style="margin: 5px;">就是约不上</button>
+                              <button type="button" class="btn btn-success RemoveModal-TagBtn" style="margin: 5px;">没能力没潜力</button>
+                              <button type="button" class="btn btn-success RemoveModal-TagBtn" style="margin: 5px;">人各有志</button>
+                              <button type="button" class="btn btn-success RemoveModal-TagBtn" style="margin: 5px;">RP有问题</button>
+                              <button type="button" class="btn btn-success RemoveModal-TagBtn" style="margin: 5px;">其他原因</button>
+                              <br>
+                              <div class="input-group">
+                                <input type="text" class="form-control" id="RemoveModal-OtherTag" placeholder="其它" style="margin:5px;">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-success RemoveModal-TagBtn" type="button" >添加</button>
+                                </span>
+                              </div><!-- /input-group -->
+                            </div>
+                          </div><!--/TagBox-->
+                        </div> 
+                      </div>
+                    </div>
+
+                
+                  </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">再考虑一下呗</button>
+                    <button type="button" class="btn btn-primary" id="RemoveModal-SubmitBtn">永不相见！</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+ 
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="jquery-1.11.3/jquery-1.11.3.min.js"></script>
+    <!--script src="jquery-2.1.4/jquery-2.1.4.min.js"></script-->
+    <script src="bootstrap-3.3.5/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!--script src="http://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script-->
+    <script src="bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" ></script>
+    <script src="bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" ></script>
+    <script src="tagsinput/bootstrap-tagsinput.js"></script>
+    <script src="tagsinput/typeahead.bundle.js"></script>
+    <script src="treeview/bootstrap-treeview.min.js"></script>
+    <script src="js/jquery.printPage.js"></script>
+    <script src="js/jquery.lazyload.js" type="text/javascript"></script>
+    <script src="js/tip.js"></script>
+
+
+
+
+    <script>
+      var currentpage=1;
+      function logout(){
+         $.post("data/login?action=logout",function(data,status){
+                window.location.href="login.html";
+         });
+
+      }      
+
+      $(document).ready(function(){
+        //初始化
+        //判断是否登录
+        $.get("data/login?action=currentuser",function(data,status){
+          ret=JSON.parse(data);
+          if (ret.login){
+            $("span#currentuser").text(ret.username);            
+          }
+          else{
+            window.location.href="login.html";
+          }
+        });
+        
+        
+
+        //面试邀约/面试结果  窗口日期插件初始化
+        $('.form_datetime').datetimepicker({
+          language:  'zh-CN',
+          weekStart: 1,
+          todayBtn:  1,
+          autoclose: 1,
+          todayHighlight: 1,
+          startView: 2,
+          forceParse: 1,
+          showMeridian: 1,
+          keyboardNavigation: 1,
+          startDate: new Date(),
+        });
+
+        //HR列表
+        buildHRList();
+       
+        
+        //部门树数据加载
+        buildDeptTree();
+        //面试官树数据加载
+        buildManagerTree();
+        
+
+        //发放录用浮动层事件注册
+        regOfferModalEvent();
+        //录用反馈浮动层事件注册
+        regResultModalEvent();
+        //简历浮动层事件注册
+        regResumeModalEvent();        
+        //面试通知浮动层事件注册
+        regNotifyModalEvent();        
+        //删除浮动层事件注册
+        regRemoveModalEvent();        
+
+        init_pagination();
+        loadList(currentpage);
+        $("#ResumeModal-PrintIDPhoto").printPage();
+      });  // on document.ready
+      
+
+    //-----------------必须放在外面初始化的部分-------------------------
+      //这坑爹的玩意，放在document.ready就是不管用  浪费了多半天时间
+      //初始化录用反馈tagsInput标签颜色
+      $("input#ResultModal-ResultTags").tagsinput({
+       tagClass: 'label label-primary'
+      });
+
+      //初始化删除原因tagsInput标签颜色
+      $("input#RemoveModal-Reason").tagsinput({
+       tagClass: 'label label-primary'
+      });
+      
+
+       
+    //----------------------主列表函数部分---------------------------
+      //加载/更新面试日志
+      function getInterviewInfo(CandidateID,StatusString){
+        
+        $.get("data/interview?action=InterviewInfoList&candidateid="+CandidateID,function(data,status){
+          //alert("Data: " + data + "\nStatus: " + status);
+          var html = "";
+          if (data=="[]"){
+             html = "<p>无面试记录！</p>";
+          }
+          else{
+            $.each(JSON.parse(data),function(i,item){
+              if (item.InterviewAppointResult=="邀约成功"){
+                if (item.ResultType=="面试通过"){
+                  html+="<p>【面试通过】——<strong>时间:</strong>"+item.InterviewTime +"；<strong>方式:</strong>"+item.InterviewType+"； <strong>面试官:</strong>"+(item.InterviewerSummary==""?"未指定": item.InterviewerSummary)+ "； <strong>面试意见:</strong>"+item.ResultTags+"； <strong>备注:</strong>"+(item.Summary==""?"无":item.Summary)+"</p>";
+                }
+                else if (item.ResultType=="面试未通过"){
+                  html+="<p>【面试未通过】——<strong>时间:</strong>"+item.InterviewTime +"；<strong>方式:</strong>"+item.InterviewType+"； <strong>面试官:</strong>"+(item.InterviewerSummary==""?"未指定": item.InterviewerSummary)+ "； <strong>面试意见:</strong>"+item.ResultTags+"； <strong>备注:</strong>"+(item.Summary==""?"无":item.Summary)+"</p>";
+                }
+                else if (item.ResultType=="面试结果待定"){
+                  html+="<p>【面试结果待定】——<strong>时间:</strong>"+item.InterviewTime +"；<strong>方式:</strong>"+item.InterviewType+"； <strong>面试官:</strong>"+(item.InterviewerSummary==""?"未指定": item.InterviewerSummary)+ "； <strong>面试意见:</strong>"+item.ResultTags+"； <strong>备注:</strong>"+(item.Summary==""?"无":item.Summary)+"</p>";
+                }
+                else if (item.ResultType=="爽约"){
+                  html+="<p>【爽约】——<strong>原定时间:</strong>"+item.InterviewTime +"；<strong>方式:</strong>"+item.InterviewType+"； <strong>面试官:</strong>"+(item.InterviewerSummary==""?"未指定": item.InterviewerSummary)+ "； <strong>面试意见:</strong>"+item.ResultTags+"； <strong>备注:</strong>"+(item.Summary==""?"无":item.Summary)+"</p>";
+                }
+                else {
+                 html+="<p>【待面试】——<strong>时间:</strong>"+item.InterviewTime +"；<strong>方式:</strong>"+item.InterviewType+"； <strong>面试官:</strong>"+(item.InterviewerSummary==""?"未指定": item.InterviewerSummary)+ "； <strong>邀约时间:</strong>"+item.InterviewAppointTimestamp+"； <strong>备注:</strong>"+(item.Summary==""?"无":item.Summary)+"</p>";
+
+                }
+
+
+              }
+              else if (item.InterviewAppointResult=="邀约失败"){
+                 html+="<p>【邀约失败】——<strong>原因:</strong>"+item.InterviewAppointFailTags+"； <strong>邀约时间:</strong>"+item.InterviewAppointTimestamp+"</p> ";
+              }
+
+            });//each
+          }
+          var content=$("#div_"+CandidateID).find(".interviewinfo_content");
+          content.empty();
+          content.html(html);
+          $("div#div_"+CandidateID).parent().parent().slideDown(); 
+          $("div#div_"+CandidateID).slideDown();
+          return;
+        });//get
+        
+         
+
+        
+        return;
+
+      }
+    
+      //更新状态与操作标签标签
+      function updateRow(CandidateID,StatusString){
+        var thisRow=$("tr.odd#"+CandidateID);
+        var statusCell=thisRow.find(".status");
+        var statusLabelClass="";
+        switch (StatusString) {
+          case "已发OFFER":
+          case "接受OFFER":
+            statusLabelClass= 'label label-primary';
+            break;
+          case '面试通过': 
+            statusLabelClass=  'label label-success';
+            break;
+          case "拒绝OFFER":
+          case "违约":
+            statusLabelClass="label label-default";
+            break;
+          case '面试结果待定'   : 
+            statusLabelClass=  'label label-info';
+            break;
+          default:
+            statusLabelClass=  'label label-primary';
+            break;
+        } 
+        statusCell.html("<span class='"+statusLabelClass+"'>"+StatusString+"</span>");
+        OpeTD=thisRow.find("td.OpeTD");
+        var name=OpeTD.attr("data-name");
+        OpeTD.html(getOpeHtml(StatusString,CandidateID,name));
+        
+      }
+
+      function addRow(item,tbody){
+        var tr=$("<tr>").attr("id",item.id);
+        var td="<td>1</td>";  //序号
+        var nametemp="";
+        if (item.name=="")
+          nametemp=item.resumeno;
+        else
+          nametemp=item.name;
+        tr.append(td);
+        td=$("<td class='OpeTD' data-name='"+nametemp+"'>");//操作
+        td.append(getOpeHtml(item.state,item.id,nametemp));
+        tr.append(td);
+        
+        
+        td=$("<td>").append("<a href='javascript:showResumeModal(&quot;"+item.id+"&quot);'>"+nametemp+"</a>("+item.sex+")");  //姓名性别
+        tr.append(td);
+        td="<td>"+item.offerjob+"/"+item.jobgrade+"</td>"; //录用职位/职级
+        tr.append(td);
+        td="<td>"+(item.age==null?"":item.age)+"</td>"; //年龄
+        tr.append(td);
+        td="<td>"+item.phone+"</td>"; //手机
+        tr.append(td);
+        td="<td>"+item.deptname+"</td>"; //录用部门
+        tr.append(td);
+        td="<td>"+item.offertimestamp+"</td>"; //录用日期
+        tr.append(td);
+        td="<td>"+item.onboarddate+"</td>"; //计划入职日期
+        tr.append(td);
+        td="<td>"+item.directorname+"</td>"; //指导人
+        tr.append(td);
+        td="<td>"+item.hrname+"</td>"; //HR姓名
+        tr.append(td);
+
+        td=$("<td>").addClass("status");
+        span=$("<span>").text(item.state);
+        switch (item.state){
+          case "已发OFFER":
+          case "接受OFFER":
+            span.addClass("label label-primary"); //深蓝
+            break;
+          case "面试通过":
+            span.addClass("label label-success"); //绿
+            break;
+          case "拒绝OFFER":
+          case "违约":
+            span.addClass("label label-default");//灰
+            break;
+          case "面试结果待定":
+            span.addClass("label label-info"); //浅蓝
+            break;
+          default:
+             span.addClass("label label-primary"); //深蓝
+        }
+        td.append(span);
+        tr.append(td);
+        
+        tbody.append(tr);
+        tr="<tr class='interviewinfo' style='display:none'>"+
+           "  <td colspan='10' align='left' background=''>"+
+           "    <div id='div_"+item.id+"' style='display:none'>"+ 
+           "      <div style='position: relative;'>" +
+           "        <button type='button' class='close' style='position:absolute;left:0px;top:-3px;' onclick='$(&quot;div#div_"+item.id+"&quot;).slideUp(&quot;fast&quot;,function(){$(this).parent().parent().css({&quot;display&quot;:&quot;none&quot;});});'>"+
+           "          <span aria-hidden='true'>&times;</span>"+
+           "        </button>"+
+           "      </div>"+
+           "      <div class='interviewinfo_content' style='margin-left:4%;'>"+
+           "        <p> 正在努力加载ing。。。。</p>"+
+           "      </div>"+
+           "    </div>"+
+           "  </td>"+
+           "</tr>";
+        tbody.append(tr);
+      }
+
+      function getOpeHtml(state,id,name){
+        //发OFFER 1 修改登记信息2  OFFER变更3 拒绝OFFER4 发送提醒5 删除6 归档人才库7
+        var OpeCode;
+        switch (state){
+          case "面试结果待定":
+          case "面试通过":
+            OpeCode=new Array("1","2","6","7");
+            break;
+          case "已发OFFER":
+            OpeCode=new Array("3","4","5","2","6","7");
+            break;
+          case "接受OFFER":
+            OpeCode=new Array("5","4","2","6","7");
+            break;
+          case "拒绝OFFER":
+            OpeCode=new Array("3","4","6","7");
+            break;
+          case "违约":
+            OpeCode=new Array("3","4","6","7");
+            break;
+          default:
+            OpeCode=new Array();
+        }
+        
+        var ret="";
+        var btn="";
+        for (x in OpeCode){
+          switch(OpeCode[x]){
+            case "1": //录用
+              btn="<button type='button' class='btn btn-primary btn-xs btn-appoint' aria-label='Left Align' title='录用' onclick='showOfferModal(&quot;new&quot;,&quot;"+id+"&quot;,&quot;"+name+"&quot;);'>";
+              btn=btn+"<span class='icon-envelope' aria-hidden='true'></span>";
+              btn=btn+"</button>";
+              ret=ret+btn;
+              break;
+            case "2": //修改登记信息
+              btn="<button type='button' class='btn btn-primary  btn-xs' aria-label='Left Align' title='修改登记信息' onclick='window.open(&quot;register.html?action=update&id="+id+"&quot;);'>";
+              btn=btn+"<span class='glyphicon glyphicon-list-alt' aria-hidden='true'></span>";  
+              btn=btn+"</button>";
+              ret=ret+btn;
+              break;
+            case "3": //录用变更
+              btn="<button type='button' class='btn btn-primary btn-xs'  aria-label='Left Align' title='录用变更' onclick='showOfferModal(&quot;update&quot;,&quot;"+id+"&quot;,&quot;"+name+ "&quot;);'>";
+              btn=btn+"<span class='icon-envelope-alt' aria-hidden='true'></span>";
+              btn=btn+"</button>";
+              ret=ret+btn;
+              break;
+            case "4"://录用反馈
+              btn="<button type='button' class='btn btn-primary btn-xs btn-appoint' aria-label='Left Align' title='录用反馈' onclick='showResultModal(&quot;"+id+"&quot;,&quot;"+name+"&quot;);'>";
+              btn=btn+"<span class='icon-tags' aria-hidden='true'></span>";  
+              btn=btn+"</button>";
+              ret=ret+btn;
+              break;
+            case "5":
+              btn="<button type='button' class='btn btn-primary btn-xs' aria-label='Left Align' title='发送提醒' onclick='showNotifyModal(&quot;"+id+"&quot;);'>";
+              btn=btn+"<span class='glyphicon glyphicon-phone' aria-hidden='true'></span>";  
+              btn=btn+"</button>";
+              ret=ret+btn;
+              break;
+            case "6":
+              btn="<button type='button' class='btn btn-primary  btn-xs' aria-label='Left Align' title='删除' onclick='showRemoveModal(&quot;" +id+"&quot;,&quot;"+name+ "&quot;);'>";
+              btn=btn+"<span class='glyphicon glyphicon-trash' aria-hidden='true'></span>";
+              btn=btn+"</button>";
+              ret=ret+btn;
+              break;
+            case "7":  //暂时不用
+              btn="<button type='button' class='btn btn-primary  btn-xs' aria-label='Left Align' title='归档人才库'>";
+              btn=btn+"<span class='glyphicon glyphicon-inbox' aria-hidden='true'></span>";
+              btn=btn+"</button>";
+              //ret=ret+btn;
+              break;
+
+          }
+        } //for
+        return ret;
+      } //getOpeHtml
+
+      function init_pagination(){
+        var hr=$("select#hr option:selected").val();
+        var status=$("select#status option:selected").val();
+
+        $.get("data/candidate?action=GetOfferList&hr="+hr+"&status="+status+"&page=0",function(data,status){
+          var pages=0;
+          if(data!="None"){
+            var ret=JSON.parse(data);
+            pages=parseInt(ret.pages);
+          }
+          var ul=$(".pagination");
+          ul.attr("data-pages",pages);
+          ul.empty();
+          if (pages>0){
+            ul.append("<li id='prev'><a href='javascript:loadList(1)' aria-label='上一页'> <span aria-hidden='true'>&laquo;</span></a></li>");
+            for (var i=1;i<=pages;i++){
+              ul.append("<li id="+i+"><a href='javascript:loadList("+i+")'>"+i+"</a></li>");
+            }
+            ul.append("<li id='next'><a href='javascript:loadList("+pages+")' aria-label='下一页'> <span aria-hidden='true'>&raquo;</span></a></li>");
+          } 
+          else
+          {
+            ul.append("<li>无记录</li>");
+          }
+           
+          
+        });
+
+      }
+      function change_pagination(page){
+        var pages=$(".pagination").attr("data-pages");
+        var prevpage=parseInt(page)-1;
+        if (prevpage==0)
+          prevpage=1;
+        var nextpage=parseInt(page)+1;
+        if (nextpage>pages)
+          nextpage=pages;
+
+        $(".pagination li#prev a").attr("href","javascript:loadList("+prevpage+")");
+        $(".pagination li#next a").attr("href","javascript:loadList("+nextpage+")");
+        for (var i=1;i<=pages;i++){
+          if (i==page){
+            $(".pagination li#"+i+" a").html("<strong>"+i+"</strong>"); 
+            $(".pagination li#"+i+" a").css("background-color","aliceblue");
+          }
+          else{
+            $(".pagination li#"+i+" a").html(i); 
+            $(".pagination li#"+i+" a").css("background-color",""); 
+          }
+        }
+      }
+      function loadList(page){
+        currentpage=page;
+        var hr=$("select#hr option:selected").val();
+        var status=$("select#status option:selected").val();
+
+        $.get("data/candidate?action=GetOfferList&hr="+hr+"&status="+status+"&page="+page,function(data,status){
+          change_pagination(page);
+          var tbody=$("table#main tbody");
+          tbody.empty();
+          if(data=="None")
+            return;
+          
+          $.each(JSON.parse(data),function(i,item){
+            addRow(item,tbody);
+          });
+          //面试日志展开功能初始化
+          $(".expanding tr:odd ").css("cursor","pointer");
+          $(".expanding tr:odd").addClass("odd");
+          $(".expanding tr:odd ").attr("title","点击显示XX详情");
+          //$(".expanding tr:not(.odd)").hide();
+          //$(".expending tr.jc").css("display","none");
+          $(".expanding tr:first-child").show();
+
+           //注册事件
+          //点击奇数行展开/折叠面试日志
+          $(".expanding tr.odd").click(function(e){
+            var tag = e.target.nodeName;
+            if(tag == 'A' || tag == 'a' || tag=='button' || tag=='BUTTON' || tag=='span' || tag=='SPAN'){
+              //do nothing
+            }
+            else{
+              var id =$(this).attr("id");
+              var status=$(this).find("span").text();
+                
+              if($(this).next("tr").is(":hidden")){  
+                getInterviewInfo(id,status);
+                
+              }
+              else
+              {
+                
+                $(this).next("tr").find("div#div_"+id).slideUp("fast",function(){$(this).parent().parent().css({"display":"none"});});
+                //$(this).next("tr").slideUp(); 
+              }
+              
+
+            }
+          });
+
+        });
+      }
+      function buildHRList(){
+        $.get("data/user?action=HRList",function(data,status){
+          ret=JSON.parse(data);
+          var s=$("select#hr");
+          s.empty();
+          var option=$("<option>").val("0").text("全部");
+          s.append(option);
+          for (i in ret){
+            option=$("<option>").val(ret[i].id).text(ret[i].name);
+            s.append(option);
+          }
+        });  
+        
+      }
+
+    //-------------------发放录用部分---------------------------
+      
+      function regOfferModalEvent(){
+        //EVENT:show.bs.modal        
+        //ps:日期插件选中后会再次触发此事件
+        $('#OfferModal').on('show.bs.modal', function (event) {
+          //调整邀约面试窗口中tagspinput样式
+          $(".bootstrap-tagsinput").css("width","100%");
+        
+        })
+
+        
+                  
+        
+        //EVENT:试用期radioCHANGE
+        $("input#OfferModal-ProbationPeriodRadioOpts").click(function(e){
+          var result=$("input#OfferModal-ProbationPeriodRadioOpts:checked").val();
+          toggleOfferModal_ProbationPeriod(result);
+        });
+
+        //EVENT:邀约面试提交按钮
+        $("button#OfferModal-SubmitBtn").click(function(e){
+           
+          e.preventDefault();
+          submitOfferModal();
+         
+        });
+        
+
+     
+      }//regOfferModalEvent
+       
+      function toggleOfferModal_ProbationPeriod(result){
+          if (result=="有"){
+            $("div#OfferModal-ProbationPeriodDiv").slideDown();
+            
+          }
+          else{
+            $("div#OfferModal-ProbationPeriodDiv").slideUp();
+          
+
+          }
+      }
+      //Show modal   录用、录用变更
+      function showOfferModal(action,candidateid,candidatename){
+          
+          
+          $("p#OfferModal-CandidateID").text(candidateid);
+          $("p#OfferModal-CandidateName").text(candidatename);
+          $("p#OfferModal-Action").text(action);
+          if (action=="update"){  //变更 
+            $("#OfferModal-Label").text("录用变更");
+
+           
+            //load info
+            $.get("data/offer?action=GetLastOfferInfo&candidateid="+candidateid,function(data,status){
+          
+              var item=JSON.parse(data);
+              $("p#OfferModal-OfferID").text(item.OfferID);
+              $("#OfferModal-DeptName").val(item.DeptName);
+              $("#OfferModal-DeptName").attr("data-id",item.DeptID);
+            
+              $("#OfferModal-Job").val(item.Job);
+              $("#OfferModal-JobGrade option[value="+item.JobGrade+"]").attr("selected", true);
+              $("#OfferModal-JobBase option[value="+item.JobBase+"]").attr("selected", true);
+
+              $("#OfferModal-Manager").val(item.Manager);
+              $("#OfferModal-Manager").attr("data-id",item.ManagerID);
+              $("#OfferModal-Director").val(item.Director);
+            
+              $("#OfferModal-Salary").val(item.Salary);
+              $("#OfferModal-AnnualSalary").val(item.AnnualSalary);
+              var pp=parseInt(item.ProbationPeriod);
+              if (pp==0){
+                $("#OfferModal-ProbationPeriodRadioOpts[value=无]").prop({checked:"checked"});
+                $("#OfferModal-ProbationPeriodSalary").val(item.Salary);
+                $("#OfferModal-ProbationPeriod").val("0");      
+                $("#OfferModal-ProbationPeriodDiv").hide();
+              }
+              else{
+                $("#OfferModal-ProbationPeriodRadioOpts[value=有]").prop({checked:"checked"});
+
+                $("#OfferModal-ProbationPeriodSalary").val(item.ProbationPeriodSalary);
+                $("#OfferModal-ProbationPeriod").val(item.ProbationPeriod);       
+                $("#OfferModal-ProbationPeriodDiv").show();
+              }
+                                     
+              $("#OfferModal-StockClause").val(item.StockClause);
+              toggleClause("StockClause",item.StockClause!=""?"show":"hide");
+              
+              $("#OfferModal-WelfareClause").val(item.WelfareClause);
+              toggleClause("WelfareClause",item.WelfareClause!=""?"show":"hide");
+
+              $("#OfferModal-AllowanceClause").val(item.AllowanceClause);
+              toggleClause("AllowanceClause",item.AllowanceClause!=""?"show":"hide");
+
+              $("#OfferModal-OtherClause").val(item.OtherClause);
+              toggleClause("OtherClause",item.OtherClause!=""?"show":"hide");
+
+              $("#OfferModal").modal({backdrop:"static",keyboard:false});
+              $("#OfferModal").modal("show"); 
+            });
+          }
+          else{ //new
+            
+            $("#OfferModal-Label").text("录用");
+            
+            
+            $("#OfferModal-DeptName").val("");
+            $("#OfferModal-DeptName").attr("data-id","");
+            
+            $("#OfferModal-Job").val("");
+            $("#OfferModal-JobGrade option[value=A1]").attr("selected", true);
+            $("#OfferModal-JobBase option[value=北京]").attr("selected", true);
+            
+            $("#OfferModal-Manager").val("");
+            $("#OfferModal-Manager").attr("data-id","");
+            $("#OfferModal-Director").val("");
+            
+            $("#OfferModal-Salary").val("");
+            $("#OfferModal-AnnualSalary").val("");
+            
+            $("#OfferModal-ProbationPeriodRadioOpts[value='有']").prop({checked:"checked"});
+            $("#OfferModal-ProbationPeriodSalary").val("");
+            $("#OfferModal-ProbationPeriod").val("3");
+            
+            $("#OfferModal-StockClause").val("");
+            $("#OfferModal-WelfareClause").val("");
+            $("#OfferModal-AllowanceClause").val("");
+            $("#OfferModal-OtherClause").val("");
+            $("#OfferModal").modal({backdrop:"static",keyboard:false});
+            $("#OfferModal").modal("show");
+           
+          }
+          return;
+      }
+      
+      function submitOfferModal(){
+        var CandidateID=$("p#OfferModal-CandidateID").text();
+        var CandidateName=$("p#OfferModal-CandidateName").text();
+        var OfferID=$("p#OfferModal-OfferID").text();
+        var action=$("p#OfferModal-Action").text();
+        
+        var Dept=$("input#OfferModal-DeptName").val();
+        var DeptID=$("input#OfferModal-DeptName").attr("data-id");
+        if (DeptID=="")
+        {
+          showTip("录用部门不能为空。",3000);
+          return;
+        }
+        var Job=$("input#OfferModal-Job").val();
+        var JobGrade=$("select#OfferModal-JobGrade option:selected").val();
+        var JobBase=$("select#OfferModal-JobBase option:selected").val();
+        if (Job=="")
+        {
+          showTip("录用职位不能为空。",3000);
+          return;
+        }
+        var Manager=$("input#OfferModal-Manager").val();
+        var ManagerID=$("input#OfferModal-Manager").attr("data-id");
+        var Director=$("input#OfferModal-Director").val();
+        
+        var Salary=parseFloat($("input#OfferModal-Salary").val());
+        var AnnualSalary=parseFloat($("input#OfferModal-AnnualSalary").val());  
+        if (Salary<=0 || isNaN(Salary)){
+          showTip("月薪需是合法正数。",3000);
+          return;
+        }
+        if (AnnualSalary<=0 || isNaN(AnnualSalary)){
+          showTip("年薪需是合法正数。",3000);
+          return;
+        }
+        if ((Salary*12)>(AnnualSalary*10000)){
+          showTip("全年月薪之和不能大于年薪。",3000);
+          return;
+        }
+
+
+        var ProbationType=$("input#OfferModal-ProbationPeriodRadioOpts:checked").val();
+        var ProbationPeriodSalary=parseFloat($("input#OfferModal-ProbationPeriodSalary").val());
+        var ProbationPeriod=parseInt($("input#OfferModal-ProbationPeriod").val());
+        if (ProbationType=="无"){
+          ProbationPeriodSalary=Salary;
+          ProbationPeriod=0;
+        }
+        if (ProbationPeriod<0 || isNaN(ProbationPeriod)){
+          showTip("试用期不能为负数。",3000);
+          return;
+        }
+        if (ProbationPeriod>6){
+          showTip("试用期不能超过6个月。",3000);
+          return;
+        }
+        if (ProbationPeriodSalary<=0 || isNaN(ProbationPeriodSalary)){
+          showTip("试用期月薪需是合法正数。",3000);
+          return;
+        }
+        if (ProbationPeriodSalary>Salary){
+          showTip("试用期月薪不能超过转正后月薪。",3000);
+          return;
+        }
+
+        var StockClause=$("textarea#OfferModal-StockClause").val();
+        var WelfareClause=$("textarea#OfferModal-WelfareClause").val();
+        var AllowanceClause=$("textarea#OfferModal-AllowanceClause").val();
+        var OtherClause=$("textarea#OfferModal-OtherClause").val();
+        
+        if (action=="new"){
+
+          addOffer(CandidateID,DeptID,Dept,Job,JobGrade,JobBase,ManagerID,Manager,Director,Salary.toFixed(2),AnnualSalary.toFixed(2),ProbationType,ProbationPeriodSalary.toFixed(2),ProbationPeriod,StockClause,WelfareClause,AllowanceClause,OtherClause);
+       
+          return;
+        }
+        else{
+          updateOffer(OfferID,CandidateID,DeptID,Dept,Job,JobGrade,JobBase,ManagerID,Manager,Director,Salary.toFixed(2),AnnualSalary.toFixed(2),ProbationType,ProbationPeriodSalary.toFixed(2),ProbationPeriod,StockClause,WelfareClause,AllowanceClause,OtherClause);
+          
+        }
+      }
+
+
+      //更新录用通知-update
+      function updateOffer(OfferID,CandidateID,DeptID,Dept,Job,JobGrade,JobBase,ManagerID,Manager,Director,Salary,AnnualSalary,ProbationType,ProbationPeriodSalary,ProbationPeriod,StockClause,WelfareClause,AllowanceClause,OtherClause){
+        $.post("data/offer?action=UpdateOffer",
+              {
+                "offerid":OfferID,
+                "candidateid":CandidateID,
+                "deptid":DeptID,
+                "deptname":Dept,
+                "offerjob":Job,
+                "jobgrade":JobGrade,
+                "jobbase":JobBase,
+                "managerid":ManagerID,
+                "managername":Manager,
+                "directorname":Director,
+                "salary":Salary,
+                "annualsalary":AnnualSalary,
+                "probationtype":ProbationType,
+                "probationperiodsalary":ProbationPeriodSalary,
+                "probationperiod":ProbationPeriod,
+                "stockclause":StockClause,
+                "welfareclause":WelfareClause,
+                "allowanceclause":AllowanceClause,
+                "otherclause":OtherClause
+              },
+              function(data,status){
+                $('#OfferModal').modal('hide');
+                
+                ret=JSON.parse(data);
+                
+                if (ret.SMSResult=="Candidate's Phone Not Found."){
+                  showTip("候选人手机号为空，录用通知短信无法送达。请补充手机号码后再次发送。",5000);
+                    
+                }
+                 
+                updateRow(CandidateID,"已发OFFER");
+                
+              }
+        );//post
+
+
+      }
+
+      //保存面试预约信息-new
+      function addOffer(CandidateID,DeptID,Dept,Job,JobGrade,JobBase,ManagerID,Manager,Director,Salary,AnnualSalary,ProbationType,ProbationPeriodSalary,ProbationPeriod,StockClause,WelfareClause,AllowanceClause,OtherClause){
+        $.post("data/offer?action=AddOffer",
+              {
+                "candidateid":CandidateID,
+                "deptid":DeptID,
+                "deptname":Dept,
+                "offerjob":Job,
+                "jobgrade":JobGrade,
+                "jobbase":JobBase,
+                "managerid":ManagerID,
+                "managername":Manager,
+                "directorname":Director,
+                "salary":Salary,
+                "annualsalary":AnnualSalary,
+                "probationtype":ProbationType,
+                "probationperiodsalary":ProbationPeriodSalary,
+                "probationperiod":ProbationPeriod,
+                "stockclause":StockClause,
+                "welfareclause":WelfareClause,
+                "allowanceclause":AllowanceClause,
+                "otherclause":OtherClause
+              },
+              function(data,status){
+                $('#OfferModal').modal('hide');
+                
+                ret=JSON.parse(data);
+                if (ret.SMSResult=="Candidate's Phone Not Found."){
+                  showTip("候选人手机号为空，面试通知短信无法送达。请补充手机号码后再次发送。",5000);
+                    
+                }
+                 
+                updateRow(CandidateID,"已发OFFER");
+                
+              }
+        );//post
+
+      }
+      function toggleClause(divid,action){
+        if (typeof(action)=="undefined")
+        {
+          $("div#OfferModal-"+divid+"Div").slideToggle();
+          var a=$("i#"+divid);
+          a.toggleClass("icon-angle-down");
+          a.toggleClass("icon-angle-up");
+        }
+        else
+        {
+          var a=$("i#"+divid);
+          if (action=="show"){
+            $("div#OfferModal-"+divid+"Div").slideDown();
+            a.removeClass("icon-angle-down");
+            a.addClass("icon-angle-up");
+          }
+          else{
+            $("div#OfferModal-"+divid+"Div").slideUp();
+            a.removeClass("icon-angle-up");
+            a.addClass("icon-angle-down");
+          }
+        }
+      }
+      
+      
+
+      //组装部门经理树数据
+      function buildManagerTree(){
+        $.get("data/basedata?action=InterviewerTree",function(data,status){
+          
+          var tree=JSON.parse(data);
+          //tree=tree[0].nodes;  //去UAP节点
+          $('div#OfferModal-ManagerTree').treeview({data:tree});    
+          //EVENT:发放录用浮动层-部门经理选中
+          $('div#OfferModal-ManagerTree').on('nodeSelected', function(event, data) {
+             $('div#OfferModal-ManagerTree').toggle();
+             $("input#OfferModal-Manager").val(data.text);
+             $("input#OfferModal-Manager").attr("data-id",data.customid)
+             
+          });      
+
+          
+        });//get
+
+      }//buildManagerTree
+ 
+      
+      //组装部门树数据，注册事件
+      function buildDeptTree(){
+         $.get("data/basedata?action=DeptTree",function(data,status){
+          
+          var tree=JSON.parse(data);
+          tree=tree[0].nodes;  //去UAP节点
+          $('div#OfferModal-DeptTree').treeview({data:tree});    
+     
+          //EVENT:部门树选中
+          $('div#OfferModal-DeptTree').on('nodeSelected', function(event, data) {
+             $('div#OfferModal-DeptTree').toggle();
+             $("input#OfferModal-DeptName").val(data.text);
+             $("input#OfferModal-DeptName").attr("data-id",data.customid);
+          });      
+
+      
+        });//get
+
+      }//buildDeptTree
+ 
+    //-------------------录用反馈部分---------------------------
+      function regResultModalEvent(){
+        //EVENT:on show
+        $('#ResultModal').on('show.bs.modal', function (event) {
+           //调整邀约面试窗口中tagspinput样式
+           $(".bootstrap-tagsinput").css("width","100%");
+        
+        })
+
+
+        //EVENT:邀约面试提交按钮
+        $("button#ResultModal-SubmitBtn").click(function(e){
+           
+          //e.preventDefault();
+
+          var candidateid= $("p#ResultModal-CandidateID").text();
+          var offerid=$("p#ResultModal-OfferID").text();
+          var result=$("input#ResultModal-ResultTypeRadioOpts:checked").val();
+          var tags=$("#ResultModal-ResultTags").tagsinput('items');
+          var comments=$("#ResultModal-Comments").val();
+
+          $.post("data/offer?action=UpdateOfferResult",
+              {
+                "candidateid":candidateid,
+                "offerid":offerid,
+                "result":result,
+                "tags":tags.toString(),
+                "comments":comments
+                
+              },
+              function(data,status){
+                 if (data=="ok"){
+                   $('#ResultModal').modal('hide');
+                   updateRow(candidateid,result);
+                 }
+              }
+           );//post
+
+
+         
+         
+        });
+
+        $("button.ResultModal-TagBtn").click(function(e){
+          
+          var text=e.currentTarget.innerText;
+          if (text=="添加"){
+            text=$("input#ResultModal-OtherTag").val();
+          }
+          $("input#ResultModal-ResultTags").tagsinput("add",text);
+          e.stopPropagation();
+        });
+        //点击content中任何区域可关闭标签盒TagBox
+        $("div#ResultModal-ContentDiv").click(function(e){
+          $('div#ResultModal-TagBox').hide();
+        })
+        //选择钮显示标签盒
+        $("button#ResultModal-ResultTagsSelBtn").click(function(e){
+          $("div#ResultModal-TagBox").show();
+          //事件阻止，防止触发content.click再次关闭
+          e.stopPropagation();
+        })
+        //标签盒事件阻止冒泡，防止触发content.click
+        $("input#ResultModal-OtherTag").click(function(e){
+          e.stopPropagation();
+        })
+        $("div#ResultModal-TagBox").click(function(e){
+          e.stopPropagation();
+        })
+        
+      }
+
+      //Show modal
+      function showResultModal(candidateid,candidatename){
+          
+
+          
+        $.get("data/offer?action=GetOfferResult&candidateid="+candidateid,function(data,status){
+          item=JSON.parse(data);
+
+          $("p#ResultModal-CandidateID").text(candidateid);
+          $("p#ResultModal-CandidateName").text(candidatename);
+          $("p#ResultModal-OfferID").text(item.ID);
+          $("#ResultModal-Comments").val(item.Comments);
+          if (typeof(item.Result)=="undefined" || item.Result==""){
+            $("#ResultModal-ResultTypeRadioOpts[value=接受OFFER]").prop({checked:"checked"});
+          }
+          else{
+            $("#ResultModal-ResultTypeRadioOpts[value="+item.Result+"]").prop({checked:"checked"});
+          }
+            
+          $("#ResultModal-ResultTags").tagsinput('removeAll');
+          array=item.Tags.split(",")
+          for (i in array){
+             $("#ResultModal-ResultTags").tagsinput("add",array[i]);
+          }          
+
+          $("#ResultModal").modal({backdrop:"static",keyboard:false});
+          $("#ResultModal").modal("show");
+        
+        });
+
+
+        return;
+      }
+
+
+  //-------------------显示简历部分---------------------------
+      function regResumeModalEvent(){
+        //EVENT:转发简历按钮
+        $("button#ResumeModal-SendBtn").click(function(e){
+           
+          //e.preventDefault();
+          var receiverstr=$("input#ResumeModal-EMail").val();
+          if (receiverstr=="" ){
+            showTip("请填写接收邮箱。",1000);
+            $("button#ResumeModal-SendBtn").attr("disabled","disabled");
+            return;
+          }
+          sendMail();
+          
+        });
+        /*
+        $("table#ResumeModal-ResumeFile tbody").on("click","input#ResumeModal-FileCheck",function(e){
+          var resumeid=getResumeIDListString();
+          var receiverstr=$("input#ResumeModal-EMail").val();
+          if (resumeid=="" || receiverstr=="" )
+            $("button#ResumeModal-SendBtn").attr("disabled","disabled");
+          else
+            $("button#ResumeModal-SendBtn").removeAttr("disabled");
+        });*/
+        $("input#ResumeModal-EMail").keypress(function(e){
+          var receiverstr=$("input#ResumeModal-EMail").val();
+          if (receiverstr=="" )
+            $("button#ResumeModal-SendBtn").attr("disabled","disabled");
+          else
+            $("button#ResumeModal-SendBtn").removeAttr("disabled");
+        });
+        $("input#ResumeModal-EMail").change(function(e){
+          var receiverstr=$("input#ResumeModal-EMail").val();
+          if (receiverstr=="" )
+            $("button#ResumeModal-SendBtn").attr("disabled","disabled");
+          else
+            $("button#ResumeModal-SendBtn").removeAttr("disabled");
+        });
+
+        $('#ResumeModal').on('shown.bs.modal', function (event) {
+          $.get("data/cc?action=GetCert&candidateid="+$("#ResumeModal-CandidateInfo").attr("data-id"),function(data,status){
+              if (data=="")
+                return;
+              ret=JSON.parse(data);
+              var id="";
+              for (x in ret){
+                switch (ret[x].filename_main){
+                  case "身份证-正":
+                    id="id1";
+                    break;
+                  case "身份证-背":
+                    id="id2";
+                    break;
+                  case "户口本-首页":
+                    id="id3";
+                    break;
+                  case "户口本-本人页-正":
+                    id="id4";
+                    break;
+                  case "户口本-本人页-背":
+                    id="id5";
+                    break;  
+                  case "毕业证":
+                    id="edu1";
+                    break;  
+                  case "学位证":
+                    id="edu2";
+                    break;    
+                  case "资质1":
+                    id="cert1";
+                    break;    
+                  case "资质2":
+                    id="cert2";
+                    break;    
+                  default:
+                    id="";
+                    alert("error");
+                }           
+                $("img#"+id).attr("data-original","upload/"+ret[x].urlname);
+              }//for
+       
+              $("img.lazy").lazyload();
+          });//get getcert
+          
+          $.get("data/cc?action=GetPortrait&candidateid="+$("#ResumeModal-CandidateInfo").attr("data-id"),function(data,status){
+              if (data=="")
+                return;
+              ret=JSON.parse(data);
+              if (ret.length>0)
+                $("img#portrait").attr("data-original","upload/"+ret[0].urlname);
+              $("img#portrait").lazyload();
+           });//get getportrait
+        });//shown.bs.modal
+
+         
+      }//regResumeModalEvent
+
+
+      //Show modal
+      function showResumeModal(candidateid){
+
+
+          $("#ResumeModal-SendBtn").attr("data-id",candidateid);
+          //init
+          $("button#ResumeModal-SendBtn").attr("disabled","disabled");
+          $("input#ResumeModal-EMail").val("");
+          $("#ResumeModal-CandidateInfo").attr("data-id",candidateid);
+          
+
+
+          reloadResumeModalCandidateInfo(candidateid);
+          reloadResumeModalTable(candidateid);
+          initImgTags();
+
+          $("#ResumeModal").modal({backdrop:"static",keyboard:false});
+          $("#ResumeModal").modal("show");
+
+
+          
+          return;
+      }
+
+      function initImgTags(){
+        var row=$("#ResumeModal-CertPhotoRow");
+        row.empty();
+        var idlist=[["id1","身份证-正"],["id2","身份证-背"],["id3","户口本-首页"],["id4","户口本-本人页-正"],["id5","户口本-本人页-背"],["edu1","毕业证"],["edu2","学位证"],["cert1","资质1"],["cert2","资质2"]];
+        var segment="";
+        for (var i=0;i<idlist.length;i++){
+          segment+="<div class='col-sm-3' style='padding-left:5px;padding-right:5px;margin-top:3px;'>"+
+                   "<row>  <a href='#' class='thumbnail' style='margin-bottom:0px;'>"+
+                   "    <img class='lazy' id='"+idlist[i][0]+"' src='images/uploadsample/preload.gif' data-original='images/uploadsample/"+idlist[i][0]+".jpg' title='"+idlist[i][1]+"'>"+
+                   "  </a></row>"+
+                   "<row><span style='width: 100%;display: inline-block;text-align: center;font-size:10px;'>"+idlist[i][1]+"</span></row>"+
+                   "</div>";
+
+        }
+        row.append(segment);
+        var div=$("#ResumeModal-CandidateInfo-Photo");
+        div.empty();
+        segment=" <a href='#' class='thumbnail' >  <img id='portrait' src='images/uploadsample/preload.gif' data-original='images/uploadsample/portrait.jpg'>  </a> ";
+        div.append(segment);    
+
+
+            
+      }
+      //加载候选人信息
+      function reloadResumeModalCandidateInfo(candidateid){
+        var div=$("#ResumeModal-CandidateInfo-Info");
+        div.empty();
+        var ret="";
+        var pval="";
+
+        $.get("data/register?candidateid="+candidateid,function(data,status){
+          if (status!="success")
+            alert("Data: " + data + "\nStatus: " + status);
+          $.each(JSON.parse(data),function(i,item){
+            
+            pval="<p><strong>姓名:</strong>"+item.Name+"("+item.Sex+") <strong>出生日期:</strong>"+item.DateOfBirth + " <strong>投递职位:</strong>"+item.Job+ "</p>";
+            ret=ret+pval;
+            pval="<p><strong>简历编号:</strong>"+item.ResumeNo+" <strong>手机:</strong>"+item.Phone + " <strong>邮箱:</strong>"+item.Mail+ "</p>";
+            ret=ret+pval;
+            pval="<p><strong>任职公司:</strong>"+item.LastJob+" <strong>职位:</strong>"+item.LastTitle + " <strong>任职月数:</strong>"+item.LastJobMonth+ " <strong>在职状态:</strong>"+ item.InServiceState+"</p>";
+            ret=ret+pval;
+            
+            pval="<p><strong>最高学历:</strong>"+item.HighestEducation+" <strong>学校:</strong>"+item.HighestEducationName + " <strong>专业:</strong>"+item.HighestEducationProfessional+ " <strong>毕业:</strong>"+ item.HighestEducationGraduation+"</p>";
+            ret=ret+pval;
+            
+            if (item.OffJobEducationCheck!=1){
+              pval="<p><strong>脱产学历:</strong>"+item.OffJobEducation+" <strong>学校:</strong>"+item.OffJobEducationName + " <strong>专业:</strong>"+item.OffJobEducationProfessional+ " <strong>毕业:</strong>"+ item.OffJobEducationGraduation+"</p>";
+              ret=ret+pval;
+            }
+
+            pval="<p><strong>简历来源:</strong>"+item.ResumeSourceType +"-" +item.ResumeSource+"</p>";
+            ret=ret+pval;
+            pval="<p><strong>说明:</strong>"+item.Comments+"</p>";
+            ret=ret+pval;
+            pval="<p><strong>是否体系内:</strong>"+item.FromYonyou+"</p>";
+            ret=ret+pval;
+
+          }); //each
+          div.append(ret);
+        });//register
+        
+        return;
+        
+      }
+      //加载附件表格
+      function reloadResumeModalTable(candidateid){
+        $.get("data/register/resumeupload?candidateid="+candidateid,function(data,status){
+          //alert("Data: " + data + "\nStatus: " + status);
+          var t=$("table#ResumeModal-ResumeFile tbody");
+          t.empty();
+          $.each(JSON.parse(data),function(i,item){
+            var tr=$("<tr>").attr("id",item.id);
+            tr.css({"border-bottom-style":"solid","border-bottom-width":"thin","border-bottom-color":"lightgrey"});
+            var tdhtml="<td style='border-top-style:none;'>"+
+                       "<a href=upload/"+item.urlname+" target='_blank'>"+item.filename+"</a>"+
+                       "</td>";
+            tr.append(tdhtml);
+            tdhtml="<td style='width:60px;border-top-style:none;'>"+
+                   " <label>选择<input type='checkbox' id='ResumeModal-FileCheck' name='"+item.id+"'></label>"+
+                   "</td>";
+            tr.append(tdhtml);
+            t.append(tr);
+          });
+        });    
+      } //reloadResumeModalTable
+
+      //获得checked的简历ID字符串，逗号分隔
+      function getResumeIDListString(){
+        var resumeid="";
+        $("#ResumeModal-FileCheck:checked").each(function(index){
+            var fileid=$(this).attr("name")
+            if (resumeid=="")
+              resumeid=fileid
+            else
+              resumeid=resumeid+","+fileid
+        });
+        return resumeid;
+      }
+ 
+
+      //发邮件   收件人邮箱用逗号分隔，简历附件编号用逗号分隔
+      function sendMail(){
+        var candidateid=$("#ResumeModal-SendBtn").attr("data-id");  
+        var receiverstr=$("input#ResumeModal-EMail").val();
+        var candidateinfo=$("#ResumeModal-CandidateInfo-Info").html();
+        var resumeid=getResumeIDListString();
+        showTip("正在发送邮件。。。。。",0);
+        
+        $.get("data/forwardresume?candidateid="+candidateid+"&receiver="+receiverstr+"&resumeid="+resumeid+"&candidateinfo="+candidateinfo,function(data,status){
+          if (data=="ok"){
+
+            showTip("发送完成",500);
+            
+          }
+          else{
+            
+            showTip("发送失败",2000);
+            alert("Data: " + data + "\nStatus: " + status);
+          }
+        });
+
+      }
+
+      function printPhoto(type){
+        
+      }
+
+      
+   //-------------------面试通知部分---------------------------
+      function regNotifyModalEvent(){
+        //EVENT:邀约面试提交按钮
+        $("button#NotifyModal-SendBtn").click(function(e){
+           
+          //e.preventDefault();
+          alert("发送面试提醒");
+         
+        })
+      }
+
+      //Show modal
+      function showNotifyModal(candidateid){
+          $("#NotifyModal").modal({backdrop:"static",keyboard:false});
+
+          $("#NotifyModal").modal("show");
+          
+          //load info
+
+          return;
+      }
+      
+    //-------------------候选人删除通知部分---------------------------
+      function regRemoveModalEvent(){
+        //EVENT:on show
+        $('#RemoveModal').on('show.bs.modal', function (event) {
+           //调整邀约面试窗口中tagspinput样式
+           $(".bootstrap-tagsinput").css("width","100%");
+        
+        })
+
+
+        //EVENT:邀约面试提交按钮
+        $("button#RemoveModal-SubmitBtn").click(function(e){
+           
+          //e.preventDefault();
+
+          var tags=$("#RemoveModal-Reason").tagsinput('items');
+          var id= $("p#RemoveModal-CandidateID").text();
+          $.post("data/candidate?action=Remove",
+              {
+                "candidateid":id,
+                "reasontags":tags.toString()
+                
+              },
+              function(data,status){
+                 $('#RemoveModal').modal('hide');
+                 showTip("真的再也看不见了。",1500);
+                 loadList(currentpage);
+              }
+           );//post
+
+         
+         
+        });
+
+        $("button.RemoveModal-TagBtn").click(function(e){
+          
+          var text=e.currentTarget.innerText;
+          if (text=="添加"){
+            text=$("input#RemoveModal-OtherTag").val();
+          }
+          $("input#RemoveModal-Reason").tagsinput("add",text);
+          e.stopPropagation();
+        });
+        //点击content中任何区域可关闭标签盒TagBox
+        $("div#RemoveModal-ContentDiv").click(function(e){
+          $('div#RemoveModal-TagBox').hide();
+        })
+        //选择钮显示标签盒
+        $("button#RemoveModal-ReasonSelBtn").click(function(e){
+          $("div#RemoveModal-TagBox").show();
+          //事件阻止，防止触发content.click再次关闭
+          e.stopPropagation();
+        })
+        //标签盒事件阻止冒泡，防止触发content.click
+        $("input#RemoveModal-OtherTag").click(function(e){
+          e.stopPropagation();
+        })
+        $("div#RemoveModal-TagBox").click(function(e){
+          e.stopPropagation();
+        })
+        
+      }
+
+      //Show modal
+      function showRemoveModal(candidateid,candidatename){
+          $("#RemoveModal").modal({backdrop:"static",keyboard:false});
+          $("p#RemoveModal-CandidateID").text(candidateid);
+          $("p#RemoveModal-CandidateName").text(candidatename);
+          $("#RemoveModal").modal("show");
+          
+          //load info
+
+          return;
+      }
+
+    </script>
+
+
+  </body>
+</html>

@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="入职宝典">
+    <meta name="author" content="刘南">
+    <link rel="icon" href="../favicon.ico">
+
+    <title>入职宝典</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">  
+    <link href="css/style.css" media="all" type="text/css" rel="stylesheet">
+    <link href="../Font-Awesome-3.2.1/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen"/> 
+    <link href="../sco.js/css/sco.message.css" rel="stylesheet" media="screen" />
+
+	<style type="text/css">
+		#tinybox{position:absolute; box-sizing:content-box;display:none; padding:10px; background:#ffffff url(../images/preload.gif) no-repeat 50% 50%; border:10px solid #e3e3e3; z-index:2000;}
+		#tinymask{position:absolute; display:none; top:0; left:0; height:100%; width:100%; background:#000000; z-index:1500;}
+		#tinycontent{background:#ffffff; font-size:1.1em;}
+		#n{margin:10px auto; width:920px; border:1px solid #CCC;font-size:12px; line-height:30px;}
+		#n a{ padding:0 4px; color:#333}
+	</style>
+	
+
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="http://v3.bootcss.com/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!--script src="http://v3.bootcss.com/assets/js/ie-emulation-modes-warning.js"></script-->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+  </head>
+
+  <body style="padding-top:70px;">
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand"><i class="icon-github icon-2x pull-left"></i><img alt="Yonyou" src="../images/logo.png"></a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="list.html">首页</a></li>
+            <li><a href="map.html?location=入职接待处">地图</a></li>
+            <li><a href="bus.html">班车/公交路线</a></li>
+            <li><a href="pe.html">入职体检说明</a></li>
+            
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+ 
+    <div class="container" >
+      <div class="text-center">
+        
+        <h3>欢迎选择用友网络研发中心！</h3>
+        <p style="text-align:left;width:80%;left:10%;display:inline-block;">以下是您在正式入职之前要了解、确认及提供的内容。如有疑问请致电您的HR联系人：<span id="hr-name">XXX</span>,电话:<span id="hr-phone">XXXXXX</span></p>      
+      </div>
+    </div>
+
+    <div class="modal-shiftfix">
+	<div class="container-fluid main-content">
+	<ul class="timeline animated">
+		<li>
+			<div class="timeline-time">
+				<h3>以下需要在3日内完成</h3>
+			</div>
+	    
+			
+		</li>
+		<li>
+			
+	    
+			<div class="timeline-icon">
+				<div class="bg-primary">    <!--success/info/warning/danger/muted/white-->
+					<i class="icon-envelope" style="line-height:34px";></i>
+                </div>
+            </div>
+            <div class="timeline-content" ><!--onclick="document.location='article.html';"-->
+         		<h4>浏览并确认录用邀请函<span id="confirm"></span></h4>
+                <p><a href="offer.html">《用友网络科技股份有限公司研发中心录用邀请函》</a></p>
+				
+			</div>
+		</li>
+          
+		 <li>
+			<div class="timeline-icon">
+				<div class="bg-primary">
+					<i class="icon-time" style="line-height:34px";></i>
+                </div>
+			</div>
+            <div class="timeline-content">
+				<div style="position:inherit;">
+					<h4>确定入职日期<span id="onboarddate"></span></h4>
+					<i class="icon-angle-up icon-2x angle" id="onboarddate" style="position: absolute;bottom: 0%;right: 0%;cursor:pointer;"></i>
+				</div>
+				<div >
+					<p>受到社保/公积金办理机构增减员业务的时间限制，入职当月社保/公积金以15日为界限。如在15日之前入职则当月社保/公积金由公司负责缴纳，如在15日（含）后入职则由原单位负责缴纳。</p> 
+					<p>如果您需要社保/公积金连续，请提前与原单位确认或妥善选择入职日期。</p>
+					<hr>
+					<form >
+					  <div class="form-group" >
+					    <label>计划入职日期</label>
+					    <div class="input-group">
+						    <input type="date" id="onboarddate" class="form-control" >
+						    <span class="input-group-btn">
+	         			      <button class="btn btn-success " type="button" onclick="submitOnboardDate();">提交</button>
+						    </span>
+						</div>
+					  </div>
+	                </form>
+
+	                <p>日后如有变更请及时致电HR联系人</p>
+			    </div>
+		</li>
+        
+        <li>
+            <div class="timeline-time">
+				<h3>以下请在入职一周前完成</h3>
+			</div>
+	    </li>
+	    <li>
+			<div class="timeline-icon">
+				<div class="bg-warning">
+					<i class="icon-info-sign" style="line-height:34px";></i>
+				</div>
+			</div>
+			<div class="timeline-content">
+	     		<div style="position:inherit;">
+	     		  <h4>个人补充信息录入<span id="personinfoex"></span></h4>
+	     		  <i class="icon-angle-up icon-2x angle"  id="personinfoex" style="position: absolute;bottom: 0%;right: 0%;cursor:pointer;"></i>
+	     		</div>
+	     		
+	     		<div >
+					<p>出于保护隐私的原因，以下内容在面试阶段不便采集。既然咱以后都是一家人了，还请补充完整。</p>
+					<hr>
+					<form> 
+			        <div class="form-group" >
+			          <label>在京详细住址</label>
+	                  <input type="text" placeholder="" class="form-control" id="address">
+			        </div>
+			       
+			        <div class="form-group" >
+			          <label>紧急联络人</label>
+	                  <select class="form-control"  id="emergency-relation">
+			            <option value="夫妻" selected>夫妻</option>
+			            <option value="父母" >父母</option>
+			            <option value="兄弟姐妹" >兄弟姐妹</option>
+			          </select>
+			          <input type="text" placeholder="姓名" class="form-control" id="emergency-name">
+	                  <input type="tel" placeholder="电话" class="form-control" id="emergency-phone">
+			        </div>
+			      
+			        <div class="form-group" >
+	                  <button class="btn btn-success " type="button" style="width:100%;" onclick="submitPersonInfoEx();">提交</button>
+			        </div>
+		          </form>   
+		        </div>
+			</div>
+		</li>
+		 <li>
+			<div class="timeline-icon">
+				<div class="bg-warning">
+					<i class="icon-info-sign" style="line-height:34px";></i>
+				</div>
+			</div>
+			<div class="timeline-content">
+	     		<div style="position:inherit;">
+	     		  <h4>社保公积金缴纳情况调查<span id="si"></span></h4>
+	     		  <i class="icon-angle-up icon-2x angle" style="position: absolute;bottom: 0%;right: 0%;cursor:pointer;"></i>
+	     		</div>
+	     		
+	     		<div >
+					<p>为了更好的办理社保公积金业务，请提供以下内容。</p>
+					<hr>
+					<form> 
+			        
+			        <div class="form-group" >
+			          <label >社保缴纳情况</label>
+			          <select class="form-control"  id="sb-flag">
+			            <option value="已缴纳" selected>已缴纳</option>
+			            <option value="未缴纳" >未缴纳</option>
+			          </select>
+			          <div id="sb-div">
+			            <input type="text" placeholder="缴纳城市" class="form-control" id="sb-city">
+			            缴纳至<input type="month" placeholder="缴纳月份" class="form-control" id="sb-date">
+			          </div>
+			        </div>
+			        
+			        <div class="form-group" >
+			          <label>公积金缴纳情况</label>
+		              <select class="form-control"  id="gjj-flag">
+			            <option value="已缴纳" selected>已缴纳</option>
+			            <option value="未缴纳" >未缴纳</option>
+			          </select>
+			          <div id="gjj-div">
+	                    <input type="text" placeholder="缴纳城市" class="form-control" id="gjj-city">
+			            缴纳至<input type="month" placeholder="缴纳月份" class="form-control" id="gjj-date">
+			          </div>
+			        </div>
+			        <div class="form-group" >
+	                  <button class="btn btn-success " type="button" style="width:100%;" onclick="submitSI();">提交</button>
+			        </div>
+		          </form>   
+		        </div>
+			</div>
+		</li>
+		  
+		<li>
+			<div class="timeline-icon">
+				<div class="bg-warning">
+					<i class="icon-user" style="line-height:34px";></i>
+				</div>
+			</div>
+			<div class="timeline-content">
+				<div style="position:inherit;">
+				  <h4>上传大头照</h4>
+				  <i class="icon-angle-up icon-2x angle" style="position: absolute;bottom: 0%;right: 0%;cursor:pointer;"></i>
+				</div>
+				<div>
+				  <p>此照片用于入职后办理员工卡及E-HR系统存档。请在白色背景前自拍，如需PS请手下留情。</p>
+                  <img id="portrait"  src="../images/uploadsample/preload.gif" data-original="../images/uploadsample/portrait.jpg" width=50%   style="border-style:dashed;border-width:1px;" onclick="showPic('portrait');"></img><br>
+                  <button type="button" class="btn btn-success  btn-sm btn-block" style="width:50%;margin-bottom:15px;" onclick="$('input#portrait[type=file]').click();"><i class="icon-camera icon-2x"></i></button>
+                  <input id="portrait" type="file" capture="camera" name="photo"  accept="image/*" style="display:none" >
+                </div>
+			</div>
+		</li>
+
+		<li>
+			<div class="timeline-icon">
+				<div class="bg-info">
+					<i class="icon-user" style="line-height:34px";></i>
+				</div>
+			</div>
+			<div class="timeline-content">
+	     		<div style="position:inherit;">
+	     		  <h4>上传身份证照片</h4>
+	     		  <i class="icon-angle-up icon-2x angle" style="position: absolute;bottom: 0%;right: 0%;cursor:pointer;"></i>
+	     		</div>
+	     		<div>
+		     		<p>身份证照片用于员工档案存档，我们保证不乱用。</p>
+		     		<p>请分别拍下身份证的正背两面，请使用白纸或浅色桌面作为背景。</p>
+					<img id="id1" class="lazy" src="../images/uploadsample/preload.gif" data-original="../images/uploadsample/id1.jpg" width=48%   style="border-style:dashed;border-width:1px;" onclick="showPic('id1');"></img>
+					<img id="id2" class="lazy" src="../images/uploadsample/preload.gif" data-original="../images/uploadsample/id2.jpg" width=48%  style="border-style:dashed;border-width:1px;" onclick="showPic('id2');"></img>
+	                <br>
+	                <button type="button" class="btn btn-success  btn-sm "style="width:48%;margin-bottom:15px;" onclick="$('input#id1[type=file]').click();"><i class="icon-camera icon-2x"></i></button>
+	                 
+	                <button type="button" class="btn btn-success  btn-sm " style="width:48%;margin-bottom:15px;" onclick="$('input#id2[type=file]').click();"><i class="icon-camera icon-2x"></i></button>
+	                <input id="id1" type="file" capture="camera" name="photo"  accept="image/*" style="display:none" >
+	               
+	                <input id="id2" type="file" capture="camera" name="photo"  accept="image/*" style="display:none" >
+	            </div>
+			</div>
+		</li>
+
+		<li>
+			<div class="timeline-icon">
+				<div class="bg-info">
+					<i class="icon-user" style="line-height:34px";></i>
+				</div>
+			</div>
+			<div class="timeline-content">
+	     		<div style="position:inherit;">
+	     		  <h4>上传户口本照片</h4>
+                  <i class="icon-angle-up icon-2x angle" style="position: absolute;bottom: 0%;right: 0%;cursor:pointer;"></i>
+	     		</div>
+	     		<div>
+		     		<p>户口本照片仅限于办理社保公积金。</p>
+		     		<p>请分别拍下户口本首页与本人身份页（正背），请使用白纸或浅色桌面作为背景。</p>
+					
+					<img id="id3" class="lazy" src="../images/uploadsample/preload.gif" data-original="../images/uploadsample/id3.jpg" width=48%  style="border-style:dashed;border-width:1px;" onclick="showPic('id3');"></img><br>
+		            <button type="button" class="btn btn-success  btn-sm " style="width:48%;margin-bottom:15px;" onclick="$('input#id3[type=file]').click();"><i class="icon-camera icon-2x"></i></button>
+		            <input id="id3" type="file" capture="camera" name="photo"  accept="image/*" style="display:none" >
+		            <br>
+
+		            <img id="id4" class="lazy" src="../images/uploadsample/preload.gif" data-original="../images/uploadsample/id4.jpg" width=48%  style="border-style:dashed;border-width:1px;" onclick="showPic('id4');"></img>
+	                <img id="id5" class="lazy" src="../images/uploadsample/preload.gif" data-original="../images/uploadsample/id5.jpg" width=48%  style="border-style:dashed;border-width:1px;" onclick="showPic('id5');"></img>
+	                <br>
+		            <button type="button" class="btn btn-success  btn-sm" style="width:48%;margin-bottom:15px;" onclick="$('input#id4[type=file]').click();"><i class="icon-camera icon-2x"></i></button>
+		            <input id="id4" type="file" capture="camera" name="photo"  accept="image/*" style="display:none" >
+		            <button type="button" class="btn btn-success  btn-sm "  style="width:48%;margin-bottom:15px;" onclick="$('input#id5[type=file]').click();"><i class="icon-camera icon-2x"></i></button>
+		            <input id="id5" type="file" capture="camera" name="photo"  accept="image/*" style="display:none" >
+		        </div>
+			</div>
+		</li>
+		<li>
+			<div class="timeline-icon">
+				<div class="bg-info">
+					<i class="icon-beaker" style="line-height:34px;"></i>
+				</div>
+			</div>
+			<div class="timeline-content">
+			    <div style="position:inherit;">  
+				  <h4>上传学历证明照片</h4>
+				  <i class="icon-angle-up icon-2x angle" style="position: absolute;bottom: 0%;right: 0%;cursor:pointer;"></i>
+	     		</div>
+	     		<div>
+					<p>请上传最高脱产学历的毕业证与学位证照片。此照片用于员工档案存档。</p>
+					<img id="edu1" class="lazy" src="../images/uploadsample/preload.gif" data-original="../images/uploadsample/edu1.jpg" width=48%  style="border-style:dashed;border-width:1px;" onclick="showPic('edu1');"></img>
+	                <img id="edu2" class="lazy" src="../images/uploadsample/preload.gif" data-original="../images/uploadsample/edu2.jpg" width=48%  style="border-style:dashed;border-width:1px;" onclick="showPic('edu2');"></img>
+	                <br>
+		            <button type="button" class="btn btn-success  btn-sm " style="width:48%;margin-bottom:15px;" onclick="$('input#edu1[type=file]').click();"><i class="icon-camera icon-2x"></i></button>
+		            <input id="edu1" type="file" capture="camera" name="photo"  accept="image/*" style="display:none" >
+		            <button type="button" class="btn btn-success  btn-sm" style="width:48%;margin-bottom:15px;" onclick="$('input#edu2[type=file]').click();"><i class="icon-camera icon-2x"></i></button>
+		            <input id="edu2" type="file" capture="camera" name="photo"  accept="image/*" style="display:none" >
+		        </div>  
+				
+			</div>
+		</li>
+		<li>
+			<div class="timeline-icon">
+				<div class="bg-info">
+					<i class="icon-certificate" style="line-height:34px;"></i>
+				</div>
+			</div>
+			<div class="timeline-content">
+			    <div style="position:inherit;">
+				  <h4>上传职称/资质证书照片(如有)</h4>
+                  <i class="icon-angle-up icon-2x angle" style="position: absolute;bottom: 0%;right: 0%;cursor:pointer;"></i>
+	     		</div>
+                <div>
+					<p>请根据面试登记表中填写的职称/资质证书上传。俗话说技不压身，说不定哪天的飞黄腾达就靠它了。</p>
+					<img id="cert1" class="lazy" src="../images/uploadsample/preload.gif" data-original="../images/uploadsample/cert1.jpg" width=48%  style="border-style:dashed;border-width:1px;" onclick="showPic('cert1');"></img>
+	                <img id="cert2" class="lazy" src="../images/uploadsample/preload.gif" data-original="../images/uploadsample/cert2.jpg" width=48%  style="border-style:dashed;border-width:1px;" onclick="showPic('cert2');"></img>
+	                <br>
+		            <button type="button" class="btn btn-success  btn-sm " style="width:48%;margin-bottom:15px;" onclick="$('input#cert1[type=file]').click();"><i class="icon-camera icon-2x"></i></button>
+		            <input id="cert1" type="file" capture="camera" name="photo"  accept="image/*" style="display:none" >
+		            <button type="button" class="btn btn-success  btn-sm " style="width:48%;margin-bottom:15px;" onclick="$('input#cert2[type=file]').click();"><i class="icon-camera icon-2x"></i></button>
+		            <input id="cert2" type="file" capture="camera" name="photo"  accept="image/*" style="display:none" >
+	            </div>
+			</div>
+		</li>
+		<li>
+			<div class="timeline-icon">
+				<div class="bg-info">
+					<i class="icon-stethoscope" style="line-height:34px";></i>
+				</div>
+			</div>
+			<div class="timeline-content">
+	     		<h4>入职体检</h4>
+				<p>请按照<a href="">公司新员工入职体检规定</a>完成入职体检。如果持有近三个月内的二级（含）以上医院或体检中心的体检报告，则可不参加入职体检。请在入职时携带体检报告（电子版或纸质版均可）。<p>
+				
+			</div>
+		</li>
+	  
+		<li>
+			<div class="timeline-icon">
+				<div class="bg-info">
+					<i class="icon-credit-card" style="line-height:34px";></i>
+				</div>
+			</div>
+			<div class="timeline-content">
+	     		<h4>工资与报销卡准备</h4>
+				<p>公司使用中国建设银行借记卡发放工资与奖金。使用中国招商银行一卡通支付业务费用报销。请提前准备好以本人姓名开户的上述银行卡。开户行不限。</p>
+			</div>
+		</li>
+	  
+       
+
+
+		<li>
+			<div class="timeline-time">
+				<h3>入职前</h3>
+			</div>
+		</li>
+		<li>
+			<div class="timeline-icon">
+				<div class="bg-primary">
+					<i class="icon-copy" style="line-height:34px;"></i>
+				</div>
+			</div>
+			<div class="timeline-content">
+				<h4>准备入职材料</h4>
+			    <p>为确保入职当日各项手续顺利完成，请检查以下资料是否准备完成。</p>
+			    
+			    <p>1、身份证、毕业证、学位证原件；<br>
+			      2、职称、资质认证证书原件；<br>
+                  3、上一家工作单位的离职证明或其它解除劳动合同关系的书面证明；<br>
+                  4、一寸免冠白底彩色（社保标准照）近照3张。（如您已在北京办理社会保险，则只需要1张照片）</p>
+			</div>
+		</li>
+		
+		<li>
+			<div class="timeline-icon">
+				<div class="bg-warning">
+					<i class="icon-thumbs-up" style="line-height:34px;"></i>
+				</div>
+			</div>
+			<div class="timeline-content">
+				<h4>万事俱备只欠东风</h4>
+				<p>祝您在用友的事业与生活蒸蒸日上。</p>
+			</div>
+		</li>
+		
+		<!--
+		<li>
+			<div class="timeline-icon">
+				<div class="bg-info">
+					<i class="fa fa-bed" style="line-height:34px;"></i>
+				</div>
+			</div>
+			<div class="timeline-content image" onclick="document.location='http://www.yonyou.com';">
+				<h2> 图片标题</h2>
+				<img src="images/img-coast.jpg">
+				<p>abcd</p>
+			</div>
+		</li>
+       
+        <li>
+			<div class="timeline-time">
+				"第一周"
+			</div>
+			<div class="timeline-icon">
+				<div class="bg-danger">
+					<i class="fa fa-bus" style="line-height:34px;"></i>
+				</div>
+			</div>
+			<div class="timeline-content image" onclick="document.location='http://udn.yyuap.com';">
+				<h2>images</h2>
+				<p>aaaaaa</p>
+				<img src="images/img-coast.jpg">
+				<p>bbbbbbb</p>
+				<img src="images/img-coast.jpg">
+				<p></p>
+			</div>
+  		</li>
+		-->
+
+       </ul>
+       </div>
+    </div>
+
+    <footer class="footer" style="text-align:center;">
+		<span class="label label-default">本宝典由iUAP人力与运营管理部版权所有并技术支持</span>
+		<span class="label label-default">云计算服务由用友云（安全稳定 性能出色）提供支持</span>
+    </footer>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../jquery-1.11.3/jquery-1.11.3.min.js" type="text/javascript"></script>
+       <!--script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script-->
+    <script src="../bootstrap-3.3.5/js/bootstrap.min.js" type="text/javascript"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!--script src="http://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script-->
+    <script src="js/tinybox.js" type="text/javascript"></script>
+    <script src="js/fitvids.js" type="text/javascript"></script>
+    <script src="js/timeline.js" type="text/javascript"></script>
+ 	<script src="../sco.js/js/sco.message.js"></script> 
+ 	<script src="../js/lrz.bundle.js" type="text/javascript"></script>
+    <script src="../js/jquery.lazyload.js" type="text/javascript"></script>
+
+    <script src="../bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" ></script>
+    <script src="../bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" ></script>
+       
+    <script>
+        var offerid=""
+        var candidateid=""
+         var dict = new Array(); 
+        $(document).ready(function(){
+          $.get("../data/ologin?action=currentuser",function(data,status){
+            ret=JSON.parse(data);
+
+            candidateid=ret.candidateid;
+            if (ret.login==false){
+              window.location.href="login.html";
+              return;
+            }     
+            $.get("../data/cc?action=GetLastOfferSummaryEx&candidateid="+candidateid,function(data,status){
+              ret=JSON.parse(data);
+              offerid=ret.OfferID;
+              $("#hr-name").text(ret.HrName);
+              $("#hr-phone").text(ret.HrPhone);
+              if (ret.ResultType=="接受OFFER")
+              	$("span#confirm").text("—已确认");
+              if (ret.OnBoardDate!=""){
+                $("input#onboarddate").val(ret.OnBoardDate);
+                //toggleDiv("onboarddate");
+                $("span#onboarddate").text("—"+ret.OnBoardDate);
+              }
+            });
+
+            $.get("../data/cc?action=GetPersonInfoEx&candidateid="+candidateid,function(data,status){
+              if (data=="")
+              	return;
+              ret=JSON.parse(data);
+              
+              $("input#address").val(ret.Address);
+              $("input#emergency-name").val(ret.EmergencyName);
+              $("input#emergency-phone").val(ret.EmergencyPhone);
+              //$("select#emergency-relation option[value="+ret.EmergencyRelation+"]").attr("selected",true);
+              $("select#emergency-relation").val(ret.EmergencyRelation);
+              
+              if (ret.Address!="" && ret.EmergencyPhone!="" && ret.EmergencyName!=""){
+                //toggleDiv("personinfoex");
+                $("span#personinfoex").text("—已提交");
+              }
+            });
+            
+            $.get("../data/cc?action=GetSI&candidateid="+candidateid,function(data,status){
+              if (data=="")
+              	return;
+              ret=JSON.parse(data);
+              $("select#sb-flag").val(ret.sb_flag);
+              if (ret.sb_flag=="已缴纳"){
+                $("input#sb-city").val(ret.sb_city);
+                $("input#sb-date").val(ret.sb_date);
+              }
+              else{
+              	$("div#sb-div").hide();
+              }
+
+
+              $("select#gjj-flag").val(ret.gjj_flag);
+              if (ret.gjj_flag=="已缴纳"){
+                $("input#gjj-city").val(ret.gjj_city);
+                $("input#gjj-date").val(ret.gjj_date);
+              }
+              else{
+                $("div#gjj-div").hide(); 
+              }
+              $("span#si").text("—已提交");
+            });
+            
+            $.get("../data/cc?action=GetPortrait&candidateid="+candidateid,function(data,status){
+              if (data=="")
+              	return;
+              ret=JSON.parse(data);
+
+
+              $("img#portrait").attr("data-original","../upload/"+ret[0].urlname);
+              $("img#portrait").lazyload();
+       
+              [].forEach.call(document.querySelectorAll('img#portrait [data-src]'), function (el) {
+                (function (el) {
+                  el.addEventListener('click', function () {
+                    el.src = 'image/loading.gif';
+                    lrz(el.dataset.src)
+                        .then(function (rst) {
+                            el.src = rst.base64;
+                           return rst;
+                        });
+                  });
+
+                  el.click();
+                })(el);
+               }); //for each
+            });//get getportrait
+            
+            $.get("../data/cc?action=GetCert&candidateid="+candidateid,function(data,status){
+              if (data=="")
+              	return;
+              ret=JSON.parse(data);
+              var id="";
+              for (x in ret){
+                switch (ret[x].filename_main){
+                  case "身份证-正":
+                    id="id1";
+                    break;
+                  case "身份证-背":
+              	    id="id2";
+              	    break;
+                  case "户口本-首页":
+                    id="id3";
+                    break;
+              	  case "户口本-本人页-正":
+              	    id="id4";
+              	    break;
+              	  case "户口本-本人页-背":
+              	    id="id5";
+              	    break;  
+              	  case "毕业证":
+              	    id="edu1";
+              	    break;  
+              	  case "学位证":
+              	    id="edu2";
+              	    break;    
+              	  case "资质1":
+              	    id="cert1";
+              	    break;    
+              	  case "资质2":
+              	    id="cert2";
+              	    break;    
+              	  default:
+                    id="";
+                    alert("error");
+                }			    	
+          
+                
+                $("img#"+id).attr("data-original","../upload/"+ret[x].urlname);
+
+			  }
+              
+
+
+
+              $("img.lazy").lazyload();
+       
+              [].forEach.call(document.querySelectorAll('img.lazy [data-src]'), function (el) {
+                (function (el) {
+                  el.addEventListener('click', function () {
+                    el.src = 'image/loading.gif';
+                    lrz(el.dataset.src)
+                        .then(function (rst) {
+                            el.src = rst.base64;
+                           return rst;
+                        });
+                  });
+
+                  el.click();
+                })(el);
+               }); //for each
+            });//get getcert
+             
+
+          });//get currentuser
+ 
+
+
+
+
+
+
+
+          $("i.angle").click(function(e){
+            
+            var x=$(e.currentTarget);
+            var y=x.parent().next();
+            y.slideToggle();
+            x.toggleClass("icon-angle-down");
+            x.toggleClass("icon-angle-up");
+          });
+
+          
+          $("select#sb-flag ").change(function(){
+            var val=$("select#sb-flag option:selected").val();
+            if (val=="已缴纳")
+          	  $("#sb-div").slideDown();
+            else
+          	  $("#sb-div").slideUp();
+          });
+          
+          $("select#gjj-flag ").change(function(){
+            var val=$("select#gjj-flag option:selected").val();
+            if (val=="已缴纳")
+          	  $("#gjj-div").slideDown();
+            else
+          	  $("#gjj-div").slideUp();
+          });
+
+          
+
+
+
+       
+
+        $('input[type=file]').change(function(e){updatePhoto(e);});
+        function updatePhoto(e) {
+            var that = e.currentTarget;
+            lrz(that.files[0], {width: 1024})
+                .then(function (rst) {
+                    var img        = new Image(),
+                        div        = document.createElement('div'),
+                        p          = document.createElement('p'),
+                        sourceSize = toFixed2(that.files[0].size / 1024),
+                        resultSize = toFixed2(rst.base64Len / 1024),
+                        scale      = parseInt(100 - (resultSize / sourceSize * 100));
+
+                    p.style.fontSize = 13 + 'px';
+                    p.innerHTML      = '源文件：<span class="text-danger">' + 
+                                        sourceSize + 'KB' + '</span> <br />' + '压缩后传输Base64：<span class="text-success">' +
+                                        resultSize + 'KB (省' + scale + '%)' +
+                                        '</span> ';
+
+           // div.className = 'col-sm-6';
+          //  div.appendChild(img);
+           // div.appendChild(p);
+
+           // img.onload = function () {
+             //   that.parentNode.appendChild(div);
+           // };
+
+           // img.src = rst.base64;
+       // var imgTmp=document.getElementById(that.id);
+                    $("img#"+that.id).attr("src",rst.base64);
+                    dict[that.id]=rst.base64;
+                    strTmp=rst.base64;
+                    iIndex=strTmp.indexOf("base64,");
+                    strBase64=strTmp.slice(iIndex+7);
+                    if (that.id=="portrait"){
+                      classify="照片";
+                      name="照片";
+                    }
+                    else{
+                      classify="证件";
+                      switch (that.id){
+                      	case "id1":
+                      	  name="身份证-正";
+                      	  break;
+                      	case "id2":
+                      	  name="身份证-背";
+                      	  break;
+                      	case "id3":
+                      	  name="户口本-首页";
+                      	  break;
+                      	case "id4":
+                      	  name="户口本-本人页-正";
+                      	  break;
+                      	case "id5":
+                      	  name="户口本-本人页-背";
+                      	  break;  
+                      	case "edu1":
+                      	  name="毕业证";
+                      	  break;  
+                      	case "edu2":
+                      	  name="学位证";
+                      	  break;    
+                      	case "cert1":
+                      	  name="资质1";
+                      	  break;    
+                      	case "cert2":
+                      	  name="资质2";
+                      	  break;    
+                      	default:
+                      	  alert("id error");
+                      }
+                    }
+                    $.scojs_message('正在上传。。。', $.scojs_message.TYPE_ERROR);
+                    $.post("../data/cc?action=UploadPhoto",
+                    	{
+                    		"candidateid":candidateid,
+                    		"name":name,
+                    		"classify":classify,
+                    		"photo":strBase64
+                    	},
+                    	function(data,status){
+                    		if (data=="ok")
+                    		  $.scojs_message('上传成功', $.scojs_message.TYPE_OK);
+
+                    	}
+                    ); 
+                    return rst;
+                });
+        }
+
+
+        });//document.ready()
+
+
+
+        function toFixed2 (num) {
+            return parseFloat(+num.toFixed(2));
+        }
+
+        /**
+        * 替换字符串 !{}
+        * @param obj
+        * @returns {String}
+        * @example
+         * '我是!{str}'.render({str: '测试'});
+        */
+        String.prototype.render = function (obj) {
+            var str = this, reg;
+
+            Object.keys(obj).forEach(function (v) {
+                reg = new RegExp('\\!\\{' + v + '\\}', 'g');
+                str = str.replace(reg, obj[v]);
+            });
+
+            return str;
+        };
+        function showPic(id){
+        	var wid=window.innerWidth|| document.documentElement.clientWidth|| document.body.clientWidth;
+            var hei=window.innerHeight || document.documentElement.clientHeight|| document.body.clientHeight;
+        	var h=0,w=0;
+        	if (wid>hei){
+              h=hei*0.6;
+              w=(id=="portrait")?h*3/4:h*4/3;	
+        	  
+        	}
+        	else
+        	{
+        		w=wid*0.6;
+        		h=(id=="portrait")?w*4/3:w*3/4;
+        	}
+            
+          	
+        	var urlname="";
+            if (typeof(dict[id])=="undefined"){
+              urlname=$("img#"+id).attr("data-original");
+              //TINY.box.show("<img width="+w+"px height="+h+"px src='../images/uploadsample/"+id+".jpg' />",0,0,0,1) ;	
+              TINY.box.show("<img width="+w+"px height="+h+"px src="+urlname+" />",0,0,0,1) ;	
+            }
+            else{
+        	  TINY.box.show("<img width="+w+"px height="+h+"px src='"+dict[id]+"' />",0,0,0,1) ;
+            }
+        }
+        function toggleDiv(name){
+        	var x=$("i#"+name);
+            var y=x.parent().next();
+            y.slideToggle();
+            x.toggleClass("icon-angle-down");
+            x.toggleClass("icon-angle-up");
+        }
+        function submitOnboardDate(){
+          var date=$("input#onboarddate").val();
+          if (offerid=="")
+          	return;
+          $.post("../data/cc?action=SubmitOnboardDate",
+            {
+              "offerid":offerid,
+              "date":date
+            },
+            function(data,status){
+            	$.scojs_message('入职日期提交完成。', $.scojs_message.TYPE_OK);
+                //toggleDiv("onboarddate");
+                $("span#onboarddate").text("-"+$("input#onboarddate").val());
+            }//function
+          );//post
+        }
+
+        function submitPersonInfoEx(){
+          
+          if (candidateid=="")
+          	return;
+          var address=$("input#address").val();
+          var emergencyname=$("input#emergency-name").val();
+          var emergencyphone=$("input#emergency-phone").val();
+          var emergencyrelation=$("select#emergency-relation option:selected").val();
+          $.post("../data/cc?action=SubmitPersonInfoEx",
+            {
+              "candidateid":candidateid,
+              "address":address,
+              "emergencyname":emergencyname,
+              "emergencyrelation":emergencyrelation,
+              "emergencyphone":emergencyphone
+            },
+            function(data,status){
+            	$.scojs_message('个人补充信息提交完成。', $.scojs_message.TYPE_OK);
+                //toggleDiv("personinfoex");
+                $("span#personinfoex").text("—已提交");
+            }//function
+          );//post
+
+
+        }
+
+
+        function submitSI(){
+          if (candidateid=="")
+          	return;
+          var sb_flag=$("select#sb-flag option:selected").val();
+          var sb_city="",sb_date="";
+          if (sb_flag=="已缴纳"){
+          	  var sb_city=$("input#sb-city").val();
+          	  var sb_date=$("input#sb-date").val();
+          }
+          var gjj_flag=$("select#gjj-flag option:selected").val();
+          var gjj_city="",gjj_date="";
+          if (gjj_flag=="已缴纳"){
+          	  var gjj_city=$("input#gjj-city").val();
+          	  var gjj_date=$("input#gjj-date").val();
+          }
+
+          $.post("../data/cc?action=SubmitSI",
+            {
+              "candidateid":candidateid,
+              "sb_flag":sb_flag,
+              "sb_city":sb_city,
+              "sb_date":sb_date,
+              "gjj_flag":gjj_flag,
+              "gjj_city":gjj_city,
+              "gjj_date":gjj_date
+              
+            },
+            function(data,status){
+            	$.scojs_message('社保公积金缴纳情况提交完成。', $.scojs_message.TYPE_OK);
+                //toggleDiv("personinfoex");
+                $("span#si").text("—已提交");
+            }//function
+          );//post
+        }
+
+    </script>
+ 
+  </body>
+</html>

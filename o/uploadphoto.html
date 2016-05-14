@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="刘南">
+    <link rel="icon" href="../favicon.ico">
+
+    <title>上传候选人影像资料</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">  
+    <link href="css/style.css" media="all" type="text/css" rel="stylesheet">
+    <link href="../Font-Awesome-3.2.1/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen"/> 
+    <link href="../sco.js/css/sco.message.css" rel="stylesheet" media="screen" />
+
+  <style type="text/css">
+    #tinybox{position:absolute; box-sizing:content-box;display:none; padding:10px; background:#ffffff url(../images/preload.gif) no-repeat 50% 50%; border:10px solid #e3e3e3; z-index:2000;}
+    #tinymask{position:absolute; display:none; top:0; left:0; height:100%; width:100%; background:#000000; z-index:1500;}
+    #tinycontent{background:#ffffff; font-size:1.1em;}
+    #n{margin:10px auto; width:920px; border:1px solid #CCC;font-size:12px; line-height:30px;}
+    #n a{ padding:0 4px; color:#333}
+  </style>
+  
+
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="http://v3.bootcss.com/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!--script src="http://v3.bootcss.com/assets/js/ie-emulation-modes-warning.js"></script-->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+  </head>
+
+  <body style="padding-top:70px;">
+   
+ 
+    <div class="container" >
+      <div class="text-center">
+        
+        
+        <p style="text-align:left;width:80%;left:10%;display:inline-block;">候选人<span id="candidate-name">XXX</span></p>      
+      </div>
+    </div>
+
+    <div class="modal-shiftfix">
+  <div class="container-fluid main-content">
+  <ul class="timeline animated">
+ 
+    <li>
+      <div class="timeline-icon">
+        <div class="bg-warning">
+          <i class="icon-user" style="line-height:34px";></i>
+        </div>
+      </div>
+      <div class="timeline-content">
+        <div style="position:inherit;">
+          <h4>上传大头照</h4>
+          <i class="icon-angle-up icon-2x angle" style="position: absolute;bottom: 0%;right: 0%;cursor:pointer;"></i>
+        </div>
+        <div>
+          <p>此照片用于入职后办理员工卡及E-HR系统存档。请在白色背景前拍摄。</p>
+                  <img id="portrait"  src="../images/uploadsample/preload.gif" data-original="../images/uploadsample/portrait.jpg" width=50%   style="border-style:dashed;border-width:1px;" onclick="showPic('portrait');"></img><br>
+                  <button type="button" class="btn btn-success  btn-sm btn-block" style="width:50%;margin-bottom:15px;" onclick="$('input#portrait[type=file]').click();"><i class="icon-camera icon-2x"></i></button>
+                  <input id="portrait" type="file" capture="camera" name="photo"  accept="image/*" style="display:none" >
+                </div>
+      </div>
+    </li>
+
+    <li>
+      <div class="timeline-icon">
+        <div class="bg-info">
+          <i class="icon-user" style="line-height:34px";></i>
+        </div>
+      </div>
+      <div class="timeline-content">
+          <div style="position:inherit;">
+            <h4>上传身份证照片</h4>
+            <i class="icon-angle-up icon-2x angle" style="position: absolute;bottom: 0%;right: 0%;cursor:pointer;"></i>
+          </div>
+          <div>
+            <p>身份证照片用于员工档案存档。</p>
+            <p>请分别拍下身份证的正背两面，请使用白纸或浅色桌面作为背景。</p>
+          <img id="id1" class="lazy" src="../images/uploadsample/preload.gif" data-original="../images/uploadsample/id1.jpg" width=48%   style="border-style:dashed;border-width:1px;" onclick="showPic('id1');"></img>
+          <img id="id2" class="lazy" src="../images/uploadsample/preload.gif" data-original="../images/uploadsample/id2.jpg" width=48%  style="border-style:dashed;border-width:1px;" onclick="showPic('id2');"></img>
+                  <br>
+                  <button type="button" class="btn btn-success  btn-sm "style="width:48%;margin-bottom:15px;" onclick="$('input#id1[type=file]').click();"><i class="icon-camera icon-2x"></i></button>
+                   
+                  <button type="button" class="btn btn-success  btn-sm " style="width:48%;margin-bottom:15px;" onclick="$('input#id2[type=file]').click();"><i class="icon-camera icon-2x"></i></button>
+                  <input id="id1" type="file" capture="camera" name="photo"  accept="image/*" style="display:none" >
+                 
+                  <input id="id2" type="file" capture="camera" name="photo"  accept="image/*" style="display:none" >
+              </div>
+      </div>
+    </li>
+
+    <li>
+      <div class="timeline-icon">
+        <div class="bg-info">
+          <i class="icon-user" style="line-height:34px";></i>
+        </div>
+      </div>
+      <div class="timeline-content">
+          <div style="position:inherit;">
+            <h4>上传户口本照片</h4>
+                  <i class="icon-angle-up icon-2x angle" style="position: absolute;bottom: 0%;right: 0%;cursor:pointer;"></i>
+          </div>
+          <div>
+            <p>户口本照片用于办理社保公积金。</p>
+            <p>请分别拍下户口本首页与本人身份页（正背），请使用白纸或浅色桌面作为背景。</p>
+          
+          <img id="id3" class="lazy" src="../images/uploadsample/preload.gif" data-original="../images/uploadsample/id3.jpg" width=48%  style="border-style:dashed;border-width:1px;" onclick="showPic('id3');"></img><br>
+                <button type="button" class="btn btn-success  btn-sm " style="width:48%;margin-bottom:15px;" onclick="$('input#id3[type=file]').click();"><i class="icon-camera icon-2x"></i></button>
+                <input id="id3" type="file" capture="camera" name="photo"  accept="image/*" style="display:none" >
+                <br>
+
+                <img id="id4" class="lazy" src="../images/uploadsample/preload.gif" data-original="../images/uploadsample/id4.jpg" width=48%  style="border-style:dashed;border-width:1px;" onclick="showPic('id4');"></img>
+                  <img id="id5" class="lazy" src="../images/uploadsample/preload.gif" data-original="../images/uploadsample/id5.jpg" width=48%  style="border-style:dashed;border-width:1px;" onclick="showPic('id5');"></img>
+                  <br>
+                <button type="button" class="btn btn-success  btn-sm" style="width:48%;margin-bottom:15px;" onclick="$('input#id4[type=file]').click();"><i class="icon-camera icon-2x"></i></button>
+                <input id="id4" type="file" capture="camera" name="photo"  accept="image/*" style="display:none" >
+                <button type="button" class="btn btn-success  btn-sm "  style="width:48%;margin-bottom:15px;" onclick="$('input#id5[type=file]').click();"><i class="icon-camera icon-2x"></i></button>
+                <input id="id5" type="file" capture="camera" name="photo"  accept="image/*" style="display:none" >
+            </div>
+      </div>
+    </li>
+    <li>
+      <div class="timeline-icon">
+        <div class="bg-info">
+          <i class="icon-beaker" style="line-height:34px;"></i>
+        </div>
+      </div>
+      <div class="timeline-content">
+          <div style="position:inherit;">  
+          <h4>上传学历证明照片</h4>
+          <i class="icon-angle-up icon-2x angle" style="position: absolute;bottom: 0%;right: 0%;cursor:pointer;"></i>
+          </div>
+          <div>
+          <p>请上传最高脱产学历的毕业证与学位证照片。此照片用于员工档案存档。</p>
+          <img id="edu1" class="lazy" src="../images/uploadsample/preload.gif" data-original="../images/uploadsample/edu1.jpg" width=48%  style="border-style:dashed;border-width:1px;" onclick="showPic('edu1');"></img>
+                  <img id="edu2" class="lazy" src="../images/uploadsample/preload.gif" data-original="../images/uploadsample/edu2.jpg" width=48%  style="border-style:dashed;border-width:1px;" onclick="showPic('edu2');"></img>
+                  <br>
+                <button type="button" class="btn btn-success  btn-sm " style="width:48%;margin-bottom:15px;" onclick="$('input#edu1[type=file]').click();"><i class="icon-camera icon-2x"></i></button>
+                <input id="edu1" type="file" capture="camera" name="photo"  accept="image/*" style="display:none" >
+                <button type="button" class="btn btn-success  btn-sm" style="width:48%;margin-bottom:15px;" onclick="$('input#edu2[type=file]').click();"><i class="icon-camera icon-2x"></i></button>
+                <input id="edu2" type="file" capture="camera" name="photo"  accept="image/*" style="display:none" >
+            </div>  
+        
+      </div>
+    </li>
+    <li>
+      <div class="timeline-icon">
+        <div class="bg-info">
+          <i class="icon-certificate" style="line-height:34px;"></i>
+        </div>
+      </div>
+      <div class="timeline-content">
+          <div style="position:inherit;">
+          <h4>上传职称/资质证书照片(如有)</h4>
+                  <i class="icon-angle-up icon-2x angle" style="position: absolute;bottom: 0%;right: 0%;cursor:pointer;"></i>
+          </div>
+                <div>
+          <p>请根据面试登记表中填写的职称/资质证书上传。</p>
+          <img id="cert1" class="lazy" src="../images/uploadsample/preload.gif" data-original="../images/uploadsample/cert1.jpg" width=48%  style="border-style:dashed;border-width:1px;" onclick="showPic('cert1');"></img>
+                  <img id="cert2" class="lazy" src="../images/uploadsample/preload.gif" data-original="../images/uploadsample/cert2.jpg" width=48%  style="border-style:dashed;border-width:1px;" onclick="showPic('cert2');"></img>
+                  <br>
+                <button type="button" class="btn btn-success  btn-sm " style="width:48%;margin-bottom:15px;" onclick="$('input#cert1[type=file]').click();"><i class="icon-camera icon-2x"></i></button>
+                <input id="cert1" type="file" capture="camera" name="photo"  accept="image/*" style="display:none" >
+                <button type="button" class="btn btn-success  btn-sm " style="width:48%;margin-bottom:15px;" onclick="$('input#cert2[type=file]').click();"><i class="icon-camera icon-2x"></i></button>
+                <input id="cert2" type="file" capture="camera" name="photo"  accept="image/*" style="display:none" >
+              </div>
+      </div>
+    </li>
+    
+    
+
+       </ul>
+       </div>
+    </div>
+
+    <footer class="footer" style="text-align:center;">
+    
+    <span class="label label-default">云计算服务由用友云（安全稳定 性能出色）提供支持</span>
+    </footer>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../jquery-1.11.3/jquery-1.11.3.min.js" type="text/javascript"></script>
+       <!--script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script-->
+    <script src="../bootstrap-3.3.5/js/bootstrap.min.js" type="text/javascript"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!--script src="http://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script-->
+    <script src="js/tinybox.js" type="text/javascript"></script>
+    <script src="js/fitvids.js" type="text/javascript"></script>
+    <script src="js/timeline.js" type="text/javascript"></script>
+    <script src="../sco.js/js/sco.message.js"></script> 
+    <script src="../js/lrz.bundle.js" type="text/javascript"></script>
+    <script src="../js/jquery.lazyload.js" type="text/javascript"></script>
+
+    <script src="../bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" ></script>
+    <script src="../bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" ></script>
+       
+    <script>
+        
+        var candidateid="";
+        var dict = new Array(); 
+        $(document).ready(function(){
+          candidateid=getUrlParam("k");
+          if (candidateid==null) { 
+            $.scojs_message('二维码错误。', $.scojs_message.TYPE_ERROR);
+            //window.location.href="login.html";
+            return;
+          }     
+            
+            
+          $.get("../data/cc?action=GetPortrait&candidateid="+candidateid,function(data,status){
+            alert("GetPortrait="+data);
+            if (data=="")
+              alert(candidateid);
+              return;
+            ret=JSON.parse(data);
+
+
+            $("img#portrait").attr("data-original","../upload/"+ret[0].urlname);
+            $("img#portrait").lazyload();
+     
+            [].forEach.call(document.querySelectorAll('img#portrait [data-src]'), function (el) {
+              (function (el) {
+                el.addEventListener('click', function () {
+                  el.src = 'image/loading.gif';
+                  lrz(el.dataset.src)
+                      .then(function (rst) {
+                          el.src = rst.base64;
+                         return rst;
+                      });
+                });
+
+                el.click();
+              })(el);
+             }); //for each
+          });//get getportrait
+            
+            $.get("../data/cc?action=GetCert&candidateid="+candidateid,function(data,status){
+              if (data=="")
+                return;
+              ret=JSON.parse(data);
+              var id="";
+              for (x in ret){
+                switch (ret[x].filename_main){
+                  case "身份证-正":
+                    id="id1";
+                    break;
+                  case "身份证-背":
+                    id="id2";
+                    break;
+                  case "户口本-首页":
+                    id="id3";
+                    break;
+                  case "户口本-本人页-正":
+                    id="id4";
+                    break;
+                  case "户口本-本人页-背":
+                    id="id5";
+                    break;  
+                  case "毕业证":
+                    id="edu1";
+                    break;  
+                  case "学位证":
+                    id="edu2";
+                    break;    
+                  case "资质1":
+                    id="cert1";
+                    break;    
+                  case "资质2":
+                    id="cert2";
+                    break;    
+                  default:
+                    id="";
+                    alert("error");
+                }           
+          
+                
+                $("img#"+id).attr("data-original","../upload/"+ret[x].urlname);
+
+        }
+              
+
+
+
+              $("img.lazy").lazyload();
+       
+              [].forEach.call(document.querySelectorAll('img.lazy [data-src]'), function (el) {
+                (function (el) {
+                  el.addEventListener('click', function () {
+                    el.src = 'image/loading.gif';
+                    lrz(el.dataset.src)
+                        .then(function (rst) {
+                            el.src = rst.base64;
+                           return rst;
+                        });
+                  });
+
+                  el.click();
+                })(el);
+               }); //for each
+            });//get getcert
+          
+          $("i.angle").click(function(e){
+            
+            var x=$(e.currentTarget);
+            var y=x.parent().next();
+            y.slideToggle();
+            x.toggleClass("icon-angle-down");
+            x.toggleClass("icon-angle-up");
+          });
+
+
+          $('input[type=file]').change(function(e){updatePhoto(e);});
+          function updatePhoto(e) {
+            var that = e.currentTarget;
+            lrz(that.files[0], {width: 1024})
+                .then(function (rst) {
+                    var img        = new Image(),
+                        div        = document.createElement('div'),
+                        p          = document.createElement('p'),
+                        sourceSize = toFixed2(that.files[0].size / 1024),
+                        resultSize = toFixed2(rst.base64Len / 1024),
+                        scale      = parseInt(100 - (resultSize / sourceSize * 100));
+
+                    p.style.fontSize = 13 + 'px';
+                    p.innerHTML      = '源文件：<span class="text-danger">' + 
+                                        sourceSize + 'KB' + '</span> <br />' + '压缩后传输Base64：<span class="text-success">' +
+                                        resultSize + 'KB (省' + scale + '%)' +
+                                        '</span> ';
+
+      
+                    $("img#"+that.id).attr("src",rst.base64);
+                    dict[that.id]=rst.base64;
+                    strTmp=rst.base64;
+                    iIndex=strTmp.indexOf("base64,");
+                    strBase64=strTmp.slice(iIndex+7);
+                    if (that.id=="portrait"){
+                      classify="照片";
+                      name="照片";
+                    }
+                    else{
+                      classify="证件";
+                      switch (that.id){
+                        case "id1":
+                          name="身份证-正";
+                          break;
+                        case "id2":
+                          name="身份证-背";
+                          break;
+                        case "id3":
+                          name="户口本-首页";
+                          break;
+                        case "id4":
+                          name="户口本-本人页-正";
+                          break;
+                        case "id5":
+                          name="户口本-本人页-背";
+                          break;  
+                        case "edu1":
+                          name="毕业证";
+                          break;  
+                        case "edu2":
+                          name="学位证";
+                          break;    
+                        case "cert1":
+                          name="资质1";
+                          break;    
+                        case "cert2":
+                          name="资质2";
+                          break;    
+                        default:
+                          alert("id error");
+                      }
+                    }
+                    $.scojs_message('正在上传。。。', $.scojs_message.TYPE_ERROR);
+                    $.post("../data/cc?action=UploadPhoto",
+                      {
+                        "candidateid":candidateid,
+                        "name":name,
+                        "classify":classify,
+                        "photo":strBase64
+                      },
+                      function(data,status){
+                        if (data=="ok")
+                          $.scojs_message('上传成功', $.scojs_message.TYPE_OK);
+
+                      }
+                    ); 
+                    return rst;
+                });
+          } //updatePhoto
+
+
+        });//document.ready()
+
+        function getUrlParam(name) {
+          var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); 
+          var r = window.location.search.substr(1).match(reg);  
+          if (r != null) return unescape(r[2]); return null; 
+        }
+
+        function toFixed2 (num) {
+            return parseFloat(+num.toFixed(2));
+        }
+
+        /**
+        * 替换字符串 !{}
+        * @param obj
+        * @returns {String}
+        * @example
+         * '我是!{str}'.render({str: '测试'});
+        */
+        String.prototype.render = function (obj) {
+            var str = this, reg;
+
+            Object.keys(obj).forEach(function (v) {
+                reg = new RegExp('\\!\\{' + v + '\\}', 'g');
+                str = str.replace(reg, obj[v]);
+            });
+
+            return str;
+        };
+        function showPic(id){
+          var wid=window.innerWidth|| document.documentElement.clientWidth|| document.body.clientWidth;
+            var hei=window.innerHeight || document.documentElement.clientHeight|| document.body.clientHeight;
+          var h=0,w=0;
+          if (wid>hei){
+              h=hei*0.6;
+              w=(id=="portrait")?h*3/4:h*4/3; 
+            
+          }
+          else
+          {
+            w=wid*0.6;
+            h=(id=="portrait")?w*4/3:w*3/4;
+          }
+            
+            
+          var urlname="";
+            if (typeof(dict[id])=="undefined"){
+              urlname=$("img#"+id).attr("data-original");
+              //TINY.box.show("<img width="+w+"px height="+h+"px src='../images/uploadsample/"+id+".jpg' />",0,0,0,1) ; 
+              TINY.box.show("<img width="+w+"px height="+h+"px src="+urlname+" />",0,0,0,1) ; 
+            }
+            else{
+            TINY.box.show("<img width="+w+"px height="+h+"px src='"+dict[id]+"' />",0,0,0,1) ;
+            }
+        }
+        function toggleDiv(name){
+          var x=$("i#"+name);
+            var y=x.parent().next();
+            y.slideToggle();
+            x.toggleClass("icon-angle-down");
+            x.toggleClass("icon-angle-up");
+        }
+      
+
+    </script>
+ 
+  </body>
+</html>

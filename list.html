@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="列表">
+    <meta name="author" content="集团UAP中心人力与运营管理部 刘南">
+    <link rel="icon" href="favicon.ico">
+
+    <title>列表</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">  
+    <link href="fontawesome-4.4/css/font-awesome.min.css" rel="stylesheet" > 
+    
+
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="http://v3.bootcss.com/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!--script src="http://v3.bootcss.com/assets/js/ie-emulation-modes-warning.js"></script-->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <style>
+
+/* Swipe 2 required styles */
+
+.swipe {
+  overflow: hidden;
+  visibility: hidden;
+  position: relative;
+}
+.swipe-wrap {
+  overflow: hidden;
+  position: relative;
+}
+.swipe-wrap > div {
+  float:left;
+  width:100%;
+  position: relative;
+}
+
+/* END required styles */
+
+</style>
+  </head>
+
+
+
+  <body>
+    <div class="container">
+      <!--div class="col-xs-12 col-sm-12 col-md-12" style="padding:0px;"-->
+        <div class="row swipe" id="mySwipe" style="border:1px solid">
+          <div class="swipe-warp ">
+            <div>  
+              <div class="col-xs-5 col-md-1">
+                <b>张三（男）</b>
+              </div>
+              <div class="col-xs-5 col-md-2">
+                <b>JAVA工程师</b>
+              </div>
+              <div class="col-xs-2 col-md-1">
+                <b>28岁</b>
+              </div>
+              <div class="col-xs-6 col-md-3">
+                <b>一二三四五六七公司</b>
+              </div>
+              <div class="col-xs-3 col-md-2">
+                <b>其他1</b>
+              </div>
+              <div class="col-xs-3 col-md-2">
+                <b>其他2</b>
+              </div>
+            </div>
+            <div id="张三" class="divswipe" style="display:none;">
+              <div class="col-xs-4">
+                面试
+              </div>
+              <div class="col-xs-4">
+                结果
+              </div>
+              <div class="col-xs-4">
+                取消
+              </div>  
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="border:1px solid">
+          <div class="col-xs-3 col-md-1">
+            <b>姓名</b>
+          </div>
+          <div class="col-xs-6 col-md-2">
+            <b>职位职位职位职位</b>
+          </div>
+          <div class="col-xs-3 col-md-1">
+            <b>男</b>
+          </div>
+          <div class="col-xs-6 col-md-3">
+            <b>用友网络科技股份有限公司</b>
+          </div>
+          <div class="col-xs-3 col-md-2">
+            <b>其他1</b>
+          </div>
+          <div class="col-xs-3 col-md-2">
+            <b>其他2</b>
+          </div>
+        </div>
+
+        <div class="row" style="border:1px solid">
+          <div class="col-xs-3 col-md-1">
+            <b>姓名</b>
+          </div>
+          <div class="col-xs-6 col-md-2">
+            <b>职位职位职位职位</b>
+          </div>
+          <div class="col-xs-3 col-md-1">
+            <b>男</b>
+          </div>
+          <div class="col-xs-6 col-md-3">
+            <b>用友网络科技股份有限公司</b>
+          </div>
+          <div class="col-xs-3 col-md-2">
+            <b>其他1</b>
+          </div>
+          <div class="col-xs-3 col-md-2">
+            <b>其他2</b>
+          </div>
+        </div>
+
+      
+    </div>
+
+    
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="jquery-1.11.3/jquery-1.11.3.min.js" type="text/javascript"></script>
+       <!--script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script-->
+    <script src="bootstrap-3.3.5/js/bootstrap.min.js" type="text/javascript"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!--script src="http://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script-->
+ 	  <script src="js/swipe.js"></script>
+    <script>
+      var elem = document.getElementById('mySwipe');
+      window.mySwipe = Swipe(elem, {
+         startSlide: 0,
+        // auto: 3000,
+         continuous: false,
+        // disableScroll: true,
+        // stopPropagation: true,
+         callback: function(index, element) {swipechange(index,element)},
+        // transitionEnd: function(index, element) {}
+      });
+
+
+      function swipechange(index,element)
+      {  
+        
+         if ($(element).attr("class")=="divswipe") 
+         {
+            $(element).prev().css("display","none");
+            $(element).css("display","block");
+            $(element).css("height","40px");
+        }
+        else
+        {
+        
+            $(element).css("display","block");
+            $(element).next().css("display","none");
+
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="预约面试">
+    <meta name="author" content="集团UAP中心人力与运营管理部 刘南">
+    <link rel="icon" href="favicon.ico">
+
+    <title>预约面试</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">  
+    <link href="fontawesome-4.4/css/font-awesome.min.css" rel="stylesheet" > 
+    <link href="bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen"/>
+
+
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="http://v3.bootcss.com/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!--script src="http://v3.bootcss.com/assets/js/ie-emulation-modes-warning.js"></script-->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+  </head>
+
+  <body>
+
+    
+    <form class="form-horizontal">
+      <div class="form-group">
+          <label class="col-sm-2 control-label">候选人</label>
+          <div class="col-sm-9">
+            <p class="form-control-static">张三</p>
+          </div>
+     </div>
+      <div class="form-group">
+          <label class="col-sm-2 control-label">部门</label>
+          <div class="col-sm-9">
+            <select multiple class="form-control">
+              <option>应用平台产品部</option>
+              <option>技术平台产品部</option>
+              <option>BQ产品部</option>
+              <option>AE产品部</option>
+            </select>
+          </div>
+     </div>
+
+     <div class="form-group">
+          <label class="col-sm-2 control-label">面试官</label>
+          <div class="col-sm-9">
+            <select multiple class="form-control">
+              <option>张三</option>
+              <option>李四</option>
+              <option>王五</option>
+              <option>赵六</option>
+            </select>
+          </div>
+     </div>
+
+     <div class="form-group">
+       <label class="col-sm-2 control-label">面试方式</label>
+         <div class="col-sm-9">
+           <label class="radio-inline"><input type="radio" name="InterviewTypeRadioOpts" id="inlineRadio1" value="现场">现场</label>
+           <label class="radio-inline"><input type="radio" name="InterviewTypeRadioOpts" id="inlineRadio2" value="电话">电话</label>
+         </div>
+     </div>
+
+
+
+
+     <div class="form-group">
+       <label class="col-sm-2 control-label" for="input01">面试时间</label>
+       <div class="input-group date form_datetime col-sm-4" data-date="2015-05-13T10:25:00Z" data-date-format="yy-m-d h:i" data-link-field="dtp_input1" style="padding-left:15px;">
+         <input class="form-control" size="16" type="text" value="" readonly>
+         <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+         <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+       </div>
+     </div>
+
+
+     <div class="form-group">
+       <label class="col-sm-2 control-label" for="input01">面试地点</label>
+       <div class="col-sm-9">
+            <input type="text" placeholder="" class="form-control">
+       </div>
+     </div>
+    
+
+   
+     <div class="form-group">
+       <label class="col-sm-2 control-label" for="input01">备注</label>
+       <div class="col-sm-9">
+           <textarea class="form-control" rows="3"></textarea>
+       </div>
+     </div>
+
+
+	 <div class="col-sm-9 col-sm-offset-2">
+	 	<button type="button" class="btn btn-primary btn-block" onclick="window.returnValue="ok";window.close(); 
+   ">提交</button>
+	 </div>
+  </form>
+
+
+  
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="jquery-1.11.3/jquery-1.11.3.min.js" type="text/javascript"></script>
+       <!--script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script-->
+    <script src="bootstrap-3.3.5/js/bootstrap.min.js" type="text/javascript"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!--script src="http://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script-->
+ 	  <script src="bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" ></script>
+    <script src="bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" ></script>
+
+    <script type="text/javascript">
+      $('.form_datetime').datetimepicker({
+        language:  'zh-CN',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 1,
+        showMeridian: 1,
+        keyboardNavigation: 1,
+        startDate: new Date(),
+    });
+    
+     
+    </script>
+  </body>
+</html>

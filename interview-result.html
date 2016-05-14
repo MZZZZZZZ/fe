@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="面试结果">
+    <meta name="author" content="集团UAP中心人力与运营管理部 刘南">
+    <link rel="icon" href="favicon.ico">
+
+    <title>面试结果</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">  
+    <link href="fontawesome-4.4/css/font-awesome.min.css" rel="stylesheet" > 
+    
+
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="http://v3.bootcss.com/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!--script src="http://v3.bootcss.com/assets/js/ie-emulation-modes-warning.js"></script-->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+  </head>
+
+  <body>
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" calss="active" id="tab1"><a href="#pass" role="tab" data-toggle="tab">通过</a></li>
+      <li role="presentation" id="tab2"><a href="#nopass" role="tab" data-toggle="tab">未通过</a></li>
+      <li role="presentation" id="tab3" ><a href="#shit" role="tab" data-toggle="tab">爽约</a></li>
+    </ul>
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane fade in active" id="pass">
+        pass
+      </div>
+      <div role="tabpanel" class="tab-pane fade" id="nopass">
+         <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">候选人</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">张三</p>
+                </div>
+                <label class="col-sm-1 control-label">面试官</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">路人甲 路人乙</p>
+                </div>
+
+           </div>
+            
+          
+
+           <div class="form-group">
+             <label class="col-sm-2 control-label">面试方式</label>
+             <div class="col-sm-9">
+               <label class="radio-inline"><input type="radio" name="InterviewTypeRadioOpts" id="inlineRadio1" value="现场">现场</label>
+               <label class="radio-inline"><input type="radio" name="InterviewTypeRadioOpts" id="inlineRadio2" value="电话">电话</label>
+             </div>
+           </div>
+
+
+
+
+           <div class="form-group">
+             <label class="col-sm-2 control-label" for="input01">面试时间</label>
+             <div class="col-sm-4">
+                  <input type="text" placeholder="" class="form-control">
+             </div>
+             
+           </div>
+          
+
+         
+           <div class="form-group">
+             <label class="col-sm-2 control-label" for="input01">未通过原因</label>
+             <div class="col-sm-9">
+                 <textarea class="form-control" rows="3"></textarea>
+             </div>
+           </div>
+
+
+         <div class="col-sm-9 col-sm-offset-2">
+          <button type="button" class="btn btn-primary btn-block">提交</button>
+         </div>
+        </form>
+      </div>
+
+      <div role="tabpanel" class="tab-pane fade" id="shit">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">候选人</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">张三</p>
+                </div>
+             </div>
+  
+           <div class="form-group">
+             <label class="col-sm-2 control-label" for="input01">计划面试时间</label>
+             <div class="col-sm-4">
+                  <input type="text" placeholder="" class="form-control">
+             </div>
+             
+           </div>
+          
+
+         
+           <div class="form-group">
+             <label class="col-sm-2 control-label" for="input01">爽约原因</label>
+             <div class="col-sm-9">
+                 <textarea class="form-control" rows="3"></textarea>
+             </div>
+           </div>
+
+
+         <div class="col-sm-9 col-sm-offset-2">
+          <button type="button" class="btn btn-primary btn-block">提交</button>
+         </div>
+        </form>
+      </div>
+    
+    </div>
+
+   
+
+
+  
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="jquery-1.11.3/jquery-1.11.3.min.js" type="text/javascript"></script>
+       <!--script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script-->
+    <script src="bootstrap-3.3.5/js/bootstrap.min.js" type="text/javascript"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!--script src="http://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script-->
+    <script type="text/javascript">
+      var tabnum=0;
+      $('#tab1').tab('show');
+      $('li#tab1').click(function (e) {
+        tabnum=1;
+      });
+      $('li#tab2').click(function (e) {
+        tabnum=2;
+      });
+      $('li#tab3').click(function (e) {
+        tabnum=3;
+      });
+    </script>
+  </body>
+</html>
